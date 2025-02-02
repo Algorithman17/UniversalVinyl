@@ -1,0 +1,33 @@
+{
+  "name": "universalvinyl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Algorithman17/UniversalVinyl.git"
+  },
+  "author": "Axel Pavageau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Algorithman17/UniversalVinyl/issues"
+  },
+  "homepage": "https://github.com/Algorithman17/UniversalVinyl#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.9.6",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.21"
+  }
+}
