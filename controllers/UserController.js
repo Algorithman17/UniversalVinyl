@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/UserModel');
+const auth = require('../middlewares/auth');
 
 // Fonction pour recevoir les données du formulaire d'enregistrement
 exports.register = async function (req, res) {
@@ -30,7 +31,7 @@ exports.register = async function (req, res) {
 };
 
 // Fonction pour se connecter
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
@@ -52,10 +53,13 @@ exports.login = async (req, res) => {
             { expiresIn: '2h' } // Expiration du token (ex: 2 heures)
         );
 
-        return res.status(200).json({
-            message: `Bienvenue ${user.first} !`,
-            token 
-        });
+        // Stocker le token dans la session
+        req.session.token = token;
+
+        // Optional: Log the headers or other details for debugging
+        console.log("LOGIN", req.session.token);
+
+        return res.redirect('/profil'); // Redirection vers la page de profil
 
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -66,11 +70,12 @@ exports.login = async (req, res) => {
 exports.getProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
-        console.log(req)
+        //console.log(req)
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur introuvable.' });
         }
-        return res.status(200).json({ message: `Bienvenue, ${req.user.email}` });
+        //return res.status(200).json({ message: `Bienvenue, ${req.user.email}` });
+        return res.render('./pages/profil', { user });
 
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -89,5 +94,17 @@ exports.showLoginForm = (req, res) => {
 
 // Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
+    console.log(req.user);
+    
     res.render('./pages/home');
 }
+
+exports.logout = (req, res) => {
+    // Supprimer le token de la session
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ message: 'Erreur lors de la déconnexion' });
+        }
+        res.redirect('/login-form'); // Redirection vers le formulaire de connexion
+    });
+};

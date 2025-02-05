@@ -26,7 +26,8 @@ app.set('view engine', 'ejs') // moteur de recherche
 app.use(session({
     secret: 'secret_key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { secure: false } // à true si tu utilises HTTPS
 }));
 
 // Middleware pour rendre le message disponible dans les templates
