@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+<h1>Bienvenue sur la page d'accueil</h1>
+<a href="/register-form" class="btn btn-primary">S'inscrire</a>
+<a href="/login-form" class="btn btn-primary">Se connecter</a>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const message = "<%- (typeof message !== 'undefined') ? message.text : '' %>";
+        const messageType = "<%- (typeof message !== 'undefined') ? message.type : '' %>";
+
+        if (message) {
+            Swal.fire({
+                title: messageType === "success" ? "Succès !" : "Erreur !",
+                text: message,
+                icon: messageType,
+                confirmButtonText: "OK",
+                //timer: 3000, // Ferme automatiquement après 3s
+                showConfirmButton: true
+            });
+        }
+    });
+</script>
+<%- include('../partials/footer') %>
