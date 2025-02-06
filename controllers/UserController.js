@@ -1,27 +1,40 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../models/UserModel');
-const auth = require('../middlewares/auth');
+const UserModel = require('../models/UserModel');
+//const auth = require('../middlewares/auth'); // Middleware pour vérifier le token
 
 // Fonction pour recevoir les données du formulaire d'enregistrement
-exports.register = async function (req, res) {
-    try {
+exports.register = function () {
+
+    const createAccount = async (req, res) => {
         const { email, password, first, last, avatar, age } = req.body;
 
-        let userExist = await User.findOne({ email });
+        let userExist = await UserModel.findOne({ email });
+        
         if (userExist) {
             req.session.message = { type: 'error', text: "Cet email existe déjà !" };
             return res.redirect('/register-form'); // Rediriger vers le formulaire d'inscription
         }
 
+        if(email === "axel1996@hotmail.fr" && password === "123456") {
+            res.redirect('/login-form'); // Redirection vers la page d'accueil
+        }
+        
         const hashedPassword = await bcrypt.hash(password, 10);
-
+        
         const user = new User({ email, password: hashedPassword, first, last, avatar, age });
         await user.save();
 
         // Stocker le message de succès
         req.session.message = { type: 'success', text: `${email} vient d\'être créé !` };
 
+        
+
+        
+    }
+
+
+    try {
         res.redirect('/login-form'); // Redirection vers la page d'accueil
 
     } catch (err) {
@@ -31,10 +44,10 @@ exports.register = async function (req, res) {
 };
 
 // Fonction pour se connecter
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email });
+        const user = await UserModel.findOne({ email });
 
         if (!user) {
             return res.status(400).json({ message: 'Email ou mot de passe incorrect.' });
@@ -55,11 +68,12 @@ exports.login = async (req, res, next) => {
 
         // Stocker le token dans la session
         req.session.token = token;
+        req.session.user = user;
 
         // Optional: Log the headers or other details for debugging
-        console.log("LOGIN", req.session.token);
+        console.log("LOGIN", req.session);
 
-        return res.redirect('/profil'); // Redirection vers la page de profil
+        return res.redirect('/');
 
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -69,12 +83,11 @@ exports.login = async (req, res, next) => {
 // Fonction pour afficher le profil de l'utilisateur
 exports.getProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user.userId);
+        const user = await UserModel.findById(req.user.userId);
         //console.log(req)
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur introuvable.' });
         }
-        //return res.status(200).json({ message: `Bienvenue, ${req.user.email}` });
         return res.render('./pages/profil', { user });
 
     } catch (err) {
@@ -94,9 +107,7 @@ exports.showLoginForm = (req, res) => {
 
 // Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
-    console.log(req.user);
-    
-    res.render('./pages/home');
+    res.render('./pages/home', { user: req.session.user || null });
 }
 
 exports.logout = (req, res) => {
@@ -105,6 +116,6 @@ exports.logout = (req, res) => {
         if (err) {
             return res.status(500).json({ message: 'Erreur lors de la déconnexion' });
         }
-        res.redirect('/login-form'); // Redirection vers le formulaire de connexion
+        res.redirect('/');
     });
 };

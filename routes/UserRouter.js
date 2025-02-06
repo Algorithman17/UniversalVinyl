@@ -7,7 +7,7 @@ const auth = require('../middlewares/auth'); // Import du middleware
 const UserController = require('../controllers/UserController');
 
 // Définition des routes
-router.get("/", auth, UserController.home);
+router.get("/", UserController.home);
 
 router.get("/register-form", UserController.showRegisterForm);
 
@@ -19,7 +19,7 @@ router.post("/login", UserController.login)
 
 router.get('/profil', auth, UserController.getProfile);
 
-router.get('/logout', UserController.logout);
+router.post('/logout', UserController.logout);
 
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;

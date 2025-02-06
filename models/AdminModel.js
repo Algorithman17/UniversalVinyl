@@ -7,10 +7,10 @@ const addressSchema = new mongoose.Schema({
   country: String
 });
 
-const userSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, default: 'user' },
+  role: { type: String, default: 'admin' },
   username: String,
   first: String,
   last: String,
@@ -18,10 +18,10 @@ const userSchema = new mongoose.Schema({
   age: Number,
   genre_preferences: [String],
   bio: String,
-  isPremiumMember: { type: Boolean, default: false },
+  isPremiumMember: { type: Boolean, default: true },
   address: addressSchema
 });
 
-const User = mongoose.model('User', userSchema);
+const Admin = mongoose.model('Admin', adminSchema);
 
-module.exports = User;
+module.exports = Admin;
