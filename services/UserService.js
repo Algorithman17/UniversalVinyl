@@ -1,50 +1,16 @@
 // En tant qu'utilisateur je peut:
-//  Consulter les annonces
-//  Consulter les commentaires
-//  Consulter les utilisateurs
-//  Ajouter des commentaires
+//  Consulter mes annonces
 //  Ajouter des annonces
-//  Modifier mes commentaires
 //  Modifier mes annonces
-//  Supprimer mes commentaires
 //  Supprimer mes annonces
 //  Supprimer mon compte
 //  Modifier mon compte
-//  Consulter mon compte
-//  Consulter mes annonces
-//  Consulter mes commentaires
-//  Consulter mes favoris
-//  Ajouter des annonces à mes favoris
-//  Supprimer des annonces de mes favoris
-//  Consulter les annonces de mes favoris
+
 
 const { CommentModel, UserModel, AnnonceModel } = require('../models');
 
 const UserService = {
-    getAnnonces: async () => {
-        try {
-            const annonces = await AnnonceModel.find();
-            return annonces;
-        } catch (error) {
-            throw error;
-        }
-    },
-    getComments: async () => {
-        try {
-            const comments = await CommentModel.find();
-            return comments;
-        } catch (error) {
-            throw error;
-        }
-    },
-    getUsers: async () => {
-        try {
-            const users = await UserModel.find();
-            return users;
-        } catch (error) {
-            throw error;
-        }
-    },
+    // 
     addComment: async (comment) => {
         try {
             const newComment = await CommentModel.create(comment);
@@ -53,14 +19,7 @@ const UserService = {
             throw error;
         }
     },
-    addAnnonce: async (annonce) => {
-        try {
-            const newAnnonce = await AnnonceModel.create(annonce);
-            return newAnnonce;
-        } catch (error) {
-            throw error;
-        }
-    },
+    // Dans la page myComments.ejs
     updateComment: async (commentId, comment) => {
         try {
             const updatedComment = await CommentModel.findByIdAndUpdate(commentId, comment, { new: true });
@@ -135,7 +94,7 @@ const UserService = {
     },
     getMyAnnonces: async (userId) => {
         try {
-            const annonces = await AnnonceModel.find({ user: userId });
+            const annonces = await AnnonceModel.find({ user: req.session.user._id });
             return annonces;
         } catch (error) {
             throw error;
@@ -178,3 +137,5 @@ const UserService = {
         }
     }
 };
+
+module.exports = UserService;
