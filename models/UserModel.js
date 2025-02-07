@@ -10,7 +10,7 @@ const addressSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, default: 'user' },
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },
   username: String,
   first: String,
   last: String,
@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema({
   age: Number,
   genre_preferences: [String],
   bio: String,
-  isPremiumMember: { type: Boolean, default: false },
   address: addressSchema
 });
 
