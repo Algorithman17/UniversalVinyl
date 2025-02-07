@@ -1,0 +1,3 @@
+pour l'affichage d'une vue avec des informations
+suceptibles de changer d'êtat, il faut que j'intègre
+la logique dans les partials 
