@@ -1,0 +1,15 @@
+<nav>
+    <ul>
+        <li><a href="/">LOGO</a></li>
+        <% if (user) { %>
+            <li><a href="/profil">PROFIL</a></li>
+            <li><a href="/my-annonces">MES ANNONCES</a></li>
+            <form action="/logout" method="POST">
+                <button type="submit">Se déconnecter</button>
+            </form>
+        <% } else { %>
+            <li><a href="/register-form">S'INSCRIRE</a></li>
+            <li><a href="/login-form">SE CONNECTER</a></li>
+        <% } %>
+    </ul>
+</nav>
