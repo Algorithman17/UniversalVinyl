@@ -16,7 +16,6 @@ const userSchema = new mongoose.Schema({
   last: String,
   avatar: String,
   age: Number,
-  genre_preferences: [String],
   bio: String,
   address: addressSchema
 });

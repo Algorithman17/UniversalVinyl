@@ -24,5 +24,7 @@ router.post('/logout', UserController.logout);
 
 router.get('/admin-dashboard', isAdmin, UserController.adminDashboard);
 
+router.get('/my-annonces', auth, UserController.myAnnonces);
+
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;
