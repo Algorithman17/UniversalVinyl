@@ -1,8 +1,8 @@
 <%- include('../../partials/header') %>
 <%- include('../../partials/navbar') %>
-<h1>Mes annonces</h1>
+<h1>Annonces</h1>
 <% if (annonces.length === 0) { %>
-    <p>Vous n'avez pas encore d'annonce</p>
+    <p>Il n'y a pas d'annonce</p>
 <% } else { %>
     <ul>
         <% annonces.forEach(annonce => { %>
@@ -14,14 +14,8 @@
                 <% annonce.images.forEach(function(image) { %>
                     <img src="<%= image.imageBase64 %>" alt="<%= image.name %>" width="200">
                 <% }); %>                
-                <a href="/edit-annonce/<%= annonce._id %>">Modifier</a>
-                <form action="/delete-annonce/<%= annonce._id %>" method="POST">
-                    <button type="submit">Supprimer</button>
-                </form>
             </li>
         <% }) %>
     </ul>
 <% } %>
-
-<a href="http://localhost:3000/add-annonce">Ajouter une annonce</a>
 <%- include('../../partials/footer') %>

@@ -1,14 +1,19 @@
 // Importation des modules nécessaires
 const express = require('express');
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const app = express();
 const session = require('express-session')
+
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+module.exports = upload;
 
 // Importation des utilitaires et routes
 const connectDb = require('./database/connect'); // Fonction de connexion à la base de données
 require('dotenv').config(); // Chargement des variables d'environnement
 const userRouter = require('./routes/UserRouter'); // Routeur pour les utilisateurs
+
 
 // Configuration du port (par défaut : 3005)
 const port = process.env.PORT || 3005;
@@ -18,9 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Support pour les formulai
 app.use(bodyParser.json()); // Support pour les requêtes JSON
 app.use(express.json()); // Permet de lire le JSON dans req.body
 app.use('/api/users', userRouter); // Vérifie que le chemin est bien défini
-const upload = multer(); // Gestionnaire d'uploads (fichiers)
-app.use(upload.none()); // Aucun traitement de fichiers, uniquement des données simples
-app.use(express.static('public')); 
+app.use(express.static('public')); // Dossier pour les fichiers statiques
 app.set('views', './views') // défini la racine
 app.set('view engine', 'ejs') // moteur de recherche
 app.use(session({
@@ -36,6 +39,11 @@ app.use((req, res, next) => {
     delete req.session.message;
     next();
 });
+
+
+
+
+
 
 // Connexion à la base de données
 connectDb();
