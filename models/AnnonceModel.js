@@ -8,7 +8,7 @@ const annonceSchema = new mongoose.Schema({
     musicStyle: { type: String, required: true },
     images: [{ name: String,
               contentType: String,
-              image: Buffer, 
+              imageUrl: String 
             }],
     createdAt: { type: Date, default: Date.now }
 });

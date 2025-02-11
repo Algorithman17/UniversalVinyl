@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
+const path = require('path');
+
 const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
 
@@ -89,12 +92,12 @@ exports.registerForm = (req, res) => {
 // Fonction pour afficher le formulaire de connexion
 exports.loginForm = (req, res) => {
     return res.render('./pages/globalPages/login', { user: req.session.user});
-}
+};
 
 // Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
     return res.render('./pages/globalPages/home', { user: req.session.user});
-}
+};
 
 exports.logout = (req, res) => {
     // Supprimer le token de la session
@@ -114,14 +117,13 @@ exports.myAnnonces = async (req, res) => {
     let annonces = [];
     annonces = await AnnonceModel.find({ userId: req.session.user._id });
 
-    // Convertir chaque image en Base64 pour l'affichage dans EJS
     const annoncesWithImages = annonces.map(annonce => {
         return {
             ...annonce._doc, // Copie des données de l'annonce
             images: annonce.images.map(img => ({
                 name: img.name,
                 contentType: img.contentType,
-                imageBase64: `data:${img.contentType};base64,${img.image.toString("base64")}`
+                imageUrl: img.imageUrl // Utiliser l'URL relative pour l'affichage
             }))
         };
     });
@@ -146,11 +148,11 @@ exports.addAnnonce = async (req, res) => {
             return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
         }
 
-        // Transformation des fichiers en objets exploitables pour MongoDB
+        // Créer une liste d'URLs d'images
         const images = req.files.map(file => ({
             name: file.originalname,
             contentType: file.mimetype,
-            image: file.buffer
+            imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
         }));
 
         // Vérifie que la session utilisateur est bien définie
@@ -176,16 +178,49 @@ exports.addAnnonce = async (req, res) => {
 
 exports.annonces = async (req, res) => {
     let annonces = await AnnonceModel.find({});
-    // Convertir chaque image en Base64 pour l'affichage dans EJS
     const annoncesWithImages = annonces.map(annonce => {
         return {
             ...annonce._doc, // Copie des données de l'annonce
             images: annonce.images.map(img => ({
                 name: img.name,
                 contentType: img.contentType,
-                imageBase64: `data:${img.contentType};base64,${img.image.toString("base64")}`
+                imageUrl: img.imageUrl // Utiliser l'URL relative pour l'affichage
             }))
         };
     });
+    console.log(annoncesWithImages);
+    
     return res.render('./pages/globalPages/showAllAnnonces', { user: req.session.user, annonces: annoncesWithImages });
+};
+
+exports.deleteAnnonce = async (req, res) => {
+    try {
+        console.log("REQID",req.params.id);
+        
+        const annonceId = req.params.id;
+        console.log("AID", annonceId);
+        
+        // Trouver l'annonce à supprimer
+        const annonce = await AnnonceModel.findById(annonceId);
+
+        if (!annonce) {
+            return res.status(404).json({ message: 'Annonce non trouvée' });
+        }
+
+        // Supprimer les images du dossier "uploads"
+        annonce.images.forEach(img => {
+            const imagePath = path.join(__dirname, '..', 'uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
+            
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
+            }
+        });
+
+        // Supprimer l'annonce de la base de données
+        await AnnonceModel.deleteOne({ _id: annonceId });
+
+        return res.redirect('/my-annonces');  // Rediriger vers la liste des annonces après la suppression
+    } catch (error) {
+        return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
+    }
 }

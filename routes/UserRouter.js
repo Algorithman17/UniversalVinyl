@@ -8,7 +8,20 @@ const isAdmin = require('../middlewares/isAdmin'); // Import du middleware
 const UserController = require('../controllers/UserController');
 
 const multer = require("multer");
-const storage = multer.memoryStorage();
+const path = require('path');
+
+// Configuration de Multer pour stocker les fichiers sur le disque
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../uploads')); // Emplacement des fichiers téléchargés
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname); // Obtenir l'extension du fichier
+        const filename = Date.now() + ext; // Générer un nom unique basé sur le timestamp
+        cb(null, filename); // Définir le nom du fichier
+    }
+});
+
 const upload = multer({ storage: storage });
 
 // Définition des routes
@@ -35,6 +48,8 @@ router.get('/add-annonce', auth, UserController.addAnnonceForm);
 router.post('/add-annonce', auth, upload.array('images', 9999), UserController.addAnnonce);
 
 router.get('/annonces', UserController.annonces);
+
+router.post('/delete-annonce/:id', auth, UserController.deleteAnnonce)
 
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;

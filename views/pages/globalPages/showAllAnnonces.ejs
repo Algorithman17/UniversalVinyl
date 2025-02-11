@@ -11,8 +11,8 @@
                 <p><%= annonce.description %></p>
                 <p><%= annonce.price %>€</p>
                 <p><%= annonce.musicStyle %></p>
-                <% annonce.images.forEach(function(image) { %>
-                    <img src="<%= image.imageBase64 %>" alt="<%= image.name %>" width="200">
+                <% annonce.images.forEach(image => { %>
+                    <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>" width="200">
                 <% }); %>                
             </li>
         <% }) %>

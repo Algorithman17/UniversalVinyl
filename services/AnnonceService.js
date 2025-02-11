@@ -1,6 +1,8 @@
-const Ad = require('../models/AdModel');
+const AnnonceModel = require('../models/AnnonceModel');
 
-class AdService {
+
+
+class AnnonceService {
     // Create a new ad
     static async createAd(data) {
         const newAd = new Ad(data);
@@ -18,9 +20,10 @@ class AdService {
     }
 
     // Delete an ad
-    static async deleteAd(id) {
-        return await Ad.findByIdAndDelete(id);
+    static async deleteAnnonce(id) {
+            return await AnnonceModel.findByIdAndDelete(id);
+        }
     }
-}
 
-module.exports = AdService;
+
+module.exports = AnnonceService;
