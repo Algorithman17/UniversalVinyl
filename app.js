@@ -24,6 +24,7 @@ app.use(bodyParser.json()); // Support pour les requêtes JSON
 app.use(express.json()); // Permet de lire le JSON dans req.body
 app.use('/api/users', userRouter); // Vérifie que le chemin est bien défini
 app.use(express.static('public')); // Dossier pour les fichiers statiques
+app.use('/uploads', express.static('uploads'));
 app.set('views', './views') // défini la racine
 app.set('view engine', 'ejs') // moteur de recherche
 app.use(session({
@@ -39,11 +40,6 @@ app.use((req, res, next) => {
     delete req.session.message;
     next();
 });
-
-
-
-
-
 
 // Connexion à la base de données
 connectDb();

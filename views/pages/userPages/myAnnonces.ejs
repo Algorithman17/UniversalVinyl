@@ -11,12 +11,12 @@
                 <p><%= annonce.description %></p>
                 <p><%= annonce.price %>€</p>
                 <p><%= annonce.musicStyle %></p>
-                <% annonce.images.forEach(function(image) { %>
-                    <img src="<%= image.imageBase64 %>" alt="<%= image.name %>" width="200">
+                <% annonce.images.forEach(image => { %>
+                    <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>" width="200">
                 <% }); %>                
                 <a href="/edit-annonce/<%= annonce._id %>">Modifier</a>
-                <form action="/delete-annonce/<%= annonce._id %>" method="POST">
-                    <button type="submit">Supprimer</button>
+                <form action="/delete-annonce/<%= annonce._id %>" method="post">
+                    <button>Supprimer</button>
                 </form>
             </li>
         <% }) %>
