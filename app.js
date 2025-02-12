@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const session = require('express-session')
+const cookieParser = require("cookie-parser")
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -13,8 +14,7 @@ module.exports = upload;
 const connectDb = require('./database/connect'); // Fonction de connexion à la base de données
 require('dotenv').config(); // Chargement des variables d'environnement
 const userRouter = require('./routes/UserRouter'); // Routeur pour les utilisateurs
-
-
+const cookiesFunctions = require('./services/UserService')
 // Configuration du port (par défaut : 3005)
 const port = process.env.PORT || 3005;
 
@@ -27,19 +27,22 @@ app.use(express.static('public')); // Dossier pour les fichiers statiques
 app.use('/uploads', express.static('uploads'));
 app.set('views', './views') // défini la racine
 app.set('view engine', 'ejs') // moteur de recherche
+app.use(cookiesFunctions.theme)
+app.use(cookieParser())
 app.use(session({
     secret: 'secret_key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // à true si tu utilises HTTPS
+    cookie: { maxAge: 6555555 }
 }));
 
-// Middleware pour rendre le message disponible dans les templates
+// Middleware
 app.use((req, res, next) => {
-    res.locals.message = req.session.message;
-    delete req.session.message;
+    res.locals.user = req.session.user;
+    res.locals.theme = req.cookies.theme;
     next();
 });
+
 
 // Connexion à la base de données
 connectDb();

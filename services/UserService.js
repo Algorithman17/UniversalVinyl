@@ -6,6 +6,7 @@
 //  Supprimer mon compte
 //  Modifier mon compte
 
+cookie("theme", "#008080", {httpOnly:true, maxAge:10000000000})
 
 const { CommentModel, UserModel, AnnonceModel } = require('../models');
 

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
 
+
 const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
 
@@ -59,9 +60,17 @@ exports.login = async (req, res) => {
             { expiresIn: '2h' } // Expiration du token (ex: 2 heures)
         );
 
+
+        // soit session soit token
+
         // Stocker le token dans la session
         req.session.token = token;
         req.session.user = user;
+
+        // res.cookie({
+        //     theme: "dark"
+        // })
+        // res.cookie.theme
 
         return res.redirect('/');
 
@@ -77,7 +86,7 @@ exports.profil = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur introuvable.' });
         }
-        return res.render('./pages/userPages/profil', { user });
+        return res.render('./pages/userPages/profil');
 
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -86,17 +95,17 @@ exports.profil = async (req, res) => {
 
 // Fonction pour afficher le formulaire d'enregistrement
 exports.registerForm = (req, res) => {
-    return res.render('./pages/globalPages/register', { user: req.session.user});
+    return res.render('./pages/globalPages/register');
 };
 
 // Fonction pour afficher le formulaire de connexion
 exports.loginForm = (req, res) => {
-    return res.render('./pages/globalPages/login', { user: req.session.user});
+    return res.render('./pages/globalPages/login');
 };
 
 // Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
-    return res.render('./pages/globalPages/home', { user: req.session.user});
+    return res.render('./pages/globalPages/home');
 };
 
 exports.logout = (req, res) => {
@@ -110,7 +119,7 @@ exports.logout = (req, res) => {
 };
 
 exports.adminDashboard = (req, res) => {
-    return res.render('./pages/adminPages/adminDashboard', { user: req.session.user });
+    return res.render('./pages/adminPages/adminDashboard');
 };
 
 exports.myAnnonces = async (req, res) => {
@@ -128,11 +137,11 @@ exports.myAnnonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/userPages/myAnnonces', { user: req.session.user, annonces: annoncesWithImages });
+    return res.render('./pages/userPages/myAnnonces', { annonces: annoncesWithImages });
 };
 
 exports.addAnnonceForm = (req, res) => {
-    return res.render('./pages/userPages/addAnnonce', { user: req.session.user });
+    return res.render('./pages/userPages/addAnnonce');
 };
 
 exports.addAnnonce = async (req, res) => {
@@ -190,15 +199,12 @@ exports.annonces = async (req, res) => {
     });
     console.log(annoncesWithImages);
     
-    return res.render('./pages/globalPages/showAllAnnonces', { user: req.session.user, annonces: annoncesWithImages });
+    return res.render('./pages/globalPages/showAllAnnonces', { annonces: annoncesWithImages });
 };
 
 exports.deleteAnnonce = async (req, res) => {
     try {
-        console.log("REQID",req.params.id);
-        
         const annonceId = req.params.id;
-        console.log("AID", annonceId);
         
         // Trouver l'annonce à supprimer
         const annonce = await AnnonceModel.findById(annonceId);

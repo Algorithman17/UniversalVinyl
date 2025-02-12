@@ -51,5 +51,7 @@ router.get('/annonces', UserController.annonces);
 
 router.post('/delete-annonce/:id', auth, UserController.deleteAnnonce)
 
+
+
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;
