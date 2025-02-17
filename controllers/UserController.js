@@ -25,11 +25,14 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new UserModel({ email, password: hashedPassword, first, last, avatar, bio, adress });
         await user.save();
-
+        
         // Stocker le message de succès
         req.session.message = { type: 'success', text: `${email} vient d\'être créé !` };
-        return res.redirect('/login-form'); // Redirection vers la page de connexion
 
+        res.locals.message = req.session.message
+        return res.redirect('/login-form'); // Redirection vers la page de connexion
+        // res.locals.message = undefined
+        
     } catch (err) {
         req.session.message = { type: 'error', text: "Une erreur est survenue !" };
         return res.redirect('/register-form');
@@ -54,14 +57,13 @@ exports.login = async (req, res) => {
 
         // Créer un token JWT
         const token = jwt.sign(
-            { userId: user._id, email: user.email }, // Payload
+            { user }, // Payload
             process.env.JWT_SECRET, // Clé secrète stockée dans .env
             { expiresIn: '2h' } // Expiration du token (ex: 2 heures)
         );
-
+        
         // Stocker le token dans la session
-        req.session.token = token;
-        req.session.user = user;
+        res.cookie("token", token, { httpOnly: true, maxAge: 10000000000 });
 
         return res.redirect('/');
 
@@ -73,11 +75,7 @@ exports.login = async (req, res) => {
 // Fonction pour afficher le profil de l'utilisateur
 exports.profil = async (req, res) => {
     try {
-        const user = req.session.user
-        if (!user) {
-            return res.status(404).json({ message: 'Utilisateur introuvable.' });
-        }
-        return res.render('./pages/userPages/profil', { user });
+        return res.render('./pages/userPages/profil');
 
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -86,37 +84,49 @@ exports.profil = async (req, res) => {
 
 // Fonction pour afficher le formulaire d'enregistrement
 exports.registerForm = (req, res) => {
-    return res.render('./pages/globalPages/register', { user: req.session.user});
+    if (req.session.message) {
+        res.locals.message = req.session.message 
+        delete req.session.message       
+    } else {
+        res.locals.message = undefined
+    }
+    return res.render('./pages/globalPages/register');
 };
 
 // Fonction pour afficher le formulaire de connexion
 exports.loginForm = (req, res) => {
-    return res.render('./pages/globalPages/login', { user: req.session.user});
+    if (req.session.message) {
+        res.locals.message = req.session.message 
+        delete req.session.message       
+    } else {
+        res.locals.message = undefined
+    }
+    return res.render('./pages/globalPages/login');
+    
 };
 
 // Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
-    return res.render('./pages/globalPages/home', { user: req.session.user});
+    return res.render('./pages/globalPages/home');
 };
 
 exports.logout = (req, res) => {
-    // Supprimer le token de la session
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ message: 'Erreur lors de la déconnexion' });
-        }
-        return res.redirect('/');
-    });
+    // Supprimer le token des cookies
+    res.clearCookie('token');
+    return res.redirect('/');
 };
 
 exports.adminDashboard = (req, res) => {
-    return res.render('./pages/adminPages/adminDashboard', { user: req.session.user });
+    return res.render('./pages/adminPages/adminDashboard');
 };
 
 exports.myAnnonces = async (req, res) => {
     let annonces = [];
-    annonces = await AnnonceModel.find({ userId: req.session.user._id });
-
+    
+    const userId = res.locals.user._id;
+    
+    annonces = await AnnonceModel.find({ userId });
+    
     const annoncesWithImages = annonces.map(annonce => {
         return {
             ...annonce._doc, // Copie des données de l'annonce
@@ -128,17 +138,16 @@ exports.myAnnonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/userPages/myAnnonces', { user: req.session.user, annonces: annoncesWithImages });
+    return res.render('./pages/userPages/myAnnonces', { annonces: annoncesWithImages });
 };
 
 exports.addAnnonceForm = (req, res) => {
-    return res.render('./pages/userPages/addAnnonce', { user: req.session.user });
+    return res.render('./pages/userPages/addAnnonce');
 };
 
 exports.addAnnonce = async (req, res) => {
     try {
         const { title, description, price, musicStyle } = req.body;
-        console.log("Fichiers reçus :", req.files); // Vérification
 
         // Vérification du nombre d'images
         if (!req.files || req.files.length < 1) {
@@ -155,18 +164,13 @@ exports.addAnnonce = async (req, res) => {
             imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
         }));
 
-        // Vérifie que la session utilisateur est bien définie
-        if (!req.session || !req.session.user) {
-            return res.status(401).json({ message: "Utilisateur non authentifié" });
-        }
-
         const newAnnonce = new AnnonceModel({
             title,
             description,
             images,
             price,
             musicStyle,
-            userId: req.session.user._id // Stocke l'ID de l'utilisateur pour lier l'annonce
+            userId: res.locals.user._id // Stocke l'ID de l'utilisateur pour lier l'annonce
         });
         await newAnnonce.save();
 
@@ -188,17 +192,13 @@ exports.annonces = async (req, res) => {
             }))
         };
     });
-    console.log(annoncesWithImages);
     
-    return res.render('./pages/globalPages/showAllAnnonces', { user: req.session.user, annonces: annoncesWithImages });
+    return res.render('./pages/globalPages/showAllAnnonces', { annonces: annoncesWithImages });
 };
 
 exports.deleteAnnonce = async (req, res) => {
     try {
-        console.log("REQID",req.params.id);
-        
         const annonceId = req.params.id;
-        console.log("AID", annonceId);
         
         // Trouver l'annonce à supprimer
         const annonce = await AnnonceModel.findById(annonceId);
@@ -223,4 +223,74 @@ exports.deleteAnnonce = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
     }
+}
+
+exports.editAnnonceForm = async (req, res) => {
+    try {
+        const annonceId = req.params.id;
+        const annonce = await AnnonceModel.findById(annonceId);
+
+        if (!annonce) {
+            return res.status(404).json({ message: 'Annonce non trouvée' });
+        }
+
+        return res.render('./pages/userPages/editAnnonce', { annonce });
+    } catch (error) {
+        return res.status(500).json({ message: 'Erreur serveur', error });
+    }
+}
+
+exports.editAnnonce = async (req, res) => {
+    try {
+        const annonceId = req.params.id;
+        const { title, description, price, musicStyle } = req.body;
+
+        if (req.files.length > 3) {
+            return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
+        }
+
+        // Trouver l'annonce à modifier
+        const annonce = await AnnonceModel.findById(annonceId);
+
+        if (!annonce) {
+            return res.status(404).json({ message: 'Annonce non trouvée' });
+        }
+
+        // Vérifier si de nouvelles images ont été téléchargées
+        if (req.files && req.files.length > 0) {
+            // Supprimer les anciennes images du dossier "uploads"
+            annonce.images.forEach(img => {
+                const imagePath = path.join(__dirname, '..', 'uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
+                
+                if (fs.existsSync(imagePath)) {
+                    fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
+                }
+            });
+
+            // Créer une liste d'URLs d'images
+            const images = req.files.map(file => ({
+                name: file.originalname,
+                contentType: file.mimetype,
+                imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
+            }));
+            
+            annonce.images = images;
+        }
+
+        annonce.title = title;
+        annonce.description = description;
+        annonce.price = price;
+        annonce.musicStyle = musicStyle;
+
+        await annonce.save();
+
+        return res.redirect('/my-annonces');
+    } catch (error) {
+        return res.status(500).json({ message: 'Erreur serveur', error });
+    }
+}
+
+exports.cookieTheme = (req, res, next) => {
+    res.cookie("theme", "#F7C635", { httpOnly: true, maxAge: 1000000000 }); // 115 jours
+    res.redirect('/');
 }

@@ -1,32 +1,19 @@
 <%- include('../../partials/header') %>
 <%- include('../../partials/navbar') %>
-<h1>Bienvenue sur la page d'accueil</h1>
 
-<% if (user && user.role === "admin") { %>
+<h1>Bienvenue sur la page d'accueil</h1>
+<% if (user && user.role === "admin" && token) { %>
     <p>Connecté en tant que <strong><%= user.email %> <%= user.role %></strong></p>
     <a href="http://localhost:3000/admin-dashboard">Dashboard administrateur</a>   
-<% } else if (user) { %>  
+<% } else if (user && token) { %>  
     <p>Connecté en tant que <strong><%= user.email %></strong></p>
     <form action="/logout" method="POST">
         <button type="submit">Se déconnecter</button>
     </form>
+<% } else { %>
+    <p>Non Connecté</p>
 <% } %>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const message = "<%- (typeof message !== 'undefined') ? message.text : '' %>";
-        const messageType = "<%- (typeof message !== 'undefined') ? message.type : '' %>";
-
-        if (message) {
-            Swal.fire({
-                title: messageType === "success" ? "Succès !" : "Erreur !",
-                text: message,
-                icon: messageType,
-                confirmButtonText: "OK",
-                //timer: 3000, // Ferme automatiquement après 3s
-                showConfirmButton: true
-            });
-        }
-    });
-</script>
+<form action="/cookie-theme" method="post">
+    <button type="submit">THEME</button>
+</form>
 <%- include('../../partials/footer') %>

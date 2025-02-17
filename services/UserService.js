@@ -6,7 +6,6 @@
 //  Supprimer mon compte
 //  Modifier mon compte
 
-
 const { CommentModel, UserModel, AnnonceModel } = require('../models');
 
 const UserService = {

@@ -1,0 +1,8 @@
+nav {
+    margin-block: 20px;
+}
+
+nav > ul {
+    display: flex;
+    justify-content: space-evenly;
+}

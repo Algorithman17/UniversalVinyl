@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Définition des routes
-router.get("/", UserController.home);
+router.get("/", auth, UserController.home);
 
 router.get("/register-form", UserController.registerForm);
 
@@ -39,7 +39,7 @@ router.get('/profil', auth, UserController.profil);
 
 router.post('/logout', UserController.logout);
 
-router.get('/admin-dashboard', isAdmin, UserController.adminDashboard);
+router.get('/admin-dashboard', auth, isAdmin, UserController.adminDashboard);
 
 router.get('/my-annonces', auth, UserController.myAnnonces);
 
@@ -47,9 +47,15 @@ router.get('/add-annonce', auth, UserController.addAnnonceForm);
 
 router.post('/add-annonce', auth, upload.array('images', 9999), UserController.addAnnonce);
 
-router.get('/annonces', UserController.annonces);
+router.get('/annonces', auth, UserController.annonces);
 
 router.post('/delete-annonce/:id', auth, UserController.deleteAnnonce)
+
+router.get('/edit-annonce/:id', auth, UserController.editAnnonceForm)
+
+router.post('/edit-annonce/:id', auth, upload.array('images', 9999), UserController.editAnnonce)
+
+router.post('/cookie-theme', UserController.cookieTheme)
 
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;
