@@ -6,14 +6,16 @@
 <% } else { %>
     <ul>
         <% annonces.forEach(annonce => { %>
-            <li>
+            <li class="annonce">
+                <div class="contentImg">
+                    <% annonce.images.forEach(image => { %>
+                        <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
+                    <% }); %> 
+                </div>              
                 <h2><%= annonce.title %></h2>
-                <p><%= annonce.description %></p>
                 <p><%= annonce.price %>€</p>
                 <p><%= annonce.musicStyle %></p>
-                <% annonce.images.forEach(image => { %>
-                    <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>" width="200">
-                <% }); %>                
+                <p><%= annonce.description %></p>
             </li>
         <% }) %>
     </ul>

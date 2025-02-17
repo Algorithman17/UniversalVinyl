@@ -14,7 +14,6 @@ module.exports = upload;
 const connectDb = require('./database/connect'); // Fonction de connexion à la base de données
 require('dotenv').config(); // Chargement des variables d'environnement
 const userRouter = require('./routes/UserRouter'); // Routeur pour les utilisateurs
-const cookiesFunctions = require('./services/UserService')
 // Configuration du port (par défaut : 3005)
 const port = process.env.PORT || 3005;
 
@@ -27,7 +26,6 @@ app.use(express.static('public')); // Dossier pour les fichiers statiques
 app.use('/uploads', express.static('uploads'));
 app.set('views', './views') // défini la racine
 app.set('view engine', 'ejs') // moteur de recherche
-app.use(cookiesFunctions.theme)
 app.use(cookieParser())
 app.use(session({
     secret: 'secret_key',
@@ -38,11 +36,11 @@ app.use(session({
 
 // Middleware
 app.use((req, res, next) => {
-    res.locals.user = req.session.user;
+    res.locals.user = req.cookies.user;
     res.locals.theme = req.cookies.theme;
+    res.locals.token = req.cookies.token;
     next();
 });
-
 
 // Connexion à la base de données
 connectDb();

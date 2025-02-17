@@ -1,0 +1,15 @@
+* {
+    list-style-type: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    padding-inline: 20px;
+}
+
+a {
+    color: #1f1f1f;
+}

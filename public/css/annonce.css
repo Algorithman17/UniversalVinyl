@@ -1,0 +1,42 @@
+.annonce {
+    border: 1px solid black;
+    width: 300px;
+    gap: 20px;
+    display: grid;
+    padding-bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.contentImgs {
+    width: 298px;
+    height: 200px;
+    /* overflow: hidden; */
+    display: flex;
+    position: relative;
+}
+
+.contentImg img {
+    width: 298px;
+    height: 100%;
+    object-fit: cover;
+    /* position: relative;
+    top: -25%; */
+}
+
+.arrowImg {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    margin-inline: 10px;
+    cursor: pointer;
+}
+
+.arrowImgRight {
+    right: 0;
+}
+
+.annonce > h2, p, a, form {
+    padding-inline: 20px;
+}
