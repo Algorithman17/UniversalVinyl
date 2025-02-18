@@ -7,15 +7,20 @@
     <ul>
         <% annonces.forEach(annonce => { %>
             <li class="annonce">
-                <div class="contentImg">
+                <div class="contentImgs">
+                    <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
                     <% annonce.images.forEach(image => { %>
-                        <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
+                        <div class="contentImg">
+                            <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
+                        </div>
                     <% }); %> 
-                </div>              
+                    <img class="arrowImg arrowImgRight" src="/images/right-arrow.png">
+                </div>               
                 <h2><%= annonce.title %></h2>
                 <p><%= annonce.price %>€</p>
                 <p><%= annonce.musicStyle %></p>
                 <p><%= annonce.description %></p>
+                <a href="/show-annonce/<%= annonce._id %>">Ouvrir l'annonce</a>
             </li>
         <% }) %>
     </ul>

@@ -6,25 +6,26 @@
 <% } else { %>
     <ul>
         <% annonces.forEach(annonce => { %>
-            <li class="annonce">
-                <div class="contentImgs">
-                    <span class="arrowImg arrowImgLeft"><</span>
-                    <% annonce.images.forEach(image => { %>
-                        <div class="contentImg">
-                            <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
-                        </div>
-                    <% }); %> 
-                    <span class="arrowImg arrowImgRight">></span>
-                </div>               
-                <h2><%= annonce.title %></h2>
-                <p><%= annonce.price %>€</p>
-                <p><%= annonce.musicStyle %></p>
-                <p><%= annonce.description %></p>
-                <a href="/edit-annonce/<%= annonce._id %>">Modifier</a>
-                <form action="/delete-annonce/<%= annonce._id %>" method="post">
-                    <button>Supprimer</button>
-                </form>
-            </li>
+                <li class="annonce">
+                    <div class="contentImgs">
+                        <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
+                        <% annonce.images.forEach(image => { %>
+                            <div class="contentImg">
+                                <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
+                            </div>
+                        <% }); %> 
+                        <img class="arrowImg arrowImgRight" src="/images/right-arrow.png">
+                    </div>               
+                    <h2><%= annonce.title %></h2>
+                    <p><%= annonce.price %>€</p>
+                    <p><%= annonce.musicStyle %></p>
+                    <p><%= annonce.description %></p>
+                    <a href="/show-annonce/<%= annonce._id %>">Ouvrir l'annonce</a>
+                    <a href="/edit-annonce/<%= annonce._id %>">Modifier</a>
+                    <form action="/delete-annonce/<%= annonce._id %>" method="post">
+                        <button>Supprimer</button>
+                    </form>
+                </li>
         <% }) %>
     </ul>
 <% } %>

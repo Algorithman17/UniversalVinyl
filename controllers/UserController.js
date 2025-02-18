@@ -290,6 +290,18 @@ exports.editAnnonce = async (req, res) => {
     }
 }
 
+exports.showAnnonce = async (req, res) => {
+    try {
+        const annonceId = req.params.id
+        const annonce = await AnnonceModel.findById(annonceId)
+        
+        return res.render('./pages/userPages/showAnnonce', { annonce })
+    } catch (error) {
+        return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
+    }
+
+}
+
 exports.cookieTheme = (req, res, next) => {
     res.cookie("theme", "#F7C635", { httpOnly: true, maxAge: 1000000000 }); // 115 jours
     res.redirect('/');

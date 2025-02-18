@@ -3,24 +3,34 @@ document.querySelectorAll(".annonce").forEach(container => {
     const images = container.querySelectorAll(".contentImg img")
     const arrowLeft = container.querySelector(".arrowImgLeft")
     const arrowRight = container.querySelector(".arrowImgRight")
-    let index = 0;
 
-
-    function updateCarousel() {
-        const offset = -index * 100;
-        carousel.style.transform = `translateX(${offset}%)`;
-        arrowLeft.style.zIndex = "2"
-        arrowRight.style.zIndex = "2"
-    }
+    let indexImg = 0
 
     arrowLeft.addEventListener('click', () => {
-            index = (index - 1 + images.length) % images.length;
-            updateCarousel();
+        if(indexImg === 0) {
+            indexImg = images.length-1 
+            arrowLeft.style.transform = `translate(calc(298px * ${indexImg}), -50%)`
+            arrowRight.style.transform = `translate(calc(298px * ${indexImg}), -50%)`
+            return carousel.style.transform = `translate(-${indexImg}00%, 0)`
+        }
+
+        indexImg--
+        arrowLeft.style.transform = `translate(calc(298px * ${indexImg}), -50%)`
+        arrowRight.style.transform = `translate(calc(298px * ${indexImg}), -50%)`
+        carousel.style.transform = `translate(-${indexImg}00%, 0)`
     })
 
-
     arrowRight.addEventListener('click', () => {
-            index = (index + 1) % images.length;
-            updateCarousel();
+        if(indexImg === images.length-1) {
+            indexImg = 0
+            arrowLeft.style.transform = `translate(0px, -50%)`
+            arrowRight.style.transform = `translate(0px, -50%)`
+            return carousel.style.transform = `translate(0, 0)`
+        }
+
+        indexImg++
+        arrowLeft.style.transform = `translate(calc(298px * ${indexImg}), -50%)`
+        arrowRight.style.transform = `translate(calc(298px * ${indexImg}), -50%)`
+        carousel.style.transform = `translate(-${indexImg}00%, 0)`      
     })
 });
