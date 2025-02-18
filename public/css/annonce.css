@@ -7,30 +7,30 @@
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
+    position: relative;
 }
 
 .contentImgs {
     width: 298px;
     height: 200px;
-    /* overflow: hidden; */
     display: flex;
     position: relative;
+    transform: translateX(0%);
 }
 
 .contentImg img {
     width: 298px;
     height: 100%;
     object-fit: cover;
-    /* position: relative;
-    top: -25%; */
 }
 
 .arrowImg {
     position: absolute;
+    width: 50px;
     top: 50%;
     z-index: 1;
-    margin-inline: 10px;
     cursor: pointer;
+    transform: translateY(-50%);
 }
 
 .arrowImgRight {
@@ -39,4 +39,11 @@
 
 .annonce > h2, p, a, form {
     padding-inline: 20px;
+}
+
+.annonce > h2, p {
+    width: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

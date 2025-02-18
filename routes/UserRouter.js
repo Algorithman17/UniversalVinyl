@@ -57,5 +57,7 @@ router.post('/edit-annonce/:id', auth, upload.array('images', 9999), UserControl
 
 router.post('/cookie-theme', UserController.cookieTheme)
 
+router.get('/show-annonce/:id', UserController.showAnnonce)
+
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;
