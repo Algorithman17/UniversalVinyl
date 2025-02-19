@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/annonce.css">
     <link rel="stylesheet" href="/css/navbar.css">
-
-        <style>
+    <% if (typeof styleUrl !== 'undefined' && styleUrl) { %>
+    <link rel="stylesheet" href="/css/<%= styleUrl %>.css">
+    <% } %>
+    <style>
         body {
             <% if(theme) { %>
             background-color: <%= theme %>;
@@ -16,4 +17,4 @@
         }
     </style>
 </head>
-<body>
+

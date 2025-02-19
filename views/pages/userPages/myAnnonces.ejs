@@ -1,12 +1,13 @@
 <%- include('../../partials/header') %>
 <%- include('../../partials/navbar') %>
+<main>
 <h1>Mes annonces</h1>
 <% if (annonces.length === 0) { %>
     <p>Vous n'avez pas encore d'annonce</p>
 <% } else { %>
     <ul>
         <% annonces.forEach(annonce => { %>
-                <li class="annonce">
+                <li class="annonceCard">
                     <div class="contentImgs">
                         <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
                         <% annonce.images.forEach(image => { %>
@@ -29,6 +30,6 @@
         <% }) %>
     </ul>
 <% } %>
-
 <a href="http://localhost:3000/add-annonce">Ajouter une annonce</a>
+</main>
 <%- include('../../partials/footer') %>

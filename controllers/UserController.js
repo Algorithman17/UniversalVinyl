@@ -138,7 +138,7 @@ exports.myAnnonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/userPages/myAnnonces', { annonces: annoncesWithImages });
+    return res.render('./pages/userPages/myAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
 };
 
 exports.addAnnonceForm = (req, res) => {
@@ -193,7 +193,7 @@ exports.annonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/globalPages/showAllAnnonces', { annonces: annoncesWithImages });
+    return res.render('./pages/globalPages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
 };
 
 exports.deleteAnnonce = async (req, res) => {
@@ -230,11 +230,13 @@ exports.editAnnonceForm = async (req, res) => {
         const annonceId = req.params.id;
         const annonce = await AnnonceModel.findById(annonceId);
 
+        const url = req.url // pour gérer le CSS dans le header.ejs
+
         if (!annonce) {
             return res.status(404).json({ message: 'Annonce non trouvée' });
         }
 
-        return res.render('./pages/userPages/editAnnonce', { annonce });
+        return res.render('./pages/userPages/editAnnonce', { annonce, url});
     } catch (error) {
         return res.status(500).json({ message: 'Erreur serveur', error });
     }
@@ -295,7 +297,7 @@ exports.showAnnonce = async (req, res) => {
         const annonceId = req.params.id
         const annonce = await AnnonceModel.findById(annonceId)
         
-        return res.render('./pages/userPages/showAnnonce', { annonce })
+        return res.render('./pages/userPages/showAnnonce', { annonce, styleUrl: "showAnnonce"})
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
     }

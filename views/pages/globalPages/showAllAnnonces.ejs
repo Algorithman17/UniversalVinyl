@@ -1,28 +1,32 @@
 <%- include('../../partials/header') %>
 <%- include('../../partials/navbar') %>
+<main>
 <h1>Annonces</h1>
 <% if (annonces.length === 0) { %>
     <p>Il n'y a pas d'annonce</p>
 <% } else { %>
     <ul>
         <% annonces.forEach(annonce => { %>
-            <li class="annonce">
+            <li class="annonceCard">
                 <div class="contentImgs">
-                    <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
                     <% annonce.images.forEach(image => { %>
                         <div class="contentImg">
                             <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
                         </div>
-                    <% }); %> 
+                        <% }); %> 
+                    </div>  
+                    <div class="annonceText">             
+                        <h2><%= annonce.title %></h2>
+                        <p><%= annonce.price %>€</p>
+                        <p><%= annonce.musicStyle %></p>
+                        <p><%= annonce.description %></p>
+                        <a href="/show-annonce/<%= annonce._id %>">Ouvrir l'annonce</a>
+                    </div>
+                    <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
                     <img class="arrowImg arrowImgRight" src="/images/right-arrow.png">
-                </div>               
-                <h2><%= annonce.title %></h2>
-                <p><%= annonce.price %>€</p>
-                <p><%= annonce.musicStyle %></p>
-                <p><%= annonce.description %></p>
-                <a href="/show-annonce/<%= annonce._id %>">Ouvrir l'annonce</a>
             </li>
         <% }) %>
     </ul>
 <% } %>
+</main>
 <%- include('../../partials/footer') %>
