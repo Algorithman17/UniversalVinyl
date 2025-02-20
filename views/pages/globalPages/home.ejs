@@ -1,6 +1,6 @@
 <%- include('../../partials/header') %>
 <%- include('../../partials/navbar') %>
-
+<main>
 <h1>Bienvenue sur la page d'accueil</h1>
 <% if (user && user.role === "admin" && token) { %>
     <p>Connecté en tant que <strong><%= user.email %> <%= user.role %></strong></p>
@@ -16,4 +16,5 @@
 <form action="/cookie-theme" method="post">
     <button type="submit">THEME</button>
 </form>
+</main>
 <%- include('../../partials/footer') %>

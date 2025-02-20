@@ -1,5 +1,6 @@
 <%- include('../../partials/header') %>
 <%- include('../../partials/navbar') %>
+<main>
 <h1>Modifier une annonce</h1>
 <form action="/edit-annonce/<%= annonce.id %>" method="POST" enctype="multipart/form-data">
     <div class="form-group">
@@ -39,4 +40,5 @@
         <input type="file" class="form-control-file" id="images" name="images" multiple accept="image/*">
     </div>
     <button type="submit" class="btn btn-primary">Modifier</button>
+</main>
 <%- include('../../partials/footer') %>

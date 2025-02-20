@@ -5,11 +5,6 @@ const app = express();
 const session = require('express-session')
 const cookieParser = require("cookie-parser")
 
-const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-module.exports = upload;
-
 // Importation des utilitaires et routes
 const connectDb = require('./database/connect'); // Fonction de connexion à la base de données
 require('dotenv').config(); // Chargement des variables d'environnement

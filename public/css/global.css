@@ -7,7 +7,11 @@
 }
 
 body {
-    padding-inline: 20px;
+}
+
+main {
+    width: 100%;
+    padding: 20px;
 }
 
 a {

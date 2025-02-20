@@ -138,7 +138,7 @@ exports.myAnnonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/userPages/myAnnonces', { annonces: annoncesWithImages });
+    return res.render('./pages/userPages/myAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
 };
 
 exports.addAnnonceForm = (req, res) => {
@@ -156,14 +156,16 @@ exports.addAnnonce = async (req, res) => {
         if (req.files.length > 3) {
             return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
         }
-
+        console.log("REQ FILES ", req.files);
+        
         // Créer une liste d'URLs d'images
         const images = req.files.map(file => ({
             name: file.originalname,
             contentType: file.mimetype,
             imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
         }));
-
+        console.log("images", images);
+        
         const newAnnonce = new AnnonceModel({
             title,
             description,
@@ -193,7 +195,7 @@ exports.annonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/globalPages/showAllAnnonces', { annonces: annoncesWithImages });
+    return res.render('./pages/globalPages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
 };
 
 exports.deleteAnnonce = async (req, res) => {
@@ -230,11 +232,13 @@ exports.editAnnonceForm = async (req, res) => {
         const annonceId = req.params.id;
         const annonce = await AnnonceModel.findById(annonceId);
 
+        const url = req.url // pour gérer le CSS dans le header.ejs
+
         if (!annonce) {
             return res.status(404).json({ message: 'Annonce non trouvée' });
         }
 
-        return res.render('./pages/userPages/editAnnonce', { annonce });
+        return res.render('./pages/userPages/editAnnonce', { annonce, url});
     } catch (error) {
         return res.status(500).json({ message: 'Erreur serveur', error });
     }
@@ -295,7 +299,7 @@ exports.showAnnonce = async (req, res) => {
         const annonceId = req.params.id
         const annonce = await AnnonceModel.findById(annonceId)
         
-        return res.render('./pages/userPages/showAnnonce', { annonce })
+        return res.render('./pages/userPages/showAnnonce', { annonce, styleUrl: "showAnnonce"})
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
     }
