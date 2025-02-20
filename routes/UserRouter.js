@@ -8,20 +8,18 @@ const isAdmin = require('../middlewares/isAdmin'); // Import du middleware
 const UserController = require('../controllers/UserController');
 
 const multer = require("multer");
-const path = require('path');
-
-// Configuration de Multer pour stocker les fichiers sur le disque
+// Définir le stockage des fichiers
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../uploads')); // Emplacement des fichiers téléchargés
+    destination: function (req, file, cb) {
+      cb(null, 'public/uploads')
     },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname); // Obtenir l'extension du fichier
-        const filename = Date.now() + ext; // Générer un nom unique basé sur le timestamp
-        cb(null, filename); // Définir le nom du fichier
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix+'.webp')
+  
     }
-});
-
+  })
+// Initialize multer
 const upload = multer({ storage: storage });
 
 // Définition des routes

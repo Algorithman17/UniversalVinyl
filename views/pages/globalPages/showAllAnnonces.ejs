@@ -5,14 +5,15 @@
 <% if (annonces.length === 0) { %>
     <p>Il n'y a pas d'annonce</p>
 <% } else { %>
-    <ul>
+    <ul class="annonceCards">
         <% annonces.forEach(annonce => { %>
             <li class="annonceCard">
-                <div class="contentImgs">
-                    <% annonce.images.forEach(image => { %>
-                        <div class="contentImg">
-                            <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
-                        </div>
+                <a class="clickableContent" href="/show-annonce/<%= annonce._id %>">
+                    <div class="contentImgs">
+                        <% annonce.images.forEach(image => { %>
+                            <div class="contentImg">
+                                <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
+                            </div>
                         <% }); %> 
                     </div>  
                     <div class="annonceText">             
@@ -20,10 +21,10 @@
                         <p><%= annonce.price %>€</p>
                         <p><%= annonce.musicStyle %></p>
                         <p><%= annonce.description %></p>
-                        <a href="/show-annonce/<%= annonce._id %>">Ouvrir l'annonce</a>
                     </div>
-                    <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
-                    <img class="arrowImg arrowImgRight" src="/images/right-arrow.png">
+                </a>
+                <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
+                <img class="arrowImg arrowImgRight" src="/images/right-arrow.png">
             </li>
         <% }) %>
     </ul>

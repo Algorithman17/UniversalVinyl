@@ -156,14 +156,16 @@ exports.addAnnonce = async (req, res) => {
         if (req.files.length > 3) {
             return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
         }
-
+        console.log("REQ FILES ", req.files);
+        
         // Créer une liste d'URLs d'images
         const images = req.files.map(file => ({
             name: file.originalname,
             contentType: file.mimetype,
             imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
         }));
-
+        console.log("images", images);
+        
         const newAnnonce = new AnnonceModel({
             title,
             description,

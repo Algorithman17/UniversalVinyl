@@ -1,35 +1,40 @@
 <%- include('../../partials/header') %>
 <%- include('../../partials/navbar') %>
 <main>
-<h1>Mes annonces</h1>
-<% if (annonces.length === 0) { %>
-    <p>Vous n'avez pas encore d'annonce</p>
-<% } else { %>
-    <ul>
-        <% annonces.forEach(annonce => { %>
+    <h1>Mes annonces</h1>
+    <% if (annonces.length === 0) { %>
+        <p>Vous n'avez pas encore d'annonce</p>
+    <% } else { %>
+        <ul class="annonceCards">
+            <% annonces.forEach(annonce => { %>
                 <li class="annonceCard">
-                    <div class="contentImgs">
-                        <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
-                        <% annonce.images.forEach(image => { %>
-                            <div class="contentImg">
-                                <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
-                            </div>
-                        <% }); %> 
-                        <img class="arrowImg arrowImgRight" src="/images/right-arrow.png">
-                    </div>               
-                    <h2><%= annonce.title %></h2>
-                    <p><%= annonce.price %>€</p>
-                    <p><%= annonce.musicStyle %></p>
-                    <p><%= annonce.description %></p>
-                    <a href="/show-annonce/<%= annonce._id %>">Ouvrir l'annonce</a>
-                    <a href="/edit-annonce/<%= annonce._id %>">Modifier</a>
-                    <form action="/delete-annonce/<%= annonce._id %>" method="post">
-                        <button>Supprimer</button>
-                    </form>
+                    <a class="clickableContent" href="/show-annonce/<%= annonce._id %>">
+                        <div class="contentImgs">
+                            <% annonce.images.forEach(image => { %>
+                                <div class="contentImg">
+                                    <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
+                                </div>
+                            <% }); %> 
+                        </div>  
+                        <div class="annonceText">             
+                            <h2><%= annonce.title %></h2>
+                            <p><%= annonce.price %>€</p>
+                            <p><%= annonce.musicStyle %></p>
+                            <p><%= annonce.description %></p>
+                        </div>
+                    </a>
+                    <div class="editAndDeleteButton">
+                        <a class="editButton" href="/edit-annonce/<%= annonce._id %>">Modifier</a>
+                        <form action="/delete-annonce/<%= annonce._id %>" method="post">
+                            <button class="deleteButton">Supprimer</button>
+                        </form>
+                    </div>
+                    <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
+                    <img class="arrowImg arrowImgRight" src="/images/right-arrow.png">
                 </li>
-        <% }) %>
-    </ul>
-<% } %>
-<a href="http://localhost:3000/add-annonce">Ajouter une annonce</a>
+            <% }) %>
+        </ul>
+    <% } %>
+    <a class="addAnnonceButton" href="http://localhost:3000/add-annonce">Ajouter une annonce</a>
 </main>
 <%- include('../../partials/footer') %>

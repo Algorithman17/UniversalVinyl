@@ -1,7 +1,13 @@
+.annonceCards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 .annonceCard {
     border: 1px solid black;
-    max-width: 350px;
-    padding-bottom: 20px;
+    max-width: 300px;
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
@@ -16,6 +22,7 @@
     flex-direction: column;
     position: relative;
     transform: translateX(0%);
+    border-bottom: 1px solid black;
 }
 
 .contentImg {
@@ -32,10 +39,7 @@
 .annonceText {
     display: grid;
     gap: 20px;
-}
-
-.annonceCard h2, .annonceCard p, .annonceCard a, .annonceCard form {
-    padding-inline: 20px;
+    padding: 20px;
 }
 
 .annonceCard h2, .annonceCard p {
@@ -43,6 +47,33 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.editAndDeleteButton {
+    display: flex;
+    justify-content: space-evenly;  
+    padding-block: 20px;
+    border-top: 1px solid black;
+}
+
+.editButton, .deleteButton {
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: rgb(255, 174, 0);
+    border: 0;
+}
+
+.deleteButton {
+    height: 100%;
+}
+
+.addAnnonceButton {
+    display: block;
+    padding: 10px 20px;
+    border: 1px solid black;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .arrowImg {
@@ -56,4 +87,24 @@
 
 .arrowImgRight {
     right: 0;
+}
+
+@media screen and (min-width: 520px) and (max-width: 676px) {
+    .annonceCard {
+        width: 100%;
+        max-width: none;
+    }
+
+    .clickableContent {
+        display: flex;
+    }
+
+    .contentImgs {
+        width: 200px;
+        overflow: hidden;
+    }
+
+    .arrowImg {
+        display: none;
+    }
 }
