@@ -1,6 +1,29 @@
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: bisque;
+    padding-block: 20px;
+}
 
 nav > ul {
     display: flex;
     justify-content: space-evenly;
-    flex-direction: column;
+    /* flex-direction: column; */
+}
+
+nav > ul form {
+}
+
+nav > ul > li > a, nav form button {
+    display: block;
+    height: 100%;
+    padding: 10px 20px;
+    border: 1px solid black;
+}
+
+
+nav form > button {
+    /* padding: 10px 20px; */
+    background-color:transparent;
+    cursor: pointer;
 }

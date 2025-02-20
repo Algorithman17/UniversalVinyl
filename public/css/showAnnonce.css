@@ -27,6 +27,12 @@ img {
     margin-top: 20px;
 }
 
+@media screen and (min-width: 1200px) {
+    .annonce {
+        max-width: 1200px;
+    }
+}
+
 /* 
 0px - 480px
 481px - 768px
