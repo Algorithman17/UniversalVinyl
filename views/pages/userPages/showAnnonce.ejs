@@ -6,20 +6,45 @@
     <p>Il n'y a pas d'annonce</p>
 <% } else { %>
     <div class="annonce">
-        <div class="contentImgs">
-            <% annonce.images.forEach(image => { %>
-                <div class="contentImg">
-                    <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
-                </div>
-            <% }); %> 
+        <div class="carousel">
+            <div class="contentImgs">
+                <% annonce.images.forEach(image => { %>
+                        <div class="contentImg">
+                            <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
+                        </div>
+                <% }); %> 
+            </div>
         </div>
-        <div class="annonceText">               
-            <h2><%= annonce.title %></h2>
-            <p><%= annonce.price %>€</p>
-            <p><%= annonce.musicStyle %></p>
-            <p><%= annonce.description %></p>
-        </div>
+            <div class="annonceText">               
+                <h2><%= annonce.title %></h2>
+                <p><%= annonce.price %>€</p>
+                <p><%= annonce.musicStyle %></p>
+                <p><%= annonce.description %></p>
+            </div>
+            <div class="prev">
+                <span class="border0">
+                    <span class="border1">
+                        <span class="line">
+                            <span class="line1"></span>
+                            <span class="line2"></span>
+                            <span class="line3"></span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+            <div class="next">
+                <span class="border0">
+                    <span class="border1">
+                        <span class="line">
+                            <span class="line1"></span>
+                            <span class="line2"></span>
+                            <span class="line3"></span>
+                        </span>
+                    </span>
+                </span>
+            </div>
     </div>
 <% } %>
 </main>
+<script src="/js/annonceCarousel.js"></script>
 <%- include('../../partials/footer') %>

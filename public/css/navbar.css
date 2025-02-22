@@ -27,3 +27,9 @@ nav form > button {
     background-color:transparent;
     cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+    nav {
+        display: none;
+    }
+}

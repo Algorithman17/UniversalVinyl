@@ -10,11 +10,9 @@
                 <li class="annonceCard">
                     <a class="clickableContent" href="/show-annonce/<%= annonce._id %>">
                         <div class="contentImgs">
-                            <% annonce.images.forEach(image => { %>
-                                <div class="contentImg">
-                                    <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
-                                </div>
-                            <% }); %> 
+                            <div class="contentImg">
+                                <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="<%= annonce.images[0].name %>">
+                            </div>
                         </div>  
                         <div class="annonceText">             
                             <h2><%= annonce.title %></h2>
