@@ -50,25 +50,6 @@
     text-overflow: ellipsis;
 }
 
-.editAndDeleteButton {
-    display: flex;
-    justify-content: space-evenly;  
-    padding-block: 20px;
-    border-top: 1px solid black;
-}
-
-.editButton, .deleteButton {
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: rgb(255, 174, 0);
-    border: 0;
-}
-
-.deleteButton {
-    height: 100%;
-}
-
 .addAnnonceButton {
     display: block;
     padding: 10px 20px;
@@ -76,19 +57,6 @@
     margin-top: 20px;
     text-align: center;
     background-color: rgb(255, 174, 0);
-}
-
-.arrowImg {
-    position: absolute;
-    width: 50px;
-    top: 100px;
-    z-index: 1;
-    cursor: pointer;
-    transform: translateY(-50%);
-}
-
-.arrowImgRight {
-    right: 0;
 }
 
 @media screen and (min-width: 520px) and (max-width: 676px) {
@@ -106,9 +74,5 @@
         overflow: hidden;
         border-right: 1px solid black;
         border-bottom: none;
-    }
-
-    .arrowImg {
-        display: none;
     }
 }

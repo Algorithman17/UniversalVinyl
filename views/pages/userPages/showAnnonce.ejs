@@ -14,37 +14,48 @@
                         </div>
                 <% }); %> 
             </div>
+            <div class="paging">
+                <span class="currentPage">1</span> / <span class="lastPage">3</span>
+            </div>
         </div>
-            <div class="annonceText">               
-                <h2><%= annonce.title %></h2>
-                <p><%= annonce.price %>€</p>
-                <p><%= annonce.musicStyle %></p>
-                <p><%= annonce.description %></p>
-            </div>
-            <div class="prev">
-                <span class="border0">
-                    <span class="border1">
-                        <span class="line">
-                            <span class="line1"></span>
-                            <span class="line2"></span>
-                            <span class="line3"></span>
-                        </span>
+        <div class="annonceText">               
+            <h2><%= annonce.title %></h2>
+            <p><%= annonce.price %>€</p>
+            <p><%= annonce.musicStyle %></p>
+            <p><%= annonce.description %></p>
+        </div>
+        <div class="prev">
+            <span class="border0">
+                <span class="border1">
+                    <span class="line">
+                        <span class="line1"></span>
+                        <span class="line2"></span>
+                        <span class="line3"></span>
                     </span>
                 </span>
-            </div>
-            <div class="next">
-                <span class="border0">
-                    <span class="border1">
-                        <span class="line">
-                            <span class="line1"></span>
-                            <span class="line2"></span>
-                            <span class="line3"></span>
-                        </span>
+            </span>
+        </div>
+        <div class="next">
+            <span class="border0">
+                <span class="border1">
+                    <span class="line">
+                        <span class="line1"></span>
+                        <span class="line2"></span>
+                        <span class="line3"></span>
                     </span>
                 </span>
+            </span>
+        </div>
+        <% if (myAnnonce) { %>
+            <div class="editAndDeleteButton">
+                <a class="editButton" href="/edit-annonce/<%= annonce._id %>">Modifier</a>
+                <form action="/delete-annonce/<%= annonce._id %>" method="post">
+                    <button class="deleteButton">Supprimer</button>
+                </form>
             </div>
+        <% } %>
     </div>
-<% } %>
+    <% } %>
 </main>
 <script src="/js/annonceCarousel.js"></script>
 <%- include('../../partials/footer') %>

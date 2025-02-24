@@ -21,14 +21,6 @@
                             <p><%= annonce.description %></p>
                         </div>
                     </a>
-                    <div class="editAndDeleteButton">
-                        <a class="editButton" href="/edit-annonce/<%= annonce._id %>">Modifier</a>
-                        <form action="/delete-annonce/<%= annonce._id %>" method="post">
-                            <button class="deleteButton">Supprimer</button>
-                        </form>
-                    </div>
-                    <img class="arrowImg arrowImgLeft" src="/images/left-arrow.png">
-                    <img class="arrowImg arrowImgRight" src="/images/right-arrow.png">
                 </li>
             <% }) %>
         </ul>
