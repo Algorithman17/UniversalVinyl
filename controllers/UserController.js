@@ -10,20 +10,35 @@ const AnnonceModel = require('../models/AnnonceModel');
 exports.register = async (req, res) => {
     try {
         const { 
-            email, password, username, 
-            first, last, avatar,  
-            bio, adress 
+            email, password, confirmPassword, username, 
+            first, last, birthday, number, street, zip, city, country
         } = req.body;
 
-        let userExist = await UserModel.findOne({ email });
+        const address = {number, street, zip, city, country}
         
+        if(password !== confirmPassword) {
+            req.session.message = { type: 'error', text: "La confirmation du mot de passe a échoué !" };
+            return res.redirect('/register-form'); // Rediriger vers le formulaire d'inscription
+        }
+
+        const birthdayParse = Date.parse(birthday)
+        const currentDate = Date.now();
+        const age = Math.floor((currentDate - birthdayParse) / (1000 * 60 * 60 * 24 * 365.25));
+
+        if (age < 18) {
+            req.session.message = { type: 'error', text: "Vous n'avez pas l'âge requis" };
+            return res.redirect('/register-form'); // Rediriger vers le formulaire d'inscription
+        }
+
+        let userExist = await UserModel.findOne({ email });
+
         if (userExist) {
             req.session.message = { type: 'error', text: "Cet email existe déjà !" };
             return res.redirect('/register-form'); // Rediriger vers le formulaire d'inscription
         }
         
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new UserModel({ email, password: hashedPassword, first, last, avatar, bio, adress });
+        const user = new UserModel({ email, password: hashedPassword, username, first, last, birthday, address });
         await user.save();
         
         // Stocker le message de succès
@@ -31,7 +46,6 @@ exports.register = async (req, res) => {
 
         res.locals.message = req.session.message
         return res.redirect('/login-form'); // Redirection vers la page de connexion
-        // res.locals.message = undefined
         
     } catch (err) {
         req.session.message = { type: 'error', text: "Une erreur est survenue !" };
@@ -73,13 +87,12 @@ exports.login = async (req, res) => {
 };
 
 // Fonction pour afficher le profil de l'utilisateur
-exports.profil = async (req, res) => {
-    try {
-        return res.render('./pages/userPages/profil');
+exports.profil = (req, res) => {
+    const birthday = Date.parse(res.locals.user.birthday)
+    const currentDate = Date.now();
+    const age = Math.floor((currentDate - birthday) / (1000 * 60 * 60 * 24 * 365.25));
 
-    } catch (err) {
-        return res.status(500).json({ message: err.message });
-    }
+    return res.render('./pages/userPages/profil', { age });
 };
 
 // Fonction pour afficher le formulaire d'enregistrement
@@ -211,7 +224,7 @@ exports.deleteAnnonce = async (req, res) => {
 
         // Supprimer les images du dossier "uploads"
         annonce.images.forEach(img => {
-            const imagePath = path.join(__dirname, '..', 'uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
+            const imagePath = path.join(__dirname, '..', 'public/uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
             
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
@@ -232,13 +245,11 @@ exports.editAnnonceForm = async (req, res) => {
         const annonceId = req.params.id;
         const annonce = await AnnonceModel.findById(annonceId);
 
-        const url = req.url // pour gérer le CSS dans le header.ejs
-
         if (!annonce) {
             return res.status(404).json({ message: 'Annonce non trouvée' });
         }
 
-        return res.render('./pages/userPages/editAnnonce', { annonce, url});
+        return res.render('./pages/userPages/editAnnonce', { annonce });
     } catch (error) {
         return res.status(500).json({ message: 'Erreur serveur', error });
     }
@@ -264,7 +275,7 @@ exports.editAnnonce = async (req, res) => {
         if (req.files && req.files.length > 0) {
             // Supprimer les anciennes images du dossier "uploads"
             annonce.images.forEach(img => {
-                const imagePath = path.join(__dirname, '..', 'uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
+                const imagePath = path.join(__dirname, '..', 'public/uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
                 
                 if (fs.existsSync(imagePath)) {
                     fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
@@ -299,14 +310,28 @@ exports.showAnnonce = async (req, res) => {
         const annonceId = req.params.id
         const annonce = await AnnonceModel.findById(annonceId)
         
-        return res.render('./pages/userPages/showAnnonce', { annonce, styleUrl: "showAnnonce"})
+        const token = req.cookies.token
+
+        let user = {}
+        if(token) {
+            user = jwt.verify(token, process.env.JWT_SECRET).user;
+        }
+        
+        let myAnnonce;
+        if (token === undefined) {
+            myAnnonce = false
+        } else if (annonce.userId === user._id) {
+            myAnnonce = true  
+        }
+        
+        return res.render('./pages/userPages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce"})
     } catch (error) {
-        return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
+        return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
     }
 
 }
 
 exports.cookieTheme = (req, res, next) => {
-    res.cookie("theme", "#F7C635", { httpOnly: true, maxAge: 1000000000 }); // 115 jours
+    res.cookie("theme", "#6efaf3", { httpOnly: true, maxAge: 1000000000 }); // 115 jours
     res.redirect('/');
 }
