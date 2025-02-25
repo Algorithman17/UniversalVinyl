@@ -1,19 +1,19 @@
-<%- include('../../partials/header') %>
-<%- include('../../partials/navbar') %>
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
 <main>
-<h1>Ajouter une annonce</h1>
-<form action="/add-annonce" method="POST" enctype="multipart/form-data">
+<h1>Modifier une annonce</h1>
+<form action="/edit-annonce/<%= annonce.id %>" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="title">Titre</label>
-        <input type="text" id="title" name="title" required>
+        <input type="text" class="form-control" id="title" name="title" value="<%= annonce.title %>">
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <textarea id="description" name="description" required></textarea>
+        <textarea class="form-control" id="description" name="description" rows="3"><%= annonce.description %></textarea>
     </div>
     <div class="form-group">
         <label for="price">Prix</label>
-        <input type="number" id="price" name="price" required>
+        <input type="number" class="form-control" id="price" name="price" value="<%= annonce.price %>">
     </div>
     <div class="form-group">
         <label for="musicStyle">Style de musique</label>
@@ -31,10 +31,14 @@
         </select>
     </div>
     <div class="form-group">
+        <div>
+            <% annonce.images.forEach(image => { %>
+                <img src="../../../uploads/<%= image.imageUrl %>" alt="image" style="width: 100px">
+            <% }) %>
+        </div>
         <label for="images">Images (max 3)</label>
-        <input type="file" id="images" name="images" multiple required accept="image/*">
+        <input type="file" class="form-control-file" id="images" name="images" multiple accept="image/*">
     </div>
-    <button type="submit">Ajouter</button>
-</form>
+    <button type="submit" class="btn btn-primary">Modifier</button>
 </main>
-<%- include('../../partials/footer') %>
+<%- include('../partials/footer') %>

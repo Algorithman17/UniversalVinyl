@@ -13,7 +13,7 @@ exports.register = async (req, res) => {
             email, password, confirmPassword, username, 
             first, last, birthday, number, street, zip, city, country
         } = req.body;
-
+        
         const address = {number, street, zip, city, country}
         
         if(password !== confirmPassword) {
@@ -92,7 +92,14 @@ exports.profil = (req, res) => {
     const currentDate = Date.now();
     const age = Math.floor((currentDate - birthday) / (1000 * 60 * 60 * 24 * 365.25));
 
-    return res.render('./pages/userPages/profil', { age });
+    let userRole = ""
+    if (res.locals.user.role === "admin") {
+        userRole = "ADMINISTRATEUR"
+    } else {
+        userRole = "UTILISATEUR"
+    }
+
+    return res.render('./pages/profil', { age, userRole });
 };
 
 // Fonction pour afficher le formulaire d'enregistrement
@@ -103,7 +110,7 @@ exports.registerForm = (req, res) => {
     } else {
         res.locals.message = undefined
     }
-    return res.render('./pages/globalPages/register');
+    return res.render('./pages/register');
 };
 
 // Fonction pour afficher le formulaire de connexion
@@ -114,23 +121,19 @@ exports.loginForm = (req, res) => {
     } else {
         res.locals.message = undefined
     }
-    return res.render('./pages/globalPages/login');
+    return res.render('./pages/login');
     
 };
 
 // Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
-    return res.render('./pages/globalPages/home');
+    return res.render('./pages/home');
 };
 
 exports.logout = (req, res) => {
     // Supprimer le token des cookies
     res.clearCookie('token');
     return res.redirect('/');
-};
-
-exports.adminDashboard = (req, res) => {
-    return res.render('./pages/adminPages/adminDashboard');
 };
 
 exports.myAnnonces = async (req, res) => {
@@ -151,11 +154,11 @@ exports.myAnnonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/userPages/myAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
+    return res.render('./pages/myAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
 };
 
 exports.addAnnonceForm = (req, res) => {
-    return res.render('./pages/userPages/addAnnonce');
+    return res.render('./pages/addAnnonce');
 };
 
 exports.addAnnonce = async (req, res) => {
@@ -208,7 +211,7 @@ exports.annonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/globalPages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
+    return res.render('./pages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
 };
 
 exports.deleteAnnonce = async (req, res) => {
@@ -249,7 +252,7 @@ exports.editAnnonceForm = async (req, res) => {
             return res.status(404).json({ message: 'Annonce non trouvée' });
         }
 
-        return res.render('./pages/userPages/editAnnonce', { annonce });
+        return res.render('./pages/editAnnonce', { annonce });
     } catch (error) {
         return res.status(500).json({ message: 'Erreur serveur', error });
     }
@@ -324,7 +327,7 @@ exports.showAnnonce = async (req, res) => {
             myAnnonce = true  
         }
         
-        return res.render('./pages/userPages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce"})
+        return res.render('./pages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce"})
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
     }
