@@ -99,7 +99,7 @@ exports.profil = (req, res) => {
         userRole = "UTILISATEUR"
     }
 
-    return res.render('./pages/profil', { age, userRole });
+    return res.render('./pages/profil', { age, userRole, styleUrl: "profil" });
 };
 
 // Fonction pour afficher le formulaire d'enregistrement
@@ -331,7 +331,27 @@ exports.showAnnonce = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
     }
+}
 
+exports.updateProfilForm = (req, res) => {
+    try {
+    let keyInfo = req.params.info
+    const valueInfo = res.locals.user[keyInfo]
+    console.log(keyInfo);
+
+    switch(keyInfo) {
+        case "username": keyInfo = "Nom d'utilisateur" 
+        break;
+        case "last": keyInfo = "Nom de famille"
+        break;
+        case "first": keyInfo = "Prénom"
+        break;
+    }
+
+    return res.render('./pages/updateProfil', { keyInfo, valueInfo })
+    } catch {
+        return res.status(500).json({ message: 'Erreur lors de l\'affichage du formulaire', error });
+    }
 }
 
 exports.cookieTheme = (req, res, next) => {

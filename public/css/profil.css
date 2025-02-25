@@ -1,0 +1,10 @@
+.allInfosContent {
+    display: grid;
+    gap: 30px;
+}
+
+.infosContent {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+}

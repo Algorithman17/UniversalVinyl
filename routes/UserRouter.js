@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth'); // Import du middleware
-// const isAdmin = require('../middlewares/isAdmin'); // Import du middleware
+const isAdmin = require('../middlewares/isAdmin'); // Import du middleware
 
 // Importation du contrôleur des users
 const UserController = require('../controllers/UserController');
@@ -33,7 +33,7 @@ router.get("/login-form", UserController.loginForm)
 
 router.post("/login", UserController.login)
 
-router.get('/profil', auth, UserController.profil);
+router.get('/profil', auth, isAdmin, UserController.profil);
 
 router.post('/logout', UserController.logout);
 
@@ -54,6 +54,8 @@ router.post('/edit-annonce/:id', auth, upload.array('images', 9999), UserControl
 router.post('/cookie-theme', UserController.cookieTheme)
 
 router.get('/show-annonce/:id', auth, UserController.showAnnonce)
+
+router.get('/updateProfilForm/:info', auth, UserController.updateProfilForm)
 
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;

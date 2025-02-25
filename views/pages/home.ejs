@@ -4,7 +4,7 @@
 <h1>Bienvenue sur la page d'accueil</h1>
 <% if (user && user.role === "admin") { %>
     <p>Connecté en tant que <strong><%= user.email %> <%= user.role %></strong></p>
-    <a href="http://localhost:3000/profil">Profil administrateur</a>   
+    <a href="http://localhost:3000/adminDashboard">Dashboard</a>   
 <% } else if (user) { %>  
     <p>Connecté en tant que <strong><%= user.email %></strong></p>
     <form action="/logout" method="POST">

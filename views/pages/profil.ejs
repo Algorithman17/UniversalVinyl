@@ -1,6 +1,74 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 <main>
-    <%- include('../partials/profilRole') %>
+    <h1>MON PROFIL <%= userRole %></h1>
+    <div class="allInfosContent">
+        <div class="avatarContent"></div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>Nom d'utilisateur</span>
+                <span><%= user.username %></span>
+            </div>
+            <a href="/updateProfilForm/username">Modifier</a>
+        </div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>Rôle</span>
+                <span><%= userRole %></span>
+            </div>
+        </div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>Nom de famille</span>
+                <span><%= user.last %></span>
+            </div>
+            <a href="/updateProfilForm/last">Modifier</a>
+        </div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>Prénom</span>
+                <span><%= user.first %></span>
+            </div>
+            <a href="/updateProfilForm/first">Modifier</a>
+        </div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>Age</span>
+                <span><%= age %></span>
+            </div>
+        </div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>Adresse</span>
+                <span>
+                    <%= user.address.number %>
+                    <%= user.address.street %>
+                    <%= user.address.zip %>
+                    <%= user.address.city %>
+                    <%= user.address.country %>
+                </span>
+            </div>
+            <a href="/updateProfilForm/address">Modifier</a>
+        </div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>Bio</span>
+                <span><%= user.bio %></span>
+            </div>
+            <a href="/updateProfilForm/bio">Modifier</a>
+        </div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>E-mail</span>
+                <span><%= user.email %></span>
+            </div>
+        </div>
+        <div class="infosContent">
+            <div class="infos">
+                <span>Mot de passe</span>
+                <span>*********</span>
+            </div>
+        </div>
+    </div>
 </main>
 <%- include('../partials/footer') %>
