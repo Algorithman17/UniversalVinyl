@@ -1,11 +1,11 @@
-<%- include('../../partials/header') %>
-<%- include('../../partials/navbar') %>
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
 <main>
 <h1>Bienvenue sur la page d'accueil</h1>
-<% if (user && user.role === "admin" && token) { %>
+<% if (user && user.role === "admin") { %>
     <p>Connecté en tant que <strong><%= user.email %> <%= user.role %></strong></p>
-    <a href="http://localhost:3000/admin-dashboard">Dashboard administrateur</a>   
-<% } else if (user && token) { %>  
+    <a href="http://localhost:3000/adminDashboard">Dashboard</a>   
+<% } else if (user) { %>  
     <p>Connecté en tant que <strong><%= user.email %></strong></p>
     <form action="/logout" method="POST">
         <button type="submit">Se déconnecter</button>
@@ -17,4 +17,4 @@
     <button type="submit">THEME</button>
 </form>
 </main>
-<%- include('../../partials/footer') %>
+<%- include('../partials/footer') %>

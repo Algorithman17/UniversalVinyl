@@ -10,7 +10,6 @@ module.exports = (req, res, next) => {
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         
-        res.locals.user = decodedToken.user; // Stocker les informations de l'utilisateur dans res.locals
         
         // Vérifier si le token est sur le point d'expirer (ex: < 10 min restantes)
         const now = Math.floor(Date.now() / 1000); // Temps actuel en secondes
@@ -25,8 +24,7 @@ module.exports = (req, res, next) => {
             );
             req.cookies.token = newToken; // Stocker le nouveau token en cookie
         }
-
-        req.user = decodedToken;
+        
         next();
     } catch (error) {
         next()

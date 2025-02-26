@@ -1,9 +1,9 @@
-<%- include('../../partials/header') %>
-<%- include('../../partials/navbar') %>
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
 <main>
-    <h1>Annonces</h1>
+    <h1>Mes annonces</h1>
     <% if (annonces.length === 0) { %>
-        <p>Il n'y a pas d'annonce</p>
+        <p>Vous n'avez pas encore d'annonce</p>
     <% } else { %>
         <ul class="annonceCards">
             <% annonces.forEach(annonce => { %>
@@ -25,5 +25,6 @@
             <% }) %>
         </ul>
     <% } %>
+    <a class="addAnnonceButton" href="/add-annonce">Ajouter une annonce</a>
 </main>
-<%- include('../../partials/footer') %>
+<%- include('../partials/footer') %>

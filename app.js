@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const session = require('express-session')
 const cookieParser = require("cookie-parser")
-
+const jwt = require('jsonwebtoken');
 // Importation des utilitaires et routes
 const connectDb = require('./database/connect'); // Fonction de connexion à la base de données
 require('dotenv').config(); // Chargement des variables d'environnement
@@ -31,9 +31,29 @@ app.use(session({
 
 // Middleware
 app.use((req, res, next) => {
-    res.locals.user = req.cookies.user;
+    if(req.cookies.token) {
+        const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_SECRET)
+        const user = decodedToken.user
+        res.locals.user = {
+            id: user._id, 
+            email: user.email, 
+            role: user.role, 
+            username: user.username, 
+            first: user.first, 
+            last: user.last, 
+            birthday: user.birthday, 
+            address: {
+                number: user.address.number, 
+                street: user.address.street, 
+                zip: user.address.zip, 
+                city: user.address.city, 
+                country: user.address.country
+            }};
+    } else {
+        res.locals.user = undefined
+    }
+    
     res.locals.theme = req.cookies.theme;
-    res.locals.token = req.cookies.token;
     next();
 });
 
