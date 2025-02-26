@@ -10,7 +10,8 @@ module.exports = async (req, res, next) => {
         const user = await UserModel.findById(userId); // req.userId doit être défini via l'authentification
         
         if (!user || user.role !== 'admin') {
-            return res.status(403).redirect('/login');
+            res.clearCookie('token');
+            return res.status(403).redirect('/');
         }
     }
     next();

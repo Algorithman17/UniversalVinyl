@@ -38,7 +38,9 @@ app.use((req, res, next) => {
             id: user._id, 
             email: user.email, 
             role: user.role, 
-            username: user.username, 
+            username: user.username,
+            avatarUrl: user.avatarUrl,
+            bio: user.bio,
             first: user.first, 
             last: user.last, 
             birthday: user.birthday, 
@@ -52,7 +54,6 @@ app.use((req, res, next) => {
     } else {
         res.locals.user = undefined
     }
-    
     res.locals.theme = req.cookies.theme;
     next();
 });

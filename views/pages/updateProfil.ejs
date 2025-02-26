@@ -1,6 +1,33 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 <h1>update profil</h1>
-<%= keyInfo %>
-<%= valueInfo %>
+<form action="/updateProfil" method="post">
+    <% if(keyInfo === "address") { %>
+        <label for="address">Adresse</label>
+        <div>
+            <label for="number">Numéro</label>
+            <input type="number" name="number" class="form-control" id="number" value="<%= user.address.number %>" min="1">
+        </div>
+        <div>
+            <label for="street">Nom de la rue</label>
+            <input type="text" name="street" class="form-control" id="street" value="<%= user.address.street %>">
+        </div>
+        <div>
+            <label for="zip">Code Postal</label>
+            <input type="text" name="zip" class="form-control" id="zip" value="<%= user.address.zip %>">
+        </div>
+        <div>
+            <label for="city">Ville</label>
+            <input type="text" name="city" class="form-control" id="city" value="<%= user.address.city %>">
+        </div>
+        <div>
+            <label for="country">Pays</label>
+            <input type="text" name="country" class="form-control" id="country" value="<%= user.address.country %>">
+        </div>
+    <% } else { %>
+        <label for="<%= keyInfo %>"><%= keyInfoTranslate %></label>
+        <input type="text" name="<%= keyInfo %>" value="<%= valueInfo %>">
+    <% } %>
+    <button type="submit" class="btn btn-primary" id="btnRegister">ENVOYER</button>
+</form>
 <%- include('../partials/footer') %>

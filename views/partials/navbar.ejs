@@ -5,6 +5,9 @@
         <li><a href="/pimp-vinyl">PIMP VINYL</a></li>
         <% if (user) { %>
             <li><a href="/profil">PROFIL</a></li>
+            <% if (user.role === "admin") { %>
+                <li><a href="/adminDashboard">TABLEAU DE BORD ADMIN</a></li>
+            <% } %>
             <li><a href="/my-annonces">MES ANNONCES</a></li>
             <form action="/logout" method="POST">
                 <button type="submit">Se déconnecter</button>

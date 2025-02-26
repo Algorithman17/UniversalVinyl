@@ -6,10 +6,11 @@ module.exports = (req, res, next) => {
         
         const token = req.cookies.token; // Récupérer le token stocké en cookie
         
-        if (!token) throw new Error("Pas de token");
+        if (!token) {
+            return res.status(403).redirect('/')
+        }
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        
         
         // Vérifier si le token est sur le point d'expirer (ex: < 10 min restantes)
         const now = Math.floor(Date.now() / 1000); // Temps actuel en secondes

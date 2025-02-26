@@ -33,9 +33,9 @@ router.get("/login-form", UserController.loginForm)
 
 router.post("/login", UserController.login)
 
-router.get('/profil', auth, isAdmin, UserController.profil);
+router.get('/profil', auth, UserController.profil);
 
-router.post('/logout', UserController.logout);
+router.post('/logout', auth, UserController.logout);
 
 router.get('/my-annonces', auth, UserController.myAnnonces);
 
@@ -53,9 +53,15 @@ router.post('/edit-annonce/:id', auth, upload.array('images', 9999), UserControl
 
 router.post('/cookie-theme', UserController.cookieTheme)
 
-router.get('/show-annonce/:id', auth, UserController.showAnnonce)
+router.get('/show-annonce/:id', UserController.showAnnonce)
 
 router.get('/updateProfilForm/:info', auth, UserController.updateProfilForm)
+
+router.post('/updateProfil', auth, UserController.updateProfil)
+
+router.get('/adminDashboard', auth, isAdmin, UserController.adminDashboard)
+
+router.post('/searchAndTreatUser', auth, isAdmin, UserController.searchAndTreatUser)
 
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;

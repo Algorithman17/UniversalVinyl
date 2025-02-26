@@ -5,14 +5,17 @@ const path = require('path');
 
 const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
+const { log } = require('console');
 
 // Fonction pour recevoir les données du formulaire d'enregistrement
 exports.register = async (req, res) => {
     try {
         const { 
             email, password, confirmPassword, username, 
-            first, last, birthday, number, street, zip, city, country
+            first, last, birthday, number, street, zip, 
+            city, country
         } = req.body;
+        console.log(req.body);
         
         const address = {number, street, zip, city, country}
         
@@ -30,15 +33,28 @@ exports.register = async (req, res) => {
             return res.redirect('/register-form'); // Rediriger vers le formulaire d'inscription
         }
 
-        let userExist = await UserModel.findOne({ email });
+        let userExist = await UserModel.find({ $or: [{ email }, { username }] });
 
-        if (userExist) {
-            req.session.message = { type: 'error', text: "Cet email existe déjà !" };
+        if (userExist.length === 1) {
+            userExist.forEach(user => {
+                if (user.email === email) {
+                    req.session.message = { type: 'error', text: "Cet email existe déjà !" };
+                }
+                if (user.username === username) {
+                    req.session.message = { type: 'error', text: "Ce nom d'utilisateur existe déjà !" };
+                }
+            });
+
             return res.redirect('/register-form'); // Rediriger vers le formulaire d'inscription
         }
         
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new UserModel({ email, password: hashedPassword, username, first, last, birthday, address });
+
+        const user = new UserModel({ 
+            email, password: hashedPassword, 
+            username, first, last, birthday, 
+            address, bio: "", avatarUrl: "" 
+        });
         await user.save();
         
         // Stocker le message de succès
@@ -337,20 +353,58 @@ exports.updateProfilForm = (req, res) => {
     try {
     let keyInfo = req.params.info
     const valueInfo = res.locals.user[keyInfo]
-    console.log(keyInfo);
+    console.log(res.locals.user);
+
+    let keyInfoTranslate;
 
     switch(keyInfo) {
-        case "username": keyInfo = "Nom d'utilisateur" 
+        case "username": keyInfoTranslate = "Nom d'utilisateur" 
         break;
-        case "last": keyInfo = "Nom de famille"
+        case "last": keyInfoTranslate = "Nom de famille"
         break;
-        case "first": keyInfo = "Prénom"
+        case "first": keyInfoTranslate = "Prénom"
         break;
+        case "address": keyInfoTranslate = "Adresse"
+        break;
+        case "bio": keyInfoTranslate = "Bio"
     }
 
-    return res.render('./pages/updateProfil', { keyInfo, valueInfo })
-    } catch {
+    return res.render('./pages/updateProfil', { keyInfoTranslate, keyInfo, valueInfo })
+    } catch (error){
         return res.status(500).json({ message: 'Erreur lors de l\'affichage du formulaire', error });
+    }
+}
+
+exports.updateProfil = async (req, res) => {
+    try {
+        const userId = res.locals.user.id
+        
+        const user = await UserModel.findById(userId)
+        if(!user) {
+            res.clearCookie('token')
+            return res.status(403).redirect('/');
+        }
+        
+        return res.redirect('/profil')
+    } catch {
+        return res.status(500).json({ message: 'Erreur lors de l\'envoi du formulaire', error });
+    }
+}
+
+exports.adminDashboard = (req, res) => {
+    try {
+        return res.render('./pages/adminDashboard')
+    } catch (error) {
+        return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
+    }
+}
+
+exports.searchAndTreatUser = async (req, res) => {
+    try {
+        return res.redirect('/adminDashboard')
+
+    } catch (error) {
+        return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
     }
 }
 
