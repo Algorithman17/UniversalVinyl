@@ -89,12 +89,12 @@ exports.login = async (req, res) => {
         const token = jwt.sign(
             { user }, // Payload
             process.env.JWT_SECRET, // Clé secrète stockée dans .env
-            { expiresIn: '2h' } // Expiration du token (ex: 2 heures)
+            { expiresIn: "2h" } // Expiration du token (ex: 2 heures)
         );
         
         // Stocker le token dans la session
-        res.cookie("token", token, { httpOnly: true, maxAge: 10000000000 });
-
+        res.cookie("token", token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 }); // 2 heures
+        
         return res.redirect('/');
 
     } catch (err) {
