@@ -5,13 +5,15 @@ const path = require('path');
 
 const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
+const { log } = require('console');
 
 // Fonction pour recevoir les données du formulaire d'enregistrement
 exports.register = async (req, res) => {
     try {
         const { 
             email, password, confirmPassword, username, 
-            first, last, birthday, number, street, zip, city, country
+            first, last, birthday, number, street, zip, 
+            city, country
         } = req.body;
         
         const address = {number, street, zip, city, country}
@@ -30,15 +32,28 @@ exports.register = async (req, res) => {
             return res.redirect('/register-form'); // Rediriger vers le formulaire d'inscription
         }
 
-        let userExist = await UserModel.findOne({ email });
+        let userExist = await UserModel.find({ $or: [{ email }, { username }] });
 
-        if (userExist) {
-            req.session.message = { type: 'error', text: "Cet email existe déjà !" };
+        if (userExist.length === 1) {
+            userExist.forEach(user => {
+                if (user.email === email) {
+                    req.session.message = { type: 'error', text: "Cet email existe déjà !" };
+                }
+                if (user.username === username) {
+                    req.session.message = { type: 'error', text: "Ce nom d'utilisateur existe déjà !" };
+                }
+            });
+
             return res.redirect('/register-form'); // Rediriger vers le formulaire d'inscription
         }
         
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new UserModel({ email, password: hashedPassword, username, first, last, birthday, address });
+
+        const user = new UserModel({ 
+            email, password: hashedPassword, 
+            username, first, last, birthday, 
+            address, bio: "", avatarUrl: "" 
+        });
         await user.save();
         
         // Stocker le message de succès
@@ -73,12 +88,12 @@ exports.login = async (req, res) => {
         const token = jwt.sign(
             { user }, // Payload
             process.env.JWT_SECRET, // Clé secrète stockée dans .env
-            { expiresIn: '2h' } // Expiration du token (ex: 2 heures)
+            { expiresIn: "2h" } // Expiration du token (ex: 2 heures)
         );
         
         // Stocker le token dans la session
-        res.cookie("token", token, { httpOnly: true, maxAge: 10000000000 });
-
+        res.cookie("token", token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 }); // 2 heures
+        
         return res.redirect('/');
 
     } catch (err) {
@@ -139,7 +154,7 @@ exports.logout = (req, res) => {
 exports.myAnnonces = async (req, res) => {
     let annonces = [];
     
-    const userId = res.locals.user._id;
+    const userId = res.locals.user.id;
     
     annonces = await AnnonceModel.find({ userId });
     
@@ -172,7 +187,6 @@ exports.addAnnonce = async (req, res) => {
         if (req.files.length > 3) {
             return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
         }
-        console.log("REQ FILES ", req.files);
         
         // Créer une liste d'URLs d'images
         const images = req.files.map(file => ({
@@ -180,7 +194,6 @@ exports.addAnnonce = async (req, res) => {
             contentType: file.mimetype,
             imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
         }));
-        console.log("images", images);
         
         const newAnnonce = new AnnonceModel({
             title,
@@ -188,7 +201,7 @@ exports.addAnnonce = async (req, res) => {
             images,
             price,
             musicStyle,
-            userId: res.locals.user._id // Stocke l'ID de l'utilisateur pour lier l'annonce
+            userId: res.locals.user.id, // Stocke l'ID de l'utilisateur pour lier l'annonce
         });
         await newAnnonce.save();
 
@@ -337,20 +350,94 @@ exports.updateProfilForm = (req, res) => {
     try {
     let keyInfo = req.params.info
     const valueInfo = res.locals.user[keyInfo]
-    console.log(keyInfo);
+
+    let keyInfoTranslate;
 
     switch(keyInfo) {
-        case "username": keyInfo = "Nom d'utilisateur" 
+        case "username": keyInfoTranslate = "Nom d'utilisateur" 
         break;
-        case "last": keyInfo = "Nom de famille"
+        case "last": keyInfoTranslate = "Nom de famille"
         break;
-        case "first": keyInfo = "Prénom"
+        case "first": keyInfoTranslate = "Prénom"
         break;
+        case "address": keyInfoTranslate = "Adresse"
+        break;
+        case "bio": keyInfoTranslate = "Bio"
     }
 
-    return res.render('./pages/updateProfil', { keyInfo, valueInfo })
-    } catch {
+    return res.render('./pages/updateProfil', { keyInfoTranslate, keyInfo, valueInfo })
+    } catch (error){
         return res.status(500).json({ message: 'Erreur lors de l\'affichage du formulaire', error });
+    }
+}
+
+exports.updateProfil = async (req, res) => {
+    try {
+        const userId = res.locals.user.id
+        
+        const user = await UserModel.findById(userId)
+        if(!user) {
+            res.clearCookie('token')
+            return res.status(403).redirect('/');
+        }
+        
+        return res.redirect('/profil')
+    } catch {
+        return res.status(500).json({ message: 'Erreur lors de l\'envoi du formulaire', error });
+    }
+}
+
+exports.adminDashboard = (req, res) => {
+    try {
+        let userSearch = {}
+        console.log(userSearch);
+        
+        return res.render('./pages/adminDashboard', { userSearch })
+    } catch (error) {
+        return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
+    }
+}
+
+exports.searchUser = async (req, res) => {
+    try {
+        const { username } = req.body
+        const userSearch = await UserModel.findOne({ username })
+
+        return res.render('./pages/adminDashboard', { userSearch })
+    } catch (error) {
+        return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
+    }
+}
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const { userId } = req.body
+        
+        // Trouver l'annonce à supprimer
+        const annonces = await AnnonceModel.find({ userId: userId });
+        
+         if (annonces) {
+             // Supprimer les images du dossier "uploads"
+             annonces.forEach(annonce => {
+                 annonce.images.forEach(img => {
+     
+                      const imagePath = path.join(__dirname, '..', 'public/uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
+     
+                      if (fs.existsSync(imagePath)) {
+                          fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
+                      }
+                 });
+             });
+      
+              // Supprimer l'annonce de la base de données
+              await AnnonceModel.deleteMany({ userId: userId });
+         }
+
+        await UserModel.deleteOne({ _id: userId })
+
+        return res.redirect('/adminDashboard')
+    } catch (error) {
+        return res.status(404).json({ message: 'Erreur lors de la suppression', error });
     }
 }
 

@@ -3,6 +3,30 @@
     gap: 30px;
 }
 
+.avatarContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.imgAvatarContent {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: antiquewhite;
+   
+}
+
+.avatarLabel {
+    cursor: pointer;
+}
+
+input[type="file"] {
+    display: none;
+}
+
 .infosContent {
     display: flex;
     justify-content: space-between;
