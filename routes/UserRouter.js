@@ -61,7 +61,9 @@ router.post('/updateProfil', auth, UserController.updateProfil)
 
 router.get('/adminDashboard', auth, isAdmin, UserController.adminDashboard)
 
-router.post('/searchAndTreatUser', auth, isAdmin, UserController.searchAndTreatUser)
+router.post('/searchUser', auth, isAdmin, UserController.searchUser)
+
+router.post('/deleteUser', auth, isAdmin, UserController.deleteUser)
 
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;

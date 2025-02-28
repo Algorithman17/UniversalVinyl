@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 <main>
-    <h1>MON PROFIL <%= userRole %></h1>
+    <h1>MON PROFIL</h1>
     <div class="allInfosContent">
         <div class="avatarContent">
             <% if(user.avatarUrl === "") { %>
@@ -90,7 +90,6 @@
     btnUpdateProfil.forEach(element => {
         element.addEventListener('click', (e) => {
             element.parentElement.appendChild()
-            console.log(element.parentElement);
         })
     })
     
