@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const connectDb = require('./database/connect'); // Fonction de connexion à la base de données
 require('dotenv').config(); // Chargement des variables d'environnement
 const userRouter = require('./routes/UserRouter'); // Routeur pour les utilisateurs
+const { set } = require('lodash');
 // Configuration du port (par défaut : 3005)
 const port = process.env.PORT || 3005;
 
@@ -30,15 +31,44 @@ app.use(session({
 }));
 
 // Middleware
-app.use((req, res, next) => {
+app.use((req, res, next) => { 
+    if(typeof req.cookies.token === "undefined") {
+        // console.log('token undefined');
+    }
+
     if(req.cookies.token) {
-        const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_SECRET)
+        const token = req.cookies.token;
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        
         const user = decodedToken.user
+        // console.log(decodedToken, "decodedToken");
+        
+        // Vérifier si le token est sur le point d'expirer (ex: < 10 min restantes)
+        const now = Math.floor(Date.now() / 1000); // Temps actuel en secondes
+        // console.log("Expiration du token:", decodedToken.exp - now, "secondes");
+        
+        if (decodedToken.exp - now < 600) { // Si expiration < 10 minutes
+            console.log("Renouvellement du token");
+            console.log(decodedToken.exp - now, "secondes avant expiration");
+            
+            const newToken = jwt.sign(
+                { user }, 
+                process.env.JWT_SECRET, 
+                { expiresIn: "2h" }
+            );
+            
+            decodedToken.exp = Date.now() + 2 * 60 * 60 * 1000; // 2 heures
+            res.clearCookie('token');
+            res.cookie('token', newToken, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000}); 
+        }
+        
         res.locals.user = {
             id: user._id, 
             email: user.email, 
             role: user.role, 
-            username: user.username, 
+            username: user.username,
+            avatarUrl: user.avatarUrl,
+            bio: user.bio,
             first: user.first, 
             last: user.last, 
             birthday: user.birthday, 
@@ -52,7 +82,6 @@ app.use((req, res, next) => {
     } else {
         res.locals.user = undefined
     }
-    
     res.locals.theme = req.cookies.theme;
     next();
 });
