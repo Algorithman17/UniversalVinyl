@@ -72,18 +72,23 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await UserModel.findOne({ email });
-
-        if (!user) {
+        
+        const findUser = await UserModel.findOne({ email });
+        
+        if (!findUser) {
             return res.status(400).json({ message: 'Email ou mot de passe incorrect.' });
         }
 
-        let isValid = await bcrypt.compare(password, user.password);
+        let isValid = await bcrypt.compare(password, findUser.password);
 
         if (!isValid) {
             return res.status(400).json({ message: 'Email ou mot de passe incorrect.' });
         }
 
+        // Supprimer le mot de passe de l'objet utilisateur
+        const user = { ...findUser._doc };
+        delete user.password;
+        
         // Créer un token JWT
         const token = jwt.sign(
             { user }, // Payload
@@ -373,16 +378,50 @@ exports.updateProfilForm = (req, res) => {
 
 exports.updateProfil = async (req, res) => {
     try {
-        const userId = res.locals.user.id
-        
-        const user = await UserModel.findById(userId)
-        if(!user) {
-            res.clearCookie('token')
-            return res.status(403).redirect('/');
+        const findUser = await UserModel.findById(res.locals.user.id)
+        const { deleteAvatar } = req.body
+
+        if(deleteAvatar) {
+            const imagePath = path.join(__dirname, '..', 'public/uploads', findUser.avatarUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
+                
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
+            }
+            findUser.avatarUrl = ""
         }
         
+        // Vérifier si de nouvelles images ont été téléchargées
+        if (req.file) {
+            if(findUser.avatarUrl === "") {
+                findUser.avatarUrl = req.file.filename
+            } else {
+                // Supprimer les anciennes images du dossier "uploads"
+                const imagePath = path.join(__dirname, '..', 'public/uploads', findUser.avatarUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
+                
+                if (fs.existsSync(imagePath)) {
+                    fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
+                }
+                findUser.avatarUrl = req.file.filename
+            }
+        }
+        
+        const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
+        const user = decodedToken.user
+        user.avatarUrl = findUser.avatarUrl
+
+        const newToken = jwt.sign(
+                        { user }, 
+                        process.env.JWT_SECRET, 
+                        { expiresIn: "2h" }
+                    );
+
+        res.clearCookie('token');
+        res.cookie('token', newToken, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000});
+
+        await findUser.save()
+        
         return res.redirect('/profil')
-    } catch {
+    } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'envoi du formulaire', error });
     }
 }
@@ -390,7 +429,6 @@ exports.updateProfil = async (req, res) => {
 exports.adminDashboard = (req, res) => {
     try {
         let userSearch = {}
-        console.log(userSearch);
         
         return res.render('./pages/adminDashboard', { userSearch })
     } catch (error) {

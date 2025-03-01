@@ -57,7 +57,7 @@ router.get('/show-annonce/:id', UserController.showAnnonce)
 
 router.get('/updateProfilForm/:info', auth, UserController.updateProfilForm)
 
-router.post('/updateProfil', auth, UserController.updateProfil)
+router.post('/updateProfil', auth, upload.single('image'), UserController.updateProfil)
 
 router.get('/adminDashboard', auth, isAdmin, UserController.adminDashboard)
 
