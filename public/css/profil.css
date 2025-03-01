@@ -16,7 +16,12 @@
     border: 1px solid black;
     border-radius: 50%;
     background-color: antiquewhite;
-   
+}
+
+.imgAvatarContent img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
 
 .avatarLabel {

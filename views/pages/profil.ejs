@@ -6,14 +6,24 @@
         <div class="avatarContent">
             <% if(user.avatarUrl === "") { %>
                 <div class="imgAvatarContent"></div>
-                <label class="avatarLabel" for="avatarUrl">Ajouter une photo de profil</label>
-                <input type="file" id="avatarUrl" name="avatarUrl" accept="image/*">
+                <form action="/updateProfil" method="post" enctype="multipart/form-data">
+                    <label class="avatarLabel" for="avatarUrl">Ajouter une photo de profil</label>
+                    <input type="file" id="avatarUrl" name="image" accept="image/*" max="1">
+                    <button type="submit" id="submitButton" style="display: none;">Envoyer</button>
+                </form>
             <% } else { %>
                 <div class="imgAvatarContent">
                     <img src="../../../uploads/<%= user.avatarUrl %>" alt="avatar de profil">
                 </div>
-                <label class="avatarLabel" for="avatarUrl">Modifier</label>
-                <input type="file" id="avatarUrl" name="avatarUrl" accept="image/*">
+                <form action="/updateProfil" method="post">
+                    <input type="hidden" name="deleteAvatar" value="true">
+                    <button type="submit">Supprimer</button>
+                </form>
+                <form action="/updateProfil" method="post" enctype="multipart/form-data">
+                    <label class="avatarLabel" for="avatarUrl">Modifier</label>
+                    <input type="file" id="avatarUrl" name="image" accept="image/*" max="1">
+                    <button type="submit" id="submitButton" style="display: none;">Envoyer</button>
+                </form>
             <% } %>
         </div>
         <div class="infosContent">
@@ -92,6 +102,15 @@
             element.parentElement.appendChild()
         })
     })
+
+    document.getElementById("avatarUrl").addEventListener("change", function () {
+        const submitButton = document.getElementById("submitButton");
+        if (this.files.length > 0) {
+            submitButton.style.display = "block"; // Affiche le bouton
+        } else {
+            submitButton.style.display = "none"; // Cache le bouton si aucune image
+        }
+    });
     
 </script>
 <%- include('../partials/footer') %>
