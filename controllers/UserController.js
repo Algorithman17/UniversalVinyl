@@ -405,9 +405,53 @@ exports.updateProfil = async (req, res) => {
             }
         }
         
+        let obj = req.body
+        
+        if(req.body.number) {
+            findUser.address.number = req.body.number
+            findUser.address.street = req.body.street
+            findUser.address.zip = req.body.zip
+            findUser.address.city = req.body.city
+            findUser.address.country = req.body.country
+        }
+        
+        const key = Object.keys(obj)[0]
+        
+        switch(key) {
+            case "username": findUser.username = obj[key]
+            break;
+            case "first": findUser.first = obj[key]
+            break;
+            case "last": findUser.last = obj[key]
+            break;
+            case "bio": findUser.bio = obj[key]
+            break;
+            case "number": findUser.address.number = obj[key]
+            break;
+            case "street": findUser.address.street = obj[key]
+            break;
+            case "zip": findUser.address.zip = obj[key]
+            break; 
+            case "city": findUser.address.city = obj[key]
+            break;
+            case "country": findUser.address.country = obj[key]
+            break;
+            default: console.log("defaut");
+        }
+
         const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-        const user = decodedToken.user
+        let user = decodedToken.user
         user.avatarUrl = findUser.avatarUrl
+        user.address.number = findUser.address.number
+        user.address.street = findUser.address.street
+        user.address.zip = findUser.address.zip
+        user.address.city = findUser.address.city
+        user.address.country = findUser.address.country
+        user.bio = findUser.bio
+        user.username = findUser.username
+        user.last = findUser.last
+        user.first = findUser.first
+
 
         const newToken = jwt.sign(
                         { user }, 
