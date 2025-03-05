@@ -330,9 +330,10 @@ exports.showAnnonce = async (req, res) => {
     try {
         const annonceId = req.params.id
         const annonce = await AnnonceModel.findById(annonceId)
+
+        const userAnnonce = await UserModel.findById({ _id: annonce.userId })
         
         const token = req.cookies.token
-
         let user = {}
         if(token) {
             user = jwt.verify(token, process.env.JWT_SECRET).user;
@@ -345,7 +346,7 @@ exports.showAnnonce = async (req, res) => {
             myAnnonce = true  
         }
         
-        return res.render('./pages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce"})
+        return res.render('./pages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce", userAnnonce })
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
     }
@@ -418,7 +419,16 @@ exports.updateProfil = async (req, res) => {
         const key = Object.keys(obj)[0]
         
         switch(key) {
-            case "username": findUser.username = obj[key]
+            case "username": 
+            let userExist = await UserModel.find({ username: obj[key] });
+            console.log("userExist", userExist);
+            
+            if (userExist.length) {
+                console.log("Ce nom d'utilisateur existe déjà !");
+                // req.session.message = { type: 'error', text: "Ce nom d'utilisateur existe déjà !" };
+                return res.redirect('/profil')
+            }
+            findUser.username = obj[key]
             break;
             case "first": findUser.first = obj[key]
             break;
@@ -521,6 +531,26 @@ exports.deleteUser = async (req, res) => {
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de la suppression', error });
     }
+}
+
+exports.sendMessageForm = (req, res) => {
+    const annonceUsername = req.params.username
+    const annonceId = req.params.annonceId
+    
+    return res.render('./pages/sendMessage', { annonceUsername, annonceId })
+}
+
+exports.sendMessage = async (req, res) => {
+    const annonceId = req.params.annonceId
+    const usernameParams = req.params.username
+    console.log(req.params);
+    
+    // const userAnnonce = await UserModel.find({ username: usernameParams })
+
+    console.log("userAnnonce", annonceId);
+    
+    // envoyer les données vers la base de l'utilisateur
+    return res.redirect(`/showAnnonce/${annonceId}`)
 }
 
 exports.cookieTheme = (req, res, next) => {

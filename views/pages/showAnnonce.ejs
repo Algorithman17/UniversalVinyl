@@ -18,11 +18,19 @@
                 <span class="currentPage">1</span> / <span class="lastPage">3</span>
             </div>
         </div>
-        <div class="annonceText">               
-            <h2><%= annonce.title %></h2>
-            <p><%= annonce.price %>€</p>
-            <p><%= annonce.musicStyle %></p>
-            <p><%= annonce.description %></p>
+        <div class="annonceText">
+            <div class="ObjectInfos">
+                <h2><%= annonce.title %></h2>
+                <p><%= annonce.price %>€</p>
+                <p><%= annonce.musicStyle %></p>
+                <p><%= annonce.description %></p>
+            </div>
+            <div class="userInfo">
+                <h2><%= userAnnonce.username %></h2>
+                <% if(userAnnonce.username !== user.username) { %>
+                    <a href="/sendMessageForm/<%= userAnnonce.username %>/<%= annonce._id %>">Envoyer un message</a>
+                <% } %>
+            </div>
         </div>
         <div class="prev">
             <span class="border0">
