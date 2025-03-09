@@ -157,6 +157,7 @@ exports.logout = (req, res) => {
 };
 
 exports.myAnnonces = async (req, res) => {
+    try {
     let annonces = [];
     
     const userId = res.locals.user.id;
@@ -175,6 +176,9 @@ exports.myAnnonces = async (req, res) => {
     });
     
     return res.render('./pages/myAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
+    } catch (error) {
+        return res.status(500).json({ message: 'Erreur lors de l\'affichage des annonces', error });
+    }
 };
 
 exports.addAnnonceForm = (req, res) => {
@@ -217,19 +221,23 @@ exports.addAnnonce = async (req, res) => {
 };
 
 exports.annonces = async (req, res) => {
-    let annonces = await AnnonceModel.find({});
-    const annoncesWithImages = annonces.map(annonce => {
-        return {
-            ...annonce._doc, // Copie des données de l'annonce
-            images: annonce.images.map(img => ({
-                name: img.name,
-                contentType: img.contentType,
-                imageUrl: img.imageUrl // Utiliser l'URL relative pour l'affichage
-            }))
-        };
-    });
-    
-    return res.render('./pages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
+    try {
+        let annonces = await AnnonceModel.find({});
+        const annoncesWithImages = annonces.map(annonce => {
+            return {
+                ...annonce._doc, // Copie des données de l'annonce
+                images: annonce.images.map(img => ({
+                    name: img.name,
+                    contentType: img.contentType,
+                    imageUrl: img.imageUrl // Utiliser l'URL relative pour l'affichage
+                }))
+            };
+        });
+
+        return res.render('./pages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
+    } catch (error) {   
+        return res.status(500).json({ message: 'Erreur lors de l\'affichage des annonces', error });
+    }
 };
 
 exports.deleteAnnonce = async (req, res) => {
@@ -345,8 +353,15 @@ exports.showAnnonce = async (req, res) => {
         } else if (annonce.userId === user._id) {
             myAnnonce = true  
         }
+
+        let dateAnnonce = annonce.createdAt
+        const dayAnnonce = dateAnnonce.getDate()
+        const monthAnnonce = dateAnnonce.getMonth() + 1
+        const yearAnnonce = dateAnnonce.getFullYear()
+        dateAnnonce = `${dayAnnonce}/${monthAnnonce}/${yearAnnonce}`
         
-        return res.render('./pages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce", userAnnonce })
+        return res.render('./pages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce", userAnnonce, dateAnnonce })
+
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
     }
@@ -426,7 +441,8 @@ exports.updateProfil = async (req, res) => {
             if (userExist.length) {
                 console.log("Ce nom d'utilisateur existe déjà !");
                 // req.session.message = { type: 'error', text: "Ce nom d'utilisateur existe déjà !" };
-                return res.redirect('/profil')
+                // return res.redirect('/profil')
+                return res.status(400).json({ message: 'Ce nom d\'utilisateur existe déjà' });
             }
             findUser.username = obj[key]
             break;
@@ -541,17 +557,59 @@ exports.sendMessageForm = (req, res) => {
 }
 
 exports.sendMessage = async (req, res) => {
-    const annonceId = req.params.annonceId
-    const usernameParams = req.params.username
-    console.log(req.params);
-    
-    // const userAnnonce = await UserModel.find({ username: usernameParams })
+    try {
+        const annonceId = req.params.annonceId
+        const { message } = req.body
+        
+        const annonce = await AnnonceModel.findById(annonceId)
+        
+        const foundUser = annonce.comments.find(comment => comment.userId === res.locals.user.id)
 
-    console.log("userAnnonce", annonceId);
-    
-    // envoyer les données vers la base de l'utilisateur
-    return res.redirect(`/showAnnonce/${annonceId}`)
+        if(foundUser) {
+            foundUser.userComments.push({ comment: message })
+        } else {
+            annonce.comments.push({
+                userId: res.locals.user.id,
+                userComments: [{ comment: message }]
+            })
+        }
+
+        await annonce.save()
+        
+        // envoyer les données vers la base de l'utilisateur
+        return res.redirect(`/show-annonce/${annonceId}`)
+    } catch (error) {
+        return res.status(404).json({ message: 'Erreur lors de l\'envoi du message', error });
+    }
 }
+
+exports.showMessages = async (req, res) => {
+    try {
+        // Récupérer les annonces contenant des commentaires
+        const annonces = await AnnonceModel.find({ comments: { $exists: true, $ne: [] } });
+
+        // Transformer les données pour correspondre à la structure souhaitée
+        const conversations = annonces.map(annonce => ({
+            annonceId: annonce._id,
+            users: annonce.comments.map(commentData => ({
+                userId: commentData.userId,
+                messages: commentData.userComments.map(comment => ({
+                    userId: commentData.userId,
+                    content: comment.comment,
+                    date: comment.createdAt
+                }))
+            }))
+        }));
+        console.log(conversations);
+        
+        // Rendre la vue EJS avec les données formatées
+        res.render('./pages/showMessages', { conversations });
+
+    } catch (error) {
+        console.error('Erreur lors de la récupération des conversations:', error);
+        res.status(500).send('Erreur serveur');
+    }
+};
 
 exports.cookieTheme = (req, res, next) => {
     res.cookie("theme", "#6efaf3", { httpOnly: true, maxAge: 1000000000 }); // 115 jours
