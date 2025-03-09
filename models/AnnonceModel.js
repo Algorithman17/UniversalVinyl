@@ -11,6 +11,13 @@ const annonceSchema = new mongoose.Schema({
   }],
   createdAt: { type: Date, default: Date.now },
   userId: { type: String },
+  comments: [{ 
+    userId: { type: String },
+    userComments: [{ 
+      comment: { type: String },
+      createdAt: { type: Date, default: Date.now }
+    }]
+  }]
 });
 
 const Annonce = mongoose.model('Annonce', annonceSchema);

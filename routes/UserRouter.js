@@ -65,5 +65,11 @@ router.post('/searchUser', auth, isAdmin, UserController.searchUser)
 
 router.post('/deleteUser', auth, isAdmin, UserController.deleteUser)
 
+router.get('/sendMessageForm/:annonceId', auth, UserController.sendMessageForm)
+
+router.post('/sendMessage/:annonceId', auth, UserController.sendMessage)
+
+router.get('/showMessages', auth, UserController.showMessages)
+
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;
