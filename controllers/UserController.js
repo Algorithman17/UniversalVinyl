@@ -5,6 +5,8 @@ const path = require('path');
 
 const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
+const CommentModel = require('../models/CommentModel');
+
 const { log } = require('console');
 
 // Fonction pour recevoir les données du formulaire d'enregistrement
@@ -336,6 +338,11 @@ exports.editAnnonce = async (req, res) => {
 
 exports.showAnnonce = async (req, res) => {
     try {
+        let userConnected = false
+        if(res.locals.user) {
+            userConnected = true
+        }
+        
         const annonceId = req.params.id
         const annonce = await AnnonceModel.findById(annonceId)
 
@@ -360,7 +367,7 @@ exports.showAnnonce = async (req, res) => {
         const yearAnnonce = dateAnnonce.getFullYear()
         dateAnnonce = `${dayAnnonce}/${monthAnnonce}/${yearAnnonce}`
         
-        return res.render('./pages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce", userAnnonce, dateAnnonce })
+        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: "showAnnonce", userAnnonce, dateAnnonce })
 
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
@@ -436,7 +443,6 @@ exports.updateProfil = async (req, res) => {
         switch(key) {
             case "username": 
             let userExist = await UserModel.find({ username: obj[key] });
-            console.log("userExist", userExist);
             
             if (userExist.length) {
                 console.log("Ce nom d'utilisateur existe déjà !");
@@ -560,22 +566,36 @@ exports.sendMessage = async (req, res) => {
     try {
         const annonceId = req.params.annonceId
         const { message } = req.body
+        const buyerUsername = res.locals.user.username
+        const annonce = await AnnonceModel.findById( annonceId )
+        const seller = await UserModel.findById( annonce.userId )
+        const sellerUsername = seller.username
+        console.log(sellerUsername);
+        console.log("annonceId", annonceId);
         
-        const annonce = await AnnonceModel.findById(annonceId)
+        const conversationExist = await CommentModel.find({ annonceId, "buyer.username": buyerUsername })
+        console.log("ok");
         
-        const foundUser = annonce.comments.find(comment => comment.userId === res.locals.user.id)
-
-        if(foundUser) {
-            foundUser.userComments.push({ comment: message })
+        if (conversationExist.length > 0) {
+            console.log("conversationExist", conversationExist);
+            conversationExist 
         } else {
-            annonce.comments.push({
-                userId: res.locals.user.id,
-                userComments: [{ comment: message }]
-            })
+            console.log("false");
+            const msg = new CommentModel({
+                annonceId: annonceId,
+                buyer: {
+                    username: buyerUsername,
+                    messages: [{
+                        message
+                    }]
+                },
+                seller: {
+                    username: sellerUsername,
+            }})
+
+            await msg.save()
         }
 
-        await annonce.save()
-        
         // envoyer les données vers la base de l'utilisateur
         return res.redirect(`/show-annonce/${annonceId}`)
     } catch (error) {
@@ -583,7 +603,7 @@ exports.sendMessage = async (req, res) => {
     }
 }
 
-exports.showMessages = async (req, res) => {
+exports.getMessaging = async (req, res) => {
     try {
         // Récupérer les annonces contenant des commentaires
         const annonces = await AnnonceModel.find({ comments: { $exists: true, $ne: [] } });
@@ -600,10 +620,9 @@ exports.showMessages = async (req, res) => {
                 }))
             }))
         }));
-        console.log(conversations);
         
         // Rendre la vue EJS avec les données formatées
-        res.render('./pages/showMessages', { conversations });
+        res.render('./pages/messaging', { conversations });
 
     } catch (error) {
         console.error('Erreur lors de la récupération des conversations:', error);

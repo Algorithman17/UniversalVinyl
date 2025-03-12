@@ -69,7 +69,7 @@ router.get('/sendMessageForm/:annonceId', auth, UserController.sendMessageForm)
 
 router.post('/sendMessage/:annonceId', auth, UserController.sendMessage)
 
-router.get('/showMessages', auth, UserController.showMessages)
+router.get('/messaging', auth, UserController.getMessaging)
 
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;
