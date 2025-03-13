@@ -1,19 +1,16 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 <h1>Messages</h1>
-<% conversations.forEach(convo => { %>
-    <div class="conversation">
-        <% convo.users.forEach(user => { %>
-            <h2>Annonce ID: <%= convo.annonceId %></h2>
-            <div class="user">Utilisateur: <%= user.userId %></div>
-            <% user.messages.forEach(msg => { %>
-                <div class="message">
-                    <span class="user"><%= msg.userId || msg.localUserId %>:</span>
-                    <span class="content"><%= msg.content %></span>
-                    <span class="date">(<%= new Date(msg.date).toLocaleString() %>)</span>
-                </div>
-            <% }) %>
-        <% }) %>
-    </div>
+<% annonces.forEach(annonce => { %>
+    <a href="chat/<%= buyer %>/<%= seller %>">
+        <div class="card">
+            <div class="contentImg">
+                <img src="<%= annonce.images[0].imgUrl %>" alt="">
+            </div>
+            <div class="InfoAnnonce">
+                <p><%= annonce.title %></p>
+            </div>
+        </div>
+    </a>
 <% }) %>
 <%- include('../partials/footer') %>

@@ -343,7 +343,8 @@ exports.showAnnonce = async (req, res) => {
             userConnected = true
         }
         
-        const annonceId = req.params.id
+        const { annonceId } = req.params
+        
         const annonce = await AnnonceModel.findById(annonceId)
 
         const userAnnonce = await UserModel.findById({ _id: annonce.userId })
@@ -555,46 +556,39 @@ exports.deleteUser = async (req, res) => {
     }
 }
 
-exports.sendMessageForm = (req, res) => {
-    const annonceUsername = req.params.username
-    const annonceId = req.params.annonceId
+exports.startConvForm = (req, res) => {
+    const { annonceId, userId } = req.params
+    console.log("annonceId", annonceId);
+    console.log("userId", userId);
     
-    return res.render('./pages/sendMessage', { annonceUsername, annonceId })
+    return res.render('./pages/startConvForm', { annonceId, userId })
 }
 
-exports.sendMessage = async (req, res) => {
+exports.sendStartConv = async (req, res) => {
     try {
-        const annonceId = req.params.annonceId
+        const { annonceId, userId } = req.params
+    
         const { message } = req.body
+
         const buyerUsername = res.locals.user.username
+
         const annonce = await AnnonceModel.findById( annonceId )
         const seller = await UserModel.findById( annonce.userId )
         const sellerUsername = seller.username
-        console.log(sellerUsername);
-        console.log("annonceId", annonceId);
-        
-        const conversationExist = await CommentModel.find({ annonceId, "buyer.username": buyerUsername })
-        console.log("ok");
-        
-        if (conversationExist.length > 0) {
-            console.log("conversationExist", conversationExist);
-            conversationExist 
-        } else {
-            console.log("false");
-            const msg = new CommentModel({
-                annonceId: annonceId,
-                buyer: {
-                    username: buyerUsername,
-                    messages: [{
-                        message
-                    }]
-                },
-                seller: {
-                    username: sellerUsername,
-            }})
 
-            await msg.save()
-        }
+        const msg = new CommentModel({
+            annonceId: annonceId,
+            buyer: {
+                username: buyerUsername,
+                messages: [{
+                    message
+                }]
+            },
+            seller: {
+                username: sellerUsername,
+        }})
+
+        await msg.save()
 
         // envoyer les données vers la base de l'utilisateur
         return res.redirect(`/show-annonce/${annonceId}`)
@@ -602,27 +596,26 @@ exports.sendMessage = async (req, res) => {
         return res.status(404).json({ message: 'Erreur lors de l\'envoi du message', error });
     }
 }
+// {/* <a href="chat/<%= annonceId %>/<%= buyerUsername %>/<%= sellerUsername %>">
+//     <div class="card"></div>
+// </a> */}
 
 exports.getMessaging = async (req, res) => {
     try {
-        // Récupérer les annonces contenant des commentaires
-        const annonces = await AnnonceModel.find({ comments: { $exists: true, $ne: [] } });
+        const usernameLocal = res.locals.user.username
+        const conversations = await CommentModel.find({ 
+            $or: [
+                { "buyer.username": usernameLocal }, 
+                { "seller.username": usernameLocal }
+            ]})
 
-        // Transformer les données pour correspondre à la structure souhaitée
-        const conversations = annonces.map(annonce => ({
-            annonceId: annonce._id,
-            users: annonce.comments.map(commentData => ({
-                userId: commentData.userId,
-                messages: commentData.userComments.map(comment => ({
-                    userId: commentData.userId,
-                    content: comment.comment,
-                    date: comment.createdAt
-                }))
-            }))
-        }));
+        console.log(conversations);
+        
+        const annonces = await AnnonceModel.find(conversations.annonceId)
+        
         
         // Rendre la vue EJS avec les données formatées
-        res.render('./pages/messaging', { conversations });
+        res.render('./pages/messaging', annonces, conversations);
 
     } catch (error) {
         console.error('Erreur lors de la récupération des conversations:', error);

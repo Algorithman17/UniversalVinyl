@@ -53,7 +53,7 @@ router.post('/edit-annonce/:id', auth, upload.array('images', 9999), UserControl
 
 router.post('/cookie-theme', UserController.cookieTheme)
 
-router.get('/show-annonce/:id', UserController.showAnnonce)
+router.get('/show-annonce/:annonceId', UserController.showAnnonce)
 
 router.get('/updateProfilForm/:info', auth, UserController.updateProfilForm)
 
@@ -65,9 +65,9 @@ router.post('/searchUser', auth, isAdmin, UserController.searchUser)
 
 router.post('/deleteUser', auth, isAdmin, UserController.deleteUser)
 
-router.get('/sendMessageForm/:annonceId', auth, UserController.sendMessageForm)
+router.get('/startConvForm/:annonceId/:userId', auth, UserController.startConvForm)
 
-router.post('/sendMessage/:annonceId', auth, UserController.sendMessage)
+router.post('/sendStartConv/:annonceId/:userId', auth, UserController.sendStartConv)
 
 router.get('/messaging', auth, UserController.getMessaging)
 

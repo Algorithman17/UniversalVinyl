@@ -1,7 +1,6 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
-<h2><%= annonceUsername %></h2>
-<form action="/sendMessage/<%= annonceId %>" method="post">
+<form action="/sendStartConv/<%= annonceId %>/<%= userId %>" method="post">
     <textarea name="message" id="" placeholder="Ecrivez un message à l'utilisateur" maxlength="300"></textarea>
     <button type="submit">Envoyer</button>
 </form>
