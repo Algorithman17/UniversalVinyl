@@ -53,7 +53,7 @@ router.post('/edit-annonce/:id', auth, upload.array('images', 9999), UserControl
 
 router.post('/cookie-theme', UserController.cookieTheme)
 
-router.get('/show-annonce/:id', UserController.showAnnonce)
+router.get('/show-annonce/:annonceId', UserController.showAnnonce)
 
 router.get('/updateProfilForm/:info', auth, UserController.updateProfilForm)
 
@@ -65,11 +65,8 @@ router.post('/searchUser', auth, isAdmin, UserController.searchUser)
 
 router.post('/deleteUser', auth, isAdmin, UserController.deleteUser)
 
-router.get('/sendMessageForm/:annonceId', auth, UserController.sendMessageForm)
+router.post('/startConversation', auth, UserController.startConversation)
 
-router.post('/sendMessage/:annonceId', auth, UserController.sendMessage)
-
-router.get('/showMessages', auth, UserController.showMessages)
-
+router.get('/conversations', auth, UserController.conversations)
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;

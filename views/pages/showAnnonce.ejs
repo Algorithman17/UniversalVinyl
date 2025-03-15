@@ -29,7 +29,12 @@
             <div class="userInfo">
                 <h2><%= userAnnonce.username %></h2>
                 <% if(userAnnonce.username !== user.username) { %>
-                    <a href="/sendMessageForm/<%= annonce._id %>">Envoyer un message</a>
+                    <form action="/startConversation" method="post">
+                        <input type="hidden" name="receiver" value="<%= userAnnonce.username %>">
+                        <input type="hidden" name="sender" value="<%= user.username %>">
+                        <input type="hidden" name="annonceId" value="<%= annonce._id %>">
+                        <button>Envoyer un message</button>
+                    </form>
                 <% } %>
             </div>
         </div>

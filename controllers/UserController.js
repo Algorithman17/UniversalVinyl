@@ -5,7 +5,10 @@ const path = require('path');
 
 const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
+const ConversationModel = require('../models/ConversationModel');
+
 const { log } = require('console');
+const { title } = require('process');
 
 // Fonction pour recevoir les données du formulaire d'enregistrement
 exports.register = async (req, res) => {
@@ -336,7 +339,13 @@ exports.editAnnonce = async (req, res) => {
 
 exports.showAnnonce = async (req, res) => {
     try {
-        const annonceId = req.params.id
+        let userConnected = false
+        if(res.locals.user) {
+            userConnected = true
+        }
+        
+        const { annonceId } = req.params
+        
         const annonce = await AnnonceModel.findById(annonceId)
 
         const userAnnonce = await UserModel.findById({ _id: annonce.userId })
@@ -360,7 +369,7 @@ exports.showAnnonce = async (req, res) => {
         const yearAnnonce = dateAnnonce.getFullYear()
         dateAnnonce = `${dayAnnonce}/${monthAnnonce}/${yearAnnonce}`
         
-        return res.render('./pages/showAnnonce', { annonce, myAnnonce, styleUrl: "showAnnonce", userAnnonce, dateAnnonce })
+        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: "showAnnonce", userAnnonce, dateAnnonce })
 
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
@@ -436,7 +445,6 @@ exports.updateProfil = async (req, res) => {
         switch(key) {
             case "username": 
             let userExist = await UserModel.find({ username: obj[key] });
-            console.log("userExist", userExist);
             
             if (userExist.length) {
                 console.log("Ce nom d'utilisateur existe déjà !");
@@ -549,67 +557,55 @@ exports.deleteUser = async (req, res) => {
     }
 }
 
-exports.sendMessageForm = (req, res) => {
-    const annonceUsername = req.params.username
-    const annonceId = req.params.annonceId
-    
-    return res.render('./pages/sendMessage', { annonceUsername, annonceId })
-}
-
-exports.sendMessage = async (req, res) => {
+exports.startConversation = async (req, res) => {
     try {
-        const annonceId = req.params.annonceId
-        const { message } = req.body
-        
-        const annonce = await AnnonceModel.findById(annonceId)
-        
-        const foundUser = annonce.comments.find(comment => comment.userId === res.locals.user.id)
+        const { receiver, sender, annonceId } = req.body
 
-        if(foundUser) {
-            foundUser.userComments.push({ comment: message })
+        const conversationExist = await ConversationModel.find({ members: [receiver, sender], annonceId });
+
+        if(conversationExist.length === 1) {
+            return res.status(400).json({ message: 'Conversation déjà existante' });
         } else {
-            annonce.comments.push({
-                userId: res.locals.user.id,
-                userComments: [{ comment: message }]
-            })
+            const newConversation = new ConversationModel({ members: [receiver, sender], annonceId });
+            await newConversation.save();
         }
 
-        await annonce.save()
-        
-        // envoyer les données vers la base de l'utilisateur
-        return res.redirect(`/show-annonce/${annonceId}`)
     } catch (error) {
-        return res.status(404).json({ message: 'Erreur lors de l\'envoi du message', error });
+        return res.status(404).json({ message: 'Erreur lors de l\'envoi', error });
     }
 }
 
-exports.showMessages = async (req, res) => {
+exports.conversations = async (req, res) => {
     try {
-        // Récupérer les annonces contenant des commentaires
-        const annonces = await AnnonceModel.find({ comments: { $exists: true, $ne: [] } });
+        const username = res.locals.user.username
 
-        // Transformer les données pour correspondre à la structure souhaitée
-        const conversations = annonces.map(annonce => ({
-            annonceId: annonce._id,
-            users: annonce.comments.map(commentData => ({
-                userId: commentData.userId,
-                messages: commentData.userComments.map(comment => ({
-                    userId: commentData.userId,
-                    content: comment.comment,
-                    date: comment.createdAt
-                }))
-            }))
-        }));
-        console.log(conversations);
-        
-        // Rendre la vue EJS avec les données formatées
-        res.render('./pages/showMessages', { conversations });
+        const conversations = await ConversationModel.find({ members: username })
 
+        const annonces = []
+        if(conversations.length > 0) {
+            for (const conversation of conversations) {
+
+                let annonce = await AnnonceModel.findById(conversation.annonceId);
+
+                annonces.push({
+                    conversationId: conversation._id,
+                    annonceId: conversation.annonceId,
+                    recipient: conversation.members.filter(member => member !== username),
+                    title: annonce.title,
+                    price: annonce.price,
+                    musicStyle: annonce.musicStyle,
+                    imageUrl: annonce.images[0].imageUrl,
+                })
+            }
+        } else {
+            return res.render('./pages/conversations', { annonces })
+        }
+
+        return res.render('./pages/conversations', { annonces })
     } catch (error) {
-        console.error('Erreur lors de la récupération des conversations:', error);
-        res.status(500).send('Erreur serveur');
+        return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
     }
-};
+}
 
 exports.cookieTheme = (req, res, next) => {
     res.cookie("theme", "#6efaf3", { httpOnly: true, maxAge: 1000000000 }); // 115 jours
