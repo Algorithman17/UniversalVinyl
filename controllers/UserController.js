@@ -5,9 +5,10 @@ const path = require('path');
 
 const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
-const CommentModel = require('../models/CommentModel');
+const ConversationModel = require('../models/ConversationModel');
 
 const { log } = require('console');
+const { title } = require('process');
 
 // Fonction pour recevoir les données du formulaire d'enregistrement
 exports.register = async (req, res) => {
@@ -556,72 +557,55 @@ exports.deleteUser = async (req, res) => {
     }
 }
 
-exports.startConvForm = (req, res) => {
-    const { annonceId, userId } = req.params
-    console.log("annonceId", annonceId);
-    console.log("userId", userId);
-    
-    return res.render('./pages/startConvForm', { annonceId, userId })
-}
-
-exports.sendStartConv = async (req, res) => {
+exports.startConversation = async (req, res) => {
     try {
-        const { annonceId, userId } = req.params
-    
-        const { message } = req.body
+        const { receiver, sender, annonceId } = req.body
 
-        const buyerUsername = res.locals.user.username
+        const conversationExist = await ConversationModel.find({ members: [receiver, sender], annonceId });
 
-        const annonce = await AnnonceModel.findById( annonceId )
-        const seller = await UserModel.findById( annonce.userId )
-        const sellerUsername = seller.username
-
-        const msg = new CommentModel({
-            annonceId: annonceId,
-            buyer: {
-                username: buyerUsername,
-                messages: [{
-                    message
-                }]
-            },
-            seller: {
-                username: sellerUsername,
-        }})
-
-        await msg.save()
-
-        // envoyer les données vers la base de l'utilisateur
-        return res.redirect(`/show-annonce/${annonceId}`)
-    } catch (error) {
-        return res.status(404).json({ message: 'Erreur lors de l\'envoi du message', error });
-    }
-}
-// {/* <a href="chat/<%= annonceId %>/<%= buyerUsername %>/<%= sellerUsername %>">
-//     <div class="card"></div>
-// </a> */}
-
-exports.getMessaging = async (req, res) => {
-    try {
-        const usernameLocal = res.locals.user.username
-        const conversations = await CommentModel.find({ 
-            $or: [
-                { "buyer.username": usernameLocal }, 
-                { "seller.username": usernameLocal }
-            ]})
-
-        console.log(conversations);
-        
-        const annonces = await AnnonceModel.find(conversations.annonceId)
-        
-        
-        // Rendre la vue EJS avec les données formatées
-        res.render('./pages/messaging', annonces, conversations);
+        if(conversationExist.length === 1) {
+            return res.status(400).json({ message: 'Conversation déjà existante' });
+        } else {
+            const newConversation = new ConversationModel({ members: [receiver, sender], annonceId });
+            await newConversation.save();
+        }
 
     } catch (error) {
-        console.error('Erreur lors de la récupération des conversations:', error);
-        res.status(500).send('Erreur serveur');
+        return res.status(404).json({ message: 'Erreur lors de l\'envoi', error });
     }
-};
+}
+
+exports.conversations = async (req, res) => {
+    try {
+        const username = res.locals.user.username
+
+        const conversations = await ConversationModel.find({ members: username })
+
+        const annonces = []
+        if(conversations.length > 0) {
+            for (const conversation of conversations) {
+
+                let annonce = await AnnonceModel.findById(conversation.annonceId);
+
+                annonces.push({
+                    conversationId: conversation._id,
+                    annonceId: conversation.annonceId,
+                    recipient: conversation.members.filter(member => member !== username),
+                    title: annonce.title,
+                    price: annonce.price,
+                    musicStyle: annonce.musicStyle,
+                    imageUrl: annonce.images[0].imageUrl,
+                })
+            }
+        } else {
+            return res.render('./pages/conversations', { annonces })
+        }
+
+        return res.render('./pages/conversations', { annonces })
+    } catch (error) {
+        return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
+    }
+}
 
 exports.cookieTheme = (req, res, next) => {
     res.cookie("theme", "#6efaf3", { httpOnly: true, maxAge: 1000000000 }); // 115 jours

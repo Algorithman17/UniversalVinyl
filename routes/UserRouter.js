@@ -65,11 +65,8 @@ router.post('/searchUser', auth, isAdmin, UserController.searchUser)
 
 router.post('/deleteUser', auth, isAdmin, UserController.deleteUser)
 
-router.get('/startConvForm/:annonceId/:userId', auth, UserController.startConvForm)
+router.post('/startConversation', auth, UserController.startConversation)
 
-router.post('/sendStartConv/:annonceId/:userId', auth, UserController.sendStartConv)
-
-router.get('/messaging', auth, UserController.getMessaging)
-
+router.get('/conversations', auth, UserController.conversations)
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;

@@ -28,16 +28,13 @@
             </div>
             <div class="userInfo">
                 <h2><%= userAnnonce.username %></h2>
-                <% if(userConnected === false) { %>
-                    <a href="/startConvForm/<%= annonce._id %>/<%= annonce.userId %>">
-                        Envoyer un message
-                    </a>
-                <% } else if (userConnected === true) { %>
-                    <% if(user.username !== userAnnonce.username) { %>
-                        <a href="/startConvForm/<%= annonce._id %>/<%= annonce.userId %>">
-                            Envoyer un message
-                        </a>
-                    <% } %>
+                <% if(userAnnonce.username !== user.username) { %>
+                    <form action="/startConversation" method="post">
+                        <input type="hidden" name="receiver" value="<%= userAnnonce.username %>">
+                        <input type="hidden" name="sender" value="<%= user.username %>">
+                        <input type="hidden" name="annonceId" value="<%= annonce._id %>">
+                        <button>Envoyer un message</button>
+                    </form>
                 <% } %>
             </div>
         </div>

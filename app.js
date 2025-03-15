@@ -5,6 +5,9 @@ const app = express();
 const session = require('express-session')
 const cookieParser = require("cookie-parser")
 const jwt = require('jsonwebtoken');
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+
 // Importation des utilitaires et routes
 const connectDb = require('./database/connect'); // Fonction de connexion à la base de données
 require('dotenv').config(); // Chargement des variables d'environnement
@@ -85,6 +88,18 @@ app.use((req, res, next) => {
     res.locals.theme = req.cookies.theme;
     next();
 });
+
+io.on('connection', (socket) => {
+    console.log('Un utilisateur s\'est connecté');
+    
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg)
+    })
+
+    socket.on('chat message 2', (msg) => {
+        io.emit('chat message 2', msg)
+    })
+})
 
 // Connexion à la base de données
 connectDb();
