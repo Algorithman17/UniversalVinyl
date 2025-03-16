@@ -68,5 +68,8 @@ router.post('/deleteUser', auth, isAdmin, UserController.deleteUser)
 router.post('/startConversation', auth, UserController.startConversation)
 
 router.get('/conversations', auth, UserController.conversations)
+
+router.get('/chat/:chatId', auth, UserController.chat)
+
 // Exportation du routeur pour l'utiliser dans l'application principale
 module.exports = router;

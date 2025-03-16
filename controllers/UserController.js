@@ -7,6 +7,11 @@ const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
 const ConversationModel = require('../models/ConversationModel');
 
+const express = require('express');
+const app = express();
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+
 const { log } = require('console');
 const { title } = require('process');
 
@@ -602,6 +607,29 @@ exports.conversations = async (req, res) => {
         }
 
         return res.render('./pages/conversations', { annonces })
+    } catch (error) {
+        return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
+    }
+}
+
+exports.chat = async (req, res) => {
+    try {
+        const chatId = req.params.chatId
+        console.log(chatId);
+        
+        
+        const localUser = res.locals.user.username
+        
+        const access = await ConversationModel.find({ _id: chatId, members: localUser })
+        
+        
+        if(access.length > 0) {
+            module.exports = { chatId }
+            res.render(`./pages/chat`, {chatId})
+
+        }
+        
+
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
     }

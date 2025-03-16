@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<div id="messages"></div>
+<form action="">
+    <input id="msg" autocomplete="off" /><button>Send</button>
+</form>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+    $(function (){
+        var socket = io()
+
+        $("form").submit(function (e) {
+            e.preventDefault()
+
+            socket.emit("<%= chatId %>", $("#msg").val())
+            $("#msg").val("")
+
+            return false
+        })
+
+        socket.on("<%= chatId %>", function (msg) {
+            $("#messages").append($("<p>").text(msg))
+        })
+    })
+
+</script>
+<%- include('../partials/footer') %>

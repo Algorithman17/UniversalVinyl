@@ -89,23 +89,22 @@ app.use((req, res, next) => {
     next();
 });
 
-io.on('connection', (socket) => {
-    console.log('Un utilisateur s\'est connecté');
-    
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg)
-    })
-
-    socket.on('chat message 2', (msg) => {
-        io.emit('chat message 2', msg)
-    })
-})
 
 // Connexion à la base de données
 connectDb();
 
 // Routage : Utilisation des routes
 app.use(userRouter)
+const { chatId } = require('./controllers/UserController')
+console.log("chatId", chatId);
+
+io.on('connection', (socket) => {
+    console.log('Un utilisateur s\'est connecté');
+    
+    socket.on(`${chatId}`, (msg) => {
+        io.emit(`${chatId}`, msg)
+    })
+})
 
 // Vérification de la chaîne de connexion (debugging)
 console.log('Database URI:', process.env.MONGO_URI + process.env.DB_NAME);
