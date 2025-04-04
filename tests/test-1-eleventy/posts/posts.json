@@ -1,5 +1,0 @@
-{
-    
-    "layout": "layout.html", //Spécifie que le layout de cette page sera `layout.html`
-    "tags": "post" //Associe ce fichier à la catégorie "post", utile pour le filtrage ou l'organisation des articles
-}
