@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<main>
+<h1>Modifier une annonce</h1>
+<form action="/edit-annonce/<%= annonce.id %>" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="title">Titre</label>
+        <input type="text" class="form-control" id="title" name="title" value="<%= annonce.title %>">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3"><%= annonce.description %></textarea>
+    </div>
+    <div class="form-group">
+        <label for="price">Prix</label>
+        <input type="number" class="form-control" id="price" name="price" value="<%= annonce.price %>">
+    </div>
+    <div class="form-group">
+        <label for="musicStyle">Style de musique</label>
+        <select id="musicStyle" name="musicStyle" required>
+            <option value="rock">Rock</option>
+            <option value="pop">Pop</option>
+            <option value="rap">Rap</option>
+            <option value="jazz">Jazz</option>
+            <option value="classique">Classique</option>
+            <option value="electro">Electro</option>
+            <option value="reggae">Reggae</option>
+            <option value="metal">Metal</option>
+            <option value="blues">Blues</option>
+            <option value="variété">Variété</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <div>
+            <% annonce.images.forEach(image => { %>
+                <img src="../../../uploads/<%= image.imageUrl %>" alt="image" style="width: 100px">
+            <% }) %>
+        </div>
+        <label for="images">Images (max 3)</label>
+        <input type="file" class="form-control-file" id="images" name="images" multiple accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary">Modifier</button>
+</main>
+<%- include('../partials/footer') %>
