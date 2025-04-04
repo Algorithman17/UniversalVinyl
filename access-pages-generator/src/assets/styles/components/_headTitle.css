@@ -1,0 +1,18 @@
+.headTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.headTitle svg {
+  max-width: 6rem;
+  max-height: 6rem;
+}
+
+@media (max-width: 96rem) {
+  .headTitle {
+    margin: 0;
+  }
+}

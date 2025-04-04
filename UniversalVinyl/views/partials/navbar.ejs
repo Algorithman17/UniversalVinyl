@@ -1,0 +1,21 @@
+<nav>
+    <ul class="navbar">
+        <li><a href="/">LOGO</a></li>
+        <li><a href="/annonces">Annonces</a></li>
+        <li><a href="/pimp-vinyl">Pimp Vinyl</a></li>
+        <% if (user) { %>
+            <li><a href="/profil">Profil</a></li>
+            <% if (user.role === "admin") { %>
+                <li><a href="/adminDashboard">Tableau de bord admin</a></li>
+            <% } %>
+            <li><a href="/my-annonces">Mes annonces</a></li>
+            <li><a href="/conversations">Mes messages</a></li>
+            <form action="/logout" method="POST" class="logout-form">
+                <button type="submit">Se déconnecter</button>
+            </form>
+        <% } else { %>
+            <li><a href="/register-form">S'inscrire</a></li>
+            <li><a href="/login-form">Se connecter</a></li>
+        <% } %>
+    </ul>
+</nav>

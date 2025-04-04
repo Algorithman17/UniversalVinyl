@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .next {
+            transform: scale(1);
+            width: fit-content;
+        }
+
+        .prev {
+            transform: scale(-1);
+            width: fit-content;
+        }
+
+        .border0 {
+            display: flex;
+            width: 100px;
+            height: 100px;
+            background-color: rgb(161, 161, 161);
+            border: 2px solid black;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .border1 {
+            display: flex;
+            width: 85px;
+            height: 85px;
+            background-color: aqua;
+            border: 2px solid red;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .line {
+            position: relative;
+        }
+
+        .line1, .line2 {
+            display: block;
+            width: 25px;
+            height: 4px;
+            border: 1px solid black;
+            background-color: burlywood;
+            border-radius: 10px;
+        }
+
+        .line1 {
+            transform-origin: right;
+            transform: rotate(45deg);
+            position: absolute;
+            top: 2px;
+            right: 0;
+        }
+
+        .line2 {
+            transform-origin: right;
+            transform: rotate(315deg);
+            position: absolute;
+            top: -2px;
+            right: 0;
+        }
+
+        .line3 {
+            display: block;
+            width: 45px;
+            height: 4px;
+            border: 1px solid black;
+            background-color: burlywood;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="next">
+        <span class="border0">
+            <span class="border1">
+                <span class="line">
+                    <span class="line1"></span>
+                    <span class="line2"></span>
+                    <span class="line3"></span>
+                </span>
+            </span>
+        </span>
+    </div>
+</body>
+</html>

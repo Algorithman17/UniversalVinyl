@@ -1,0 +1,67 @@
+<style>
+    .showMessage {
+        width: fit-content;
+        height: 300px;
+        padding: 20px;
+        border: 2px solid black;
+        border-radius: 20px;
+        visibility: hidden;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        font-size: 30px;
+    }
+    .showMessage p {
+        margin: 0;
+        text-align: center;
+    }
+    .showMessage img {
+        width: 100px;
+        margin-bottom: 20px;
+    }
+</style>
+<div class="showMessage" id="blockMessage">
+    <p id="iconMessage">
+        <p style="height:0px; visibility:hidden; margin: 0;"  >
+            <a target="_blank" href="https://icons8.com/icon/110240/error">
+                Erreur
+            </a> 
+            icône par 
+            <a target="_blank" href="https://icons8.com">
+                Icons8
+            </a>
+        </p>
+    </p>
+    <p id="showMessage"></p>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () { 
+        let message = <%- JSON.stringify(message) %>;
+        if (message) {
+            const blockMessage = document.getElementById("blockMessage")
+            const iconMessage = document.getElementById("iconMessage")
+            const showMessage = document.getElementById("showMessage")
+
+            if(message.type === "success") {
+                iconMessage.innerHTML = `<img src="/images/success.png" alt="success icon">`
+            } else {
+                iconMessage.innerHTML = `<img src="/images/error.png" alt="error icon">`
+            }
+
+            showMessage.textContent = message.text
+
+            blockMessage.style.visibility = "visible"
+            setTimeout(() => {
+               blockMessage.style.visibility = "hidden" 
+            }, "3000")
+        } else {
+            next()
+        }
+    });
+</script>

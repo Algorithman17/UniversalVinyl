@@ -1,0 +1,153 @@
+[
+  {
+    "title": "Technologies utilisées pour la réalisation du site web",
+    "information": [
+      {
+        "content": "",
+        "permalink": null
+      }
+    ]
+  },
+  {
+    "title": "Agents utilisateurs, technologies d'assistance et outils utilisés pour vérifier l'accessibilité",
+    "information": [
+      {
+        "content": "Firefox et NVDA",
+        "permalink": null
+      },
+      {
+        "content": "Safari et VoiceOver",
+        "permalink": null
+      },
+      {
+        "content": "Firefox et Jaws",
+        "permalink": null
+      },
+      {
+        "content": "Colour Contrast Analyser",
+        "permalink": null
+      },
+      {
+        "content": "Extension « Web Developer »",
+        "permalink": null
+      },
+      {
+        "content": "Extension « Assistant RGAA »",
+        "permalink": null
+      },
+      {
+        "content": "Extension « WCAG Contrast checker »",
+        "permalink": null
+      },
+      {
+        "content": "Extension « ARC Toolkit »",
+        "permalink": null
+      },
+      {
+        "content": "Extension « HeadingsMap »",
+        "permalink": null
+      },
+      {
+        "content": "Outils pour développeurs intégrés au navigateur Firefox",
+        "permalink": null
+      },
+      {
+        "content": "Validateur HTML du W3C",
+        "permalink": null
+      }
+    ]
+  },
+  {
+    "title": "Pages du site ayant fait l'objet de la vérification de conformité",
+    "information": [
+      {
+        "content": "Page de connexion",
+        "permalink": null
+      },
+      {
+        "content": "Accueil",
+        "permalink": "/accueil"
+      },
+      {
+        "content": "Actualités",
+        "permalink": "/actualites"
+      },
+      {
+        "content": "Agenda",
+        "permalink": "/agenda"
+      },
+      {
+        "content": "Détail d'un événement",
+        "permalink": null
+      },
+      {
+        "content": "Mobilité et offres d'emploi",
+        "permalink": "/ma-vie-d-agent/mobilite-et-offres-d-emploi#/"
+      },
+      {
+        "content": "Détail d'une offre d'emploi",
+        "permalink": null
+      },
+      {
+        "content": "Actus syndicales",
+        "permalink": "/ma-vie-d-agent/syndicats?article=actus-syndicales"
+      },
+      {
+        "content": "Annuaire",
+        "permalink": "/m-organiser/annuaire/"
+      },
+      {
+        "content": "Réserver une salle, un véhicule ou du matériel",
+        "permalink": "/m-organiser/reservations"
+      },
+      {
+        "content": "Outils/applications",
+        "permalink": "/m-organiser/outils-applications"
+      },
+      {
+        "content": "Dépôt de fichiers volumineux",
+        "permalink": "/m-organiser/outils-applications/depot-de-fichiers-volumineux"
+      },
+      {
+        "content": "Parcours professionnel: droits et obligations",
+        "permalink": "/ma-vie-d-agent/parcours-professionnel?article=les-droits-et-obligations"
+      },
+      {
+        "content": "Parcours professionnel: l'entretien professionnel",
+        "permalink": "/ma-vie-d-agent/parcours-professionnel?article=l-entretien-professionnel-et-l-evaluation"
+      },
+      {
+        "content": "Parcours professionnel: formations",
+        "permalink": "/ma-vie-d-agent/parcours-professionnel?article=les-formations"
+      },
+      {
+        "content": "Organigramme",
+        "permalink": "/m-organiser/organigramme"
+      },
+      {
+        "content": "Numérique responsable",
+        "permalink": "/m-organiser/numerique-responsable"
+      },
+      {
+        "content": "Organisation politique",
+        "permalink": "/m-informer/organisation-politique"
+      },
+      {
+        "content": "Accessibilité",
+        "permalink": "/accessibilite"
+      },
+      {
+        "content": "Contact",
+        "permalink": "/contact"
+      },
+      {
+        "content": "Plan du site",
+        "permalink": "/plan-du-site"
+      },
+      {
+        "content": "Recherche",
+        "permalink": "/recherche/-/resultats/trouver?keywords=formation"
+      }
+    ]
+  }
+]

@@ -1,0 +1,35 @@
+.glossary {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.glossary-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.glossary-wrapper p {
+  margin-bottom: 0.5rem;
+}
+
+.glossary-wrapper ul {
+  list-style-type: "⬤";
+}
+
+.glossary-wrapper li {
+  padding-left: 0.75rem;
+  margin-left: 1rem;
+}
+
+.glossary-wrapper li strong {
+  font-weight: bold;
+}
+
+.glossary-bold {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: normal;
+}

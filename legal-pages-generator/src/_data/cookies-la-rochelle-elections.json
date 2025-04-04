@@ -1,0 +1,21 @@
+[
+  {
+    "title": "Cookies techniques nécessaires",
+    "description": "Ces cookies, directement créés par l’outil qui héberge le site, sont nécessaires au bon fonctionnement technique de celui-ci. Il n’est pas possible de refuser ces cookies si vous voulez visiter ce site.",
+    "information": [
+      {
+        "name": "ROUTEID_PHP",
+        "expire": "Session de navigation",
+        "use": "Permet la répartition de charge entre les différents noeuds de nos serveurs"
+      }
+    ]
+  },
+  {
+    "title": "Cookies statistiques",
+    "description": "Ce site n’utilise aucun cookie statistique."
+  },
+  {
+    "title": "Cookies tiers",
+    "description": "Ce site n’utilise aucun cookie tiers."
+  }
+]

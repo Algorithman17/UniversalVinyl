@@ -1,0 +1,67 @@
+{% comment %} Définition du titre de la page en fonction de l'URL {% endcomment %}
+{% assign pageTitle = title | default: page.renderData.title | append: " - " | append: site.title %}
+{% assign description = description | default: site.description %}
+{% assign canonicalUrl = page.url | toAbsoluteUrl -%}
+
+{% assign faviconCDA = "src/assets/images/favicon/favicon-agglo.png" %}
+{% assign faviconVille = "src/assets/images/favicon/favicon-ville.png" %}
+
+{% capture openGraph %}
+    {
+      "image": "{% if collectivity == "CDA" %}{{ faviconCDA | toAbsoluteImageUrl: 400 }}{% else %}{{ faviconVille | toAbsoluteImageUrl: 400 }}{% endif %}"
+    }
+{% endcapture %}
+
+{% assign openGraph = openGraph | fromJson %}
+
+<!DOCTYPE html>
+<html lang="{{ site.language }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ pageTitle }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="{{ site.author }}">
+  <link rel="canonical" href="{{ canonicalUrl }}">
+  {% if noindex %}
+    <meta name="robots" content="noindex">
+  {% endif %}
+  <!-- Préchargement des ressources si spécifié -->
+  {%- if preloads -%}
+  {% for preload in preloads %}
+    <link rel="preload" as="{{ preload.as }}" type="{{ preload.type }}" href="{{ preload.href }}" {% if preload.crossorigin %}crossorigin{% endif %}>
+  {%- endfor -%}
+  {% endif %}
+  <!-- Inclusion des styles et scripts -->
+  {% for href in stylesheets %}
+    <link rel="stylesheet" href="{{ href }}">
+  {%- endfor -%}
+  {%- for script in scripts -%}
+    <script defer src="{{ script }}"></script>
+  {%- endfor -%}
+  <!-- Gestion des favicons en fonction de la collectivité -->
+  {% if collectivity == "Ville" %}
+    {% favicon 'src/assets/images/favicon/favicon-ville.png' %}
+  {% endif %}
+  {% if collectivity == "CDA" %}
+    {% favicon 'src/assets/images/favicon/favicon-agglo.png' %}
+  {% endif %}
+  <meta property="og:title" content="{{ openGraph.title | default: pageTitle }}">
+  {%- if openGraph.image -%}
+    <meta property="og:image" content="{{ openGraph.image }}">
+  {%- endif -%}
+  <meta property="og:description" content="{{ openGraph.description | default: description }}">
+  <meta property="og:url" content="{{ page.url | toAbsoluteUrl }}">
+  <meta property="og:type" content="{{ openGraph.type | default: "website" }}">
+  <meta name="twitter:card" content="{{ openGraph.twitter.card | default: "summary" }}">
+  <meta name="twitter:title" content="{{ openGraph.title | default: pageTitle }}">
+  <meta name="twitter:description" content="{{ openGraph.description | default: description }}">
+  {%- if openGraph.image -%}
+    <meta name="twitter:image" content="{{ openGraph.image }}">
+  {%- endif -%}
+  <meta name="generator" content="{{ eleventy.generator }}" />
+</head>
+<body>
+  {{ content }}
+</body>
+</html>

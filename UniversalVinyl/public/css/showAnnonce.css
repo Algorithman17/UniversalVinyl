@@ -1,0 +1,107 @@
+.annonce {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+}
+
+.carousel {
+    overflow: hidden;
+    width: 70%;
+    position: relative;
+}
+
+.contentImgs {
+    display: flex;
+    width: 300%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.contentImg {
+    height: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.contentImg img {
+    width: 100%;
+    object-fit: scale-down;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.paging {
+    position: absolute;
+    width: fit-content;
+    right: 10px;
+    bottom: 0;
+    background-color: #26d804;
+    color: #383838;
+    border-radius: 4px;
+    padding: 2px 5px;
+}
+
+.annonceText {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgb(251, 255, 0);
+}
+
+
+.prev {
+    transform: scale(-0.5) translate(50%, 50%);
+    width: fit-content;
+    position: absolute;
+    z-index: 1;
+    left: 40px;
+    top: 225px;
+    cursor: pointer;
+}
+
+.next {
+    transform: scale(0.5) translate(0%, -50%);
+    transform-origin: right;
+    width: fit-content;
+    position: absolute;
+    z-index: 1;
+    right: 40px;
+    top: 225px;
+    cursor: pointer;
+}
+
+.editAndDeleteButton {
+    display: flex;
+    justify-content: space-evenly;  
+    padding-block: 20px;
+    width: 100%;
+}
+
+.editButton, .deleteButton {
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: rgb(255, 174, 0);
+    border: 0;
+}
+
+.deleteButton {
+    height: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .prev, .next {
+        display: none;
+    }
+}
+
+/* 
+0px - 480px
+481px - 768px
+769px - 1279px
+1280px+
+*/

@@ -1,0 +1,53 @@
+{% for item in data %}
+<div class="accordion">
+  <!-- Bouton pour ouvrir/fermer l'accordéon -->
+  <button class="accordion-btn" aria-expanded="false" aria-controls="accordion-{{ forloop.index }}">
+    {{ item.title }}
+    <!-- Bouton pour ouvrir/fermer l'accordéon avec le titre de l'élément -->
+    <span aria-hidden="true">
+      <svg class="icon-accordeon">
+        <use
+          xlink:href="/assets/images/svg/sprites/sprite-icon-acordeon.svg#icon-accordeon-plus"
+        ></use>
+      </svg>
+    </span>
+    <!-- Icône indiquant l'état de l'accordéon (ouvert/fermé) -->
+  </button>
+  <!-- Contenu de l'accordéon -->
+  <div class="accordion-collapse" id="accordion-{{ forloop.index }}" aria-hidden="true">
+    <div>      
+      <p>{{ item.description }}</p>
+      <!-- Description de l'élément de l'accordéon -->
+      {% if item.information %}
+        <!-- Tableau pour afficher les informations supplémentaires -->
+        <div class="accordion-table-wrapper" tabindex="-1">
+          <table class="accordion-table">
+            <caption>
+              {{ item.title }}
+            </caption>
+            <!-- Titre du tableau -->
+            <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Durée de conservation</th>
+                <th scope="col">Utilisation</th>
+              </tr>
+            </thead>
+            <!-- En-tête du tableau -->
+            <tbody>
+              {% for row in item.information %}
+                <tr>
+                  <td><strong>{{ row.name }}</strong></td>
+                  <td>{{ row.expire }}</td>
+                  <td>{{ row.use }}</td>
+                </tr>
+                <!-- Ligne du tableau avec les informations sur les cookies -->
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endfor %}

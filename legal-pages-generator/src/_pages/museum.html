@@ -1,0 +1,18 @@
+---
+# Indiquer le permalien pour accéder à la page
+permalink: /museum/
+# Indiquer le nom site concerné
+title: Museum La Rochelle
+# Indiquer l'url du site concerné
+urlSite: https://museum.larochelle.fr/
+# Indiquer la collectivité : CDA ou Ville
+collectivity: Ville
+# Indiquer la date de modification du site au format YYYY-MM-DD
+lastUpdate: 2024-06-18
+# Indiquer si le site concerné comporte Matomo : true ou false
+hasMatomo: true
+---
+
+{% comment %} Mettre le fichier JSON des cookies dans 
+la variable - data: cookies-nom-du-site {% endcomment %}
+{% render "accordion.html" data: cookies-museum %}

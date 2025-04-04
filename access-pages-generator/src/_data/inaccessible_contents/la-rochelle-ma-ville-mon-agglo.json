@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Non conformité",
+    "description": "Ne sont listées ici que les non-conformités jugées les plus impactantes et présentes en quantités importantes dans les pages de l’échantillon. Le résultat complet de l’audit est mis à disposition dans le paragraphe précédent.",
+    "information": [
+      {
+        "content": "Utilisation de composants JavaScript non accessibles aux technologies d’assistance (autocomplétion de recherche, champ de sélection multiple)"
+      },
+      {
+        "content": "Contenus cachés non ignorés par les technologies d'assistance (cartes dynamiques)"
+      },
+      {
+        "content": "Intitulés de boutons non pertinents (navigation dans les processus à étapes)"
+      },
+      {
+        "content": "Information mal structurée par des titres, des listes ou des champ de saisie"
+      }
+    ]
+  },
+  {
+    "title": "Dérogations pour charge disproportionnée", 
+    "description": null,
+    "information": [
+      {
+        "content": "Néant"
+      }
+    ]
+  },
+  {
+    "title": "Contenus non soumis à l'obligation d'accessibilité", 
+    "description": null,
+    "information": [
+      {
+        "content": "Néant"
+      }
+    ]
+  }
+]

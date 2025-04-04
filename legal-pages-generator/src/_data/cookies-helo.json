@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Cookies techniques nécessaires",
+    "description": "Ces cookies, directement créés par l’outil qui héberge le site, sont nécessaires au bon fonctionnement technique de celui-ci. Il n’est pas possible de refuser ces cookies si vous voulez visiter ce site.",
+    "information": [
+      {
+        "name": "_ASPXAUTH",
+        "expire": "23 heures",
+        "use": "Permet le maintien de la connexion à votre espace personnel si la déconnexion n’est pas effectuée (bouton se déconnecter ou fermeture du navigateur)"
+      },
+      {
+        "name": "ASP.NET_SessionId",
+        "expire": "Session de navigation",
+        "use": "Permet le maintien de la connexion à votre espace personnel si la déconnexion n’est pas effectuée (bouton se déconnecter ou fermeture du navigateur)"
+      },
+      {
+        "name": "EGEESUITE.PRODUIT.CurrentUICulture",
+        "expire": "1 an",
+        "use": "Permet de déterminer vos paramètres régionaux (langue, …)"
+      },
+      {
+        "name": "__RequestVerificationToken_L1BvcnRhaWw1",
+        "expire": "Session de navigation",
+        "use": "Utilisé pour empêcher les attaques par falsification de requête"
+      }
+    ]
+  },
+  {
+    "title": "Cookies statistiques",
+    "description": "Ce site n’utilise aucun cookie statistique."
+  },
+  {
+    "title": "Cookies tiers",
+    "description": "Ce site n’utilise aucun cookie tiers."
+  }
+]

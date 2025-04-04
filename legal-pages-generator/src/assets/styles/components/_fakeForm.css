@@ -1,0 +1,45 @@
+.fakeForm {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, min-height);
+  gap: 1.5rem;
+  padding: 1rem;
+  border: 0.0625rem var(--dark-blue) solid;
+  border-radius: 0.25rem;
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.fakeForm-title {
+  text-transform: uppercase;
+  grid-column: span 2;
+}
+
+.fakeForm-label {
+  font-size: 0.875rem;
+}
+
+.fakeForm-input {
+  background: var(--light-blue);
+  min-height: 2rem;
+}
+
+.fakeForm-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fakeForm-wrapper:last-of-type {
+  grid-column: span 2;
+}
+
+.fakeForm-wrapper:last-of-type .fakeForm-input {
+  min-height: 8rem;
+}
+
+@media (max-width: 32rem) {
+  .fakeForm-wrapper {
+    grid-column: span 2;
+  }
+}

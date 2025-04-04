@@ -1,0 +1,53 @@
+[
+  {
+    "title": "Cookies techniques nécessaires",
+    "description": "Ces cookies, directement créés par l’outil qui héberge le site, sont nécessaires au bon fonctionnement technique de celui-ci. Il n’est pas possible de refuser ces cookies si vous voulez visiter ce site.",
+    "information": [
+      {
+        "name": "tarteaucitron",
+        "expire": "1 an",
+        "use": "Utilisé par Tarte Au Citron, notre outil de gestion de cookies, afin d’enregistrer vos choix en matière d’acceptation ou de refus des cookies"
+      },
+      {
+        "name": "i18next",
+        "expire": "Session de navigation",
+        "use": "Permet d’adapter la langue du site en fonction de votre zone géographique"
+      },
+      {
+        "name": "fe_typo_user",
+        "expire": "Session de navigation",
+        "use": "Permet d’identifier une session lorsque vous êtes connecté sur ce site"
+      }
+    ]
+  },
+  {
+    "title": "Cookies statistiques",
+    "description": "Les cookies statistiques aident la Ville de La Rochelle, propriétaire de ce site web, à comprendre la navigation des visiteurs et leurs interactions avec les sites webs. L'outil Matomo est utilisé à ces fins, paramétré pour être entièrement anonymisé, et les données collectées sont exclusivement destinées à la Ville de La Rochelle. Nous respectons les préconisations de la CNIL permettant d’exempter ces cookies de votre consentement.",
+    "information": [
+      {
+        "name": "_pk_id",
+        "expire": "13 mois",
+        "use": "Effectue les mesures d’audience (nombre de visite, temps moyen passé sur le site, quelles pages ont été visitées, …)."
+      },
+      {
+        "name": "_pk_ref",
+        "expire": "6 mois",
+        "use": "Identifie le site de référence à partir duquel le visiteur est arrivé"
+      },
+      {
+        "name": "_pk_ses",
+        "expire": "30 minutes",
+        "use": "Suit les demandes de page du visiteur au cours de la session."
+      },
+      {
+        "name": "MATOMO_SESSID",
+        "expire": "Session de navigation",
+        "use": "Enregistre la session courante de l'outil de suivi statistique Matomo"
+      }
+    ]
+  },
+  {
+    "title": "Cookies tiers",
+    "description": "Ce site n’utilise aucun cookie tiers."
+  }
+]

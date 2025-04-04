@@ -1,0 +1,57 @@
+https://www.agglo-larochelle.fr/ ok
+
+https://larochelle.renocarbone.fddcp.inef4.org/app non conforme
+
+https://www.bazimmo.fr/ ?
+
+https://www.carre-amelot.net/ non conforme
+
+https://conservatoire.agglo-larochelle.fr/ non conforme
+
+https://www.declaloc.fr/ bug
+
+https://demarches-urbanisme.agglo-larochelle.fr/ bug
+
+https://helo.agglo-larochelle.fr/ bug
+
+https://www.larochelle.fr/action-municipale/ville-connectee/lapplication-la-rochelle-au-bout-des-doigts
+
+https://elections.larochelle.fr ok
+
+https://demarches.agglo-larochelle.fr ok
+
+https://www.larochelle-technopole.fr/ non conforme
+
+https://www.larochelle-zerocarbone.fr/ non conforme
+
+https://mediatheques.agglo-larochelle.fr/ non conforme
+
+https://museedesbeauxarts.larochelle.fr/ non conforme
+
+https://museedunouveaumonde.larochelle.fr/ non conforme
+
+https://museemaritime.larochelle.fr/ non conforme
+
+https://museum.larochelle.fr/ non conforme
+
+https://opendata.agglo-larochelle.fr/ non conforme
+
+https://e-piscines.agglo-larochelle.fr/ bug
+
+https://piscines.agglo-larochelle.fr/ non conforme
+
+https://petitions.larochelle.fr/ bug
+
+https://prre.agglo-larochelle.fr/ non conforme
+
+https://www.pru-villeneuve-larochelle.fr/ non conforme
+
+https://talents.elsatis.fr/prod10/portal/portal.jsp?c=137055141&p=114404659&g=114404361&idSupport=null bug
+
+https://talents.elsatis.fr/prod10/portal/portal.jsp?c=137055141&p=114404659&g=114404361&idSupport=null bug
+
+https://tandem.larochelle.fr/ ok
+
+https://agglolarochelle.taxesejour.fr/ bug
+
+https://www.larochelle.fr/ ok

@@ -1,0 +1,21 @@
+[
+  {
+    "title": "Cookies techniques nécessaires",
+    "description": "Ces cookies, directement créés par l’outil qui héberge le site, sont nécessaires au bon fonctionnement technique de celui-ci. Il n’est pas possible de refuser ces cookies si vous voulez visiter ce site.",
+    "information": [
+      {
+        "name": "PHPSESSID",
+        "expire": "Session de navigation",
+        "use": "Permet la sauvegarde d'informations saisies durant la session de navigation, par exemple pour les conserver en cas de recharge de page"
+      }
+    ]
+  },
+  {
+    "title": "Cookies statistiques",
+    "description": "Ce site n’utilise aucun cookie statiques."
+  },
+  {
+    "title": "Cookies tiers",
+    "description": "Ce site n’utilise aucun cookie tiers."
+  }
+]

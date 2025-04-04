@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  app:
+    image: "${DEFAULT_CI_REGISTRY_IMAGE}:${IMAGE_TAG}"
+    init: true
+    networks:
+      - proxy
+    healthcheck:
+      test: [ "CMD", "curl", "--silent", "--fail", "--ipv4", "http://localhost:80/agglo-larochelle/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 8
+      start_period: 20s
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          cpus: '0.10'
+          memory: 128M
+      update_config:
+        parallelism: 1
+        order: start-first
+        failure_action: continue
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 0
+        window: 120s
+      labels:
+        traefik.http.routers.legal-pages-generator.rule: "Host(`donneespersonnelles.larochelle.fr`) || Host(`donneespersonnelles-lab.larochelle.fr`)"
+        traefik.http.routers.legal-pages-generator.entrypoints: "http"
+        traefik.http.services.legal-pages-generator.loadbalancer.server.port: 80
+        traefik.http.services.legal-pages-generator.loadbalancer.sticky.cookie: "true"
+        traefik.http.services.legal-pages-generator.loadbalancer.sticky.cookie.name: "traefik-${CI_PROJECT_NAME}"
+networks:
+  proxy:
+    external: true

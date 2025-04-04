@@ -1,0 +1,36 @@
+<ul class="contact-rights-list">
+  <li class="contact-rights-item">
+    <div class="contact-rights-method">
+      <svg class="icon">
+        <use xlink:href="/assets/images/svg/sprites/sprite-icon-with-bg.svg#icon-vos-droits-courier"></use>
+      </svg>
+      <p>Par courrier</p>
+    </div>
+    <p>
+      Il doit être signé et accompagné de la copie d’un titre d’identité.
+    </p>
+    <p>{{ contact.address }}</p>
+  </li>
+  <li class="contact-rights-item">
+    <div class="contact-rights-method">
+      <svg class="icon">
+        <use xlink:href="/assets/images/svg/sprites/sprite-icon-with-bg.svg#icon-vos-droits-courriel"></use>
+      </svg>
+      <p>Par courriel</p>
+    </div>
+    <p>
+      En écrivant au mail suivant :
+    </p>
+    <a href="mailto:{{ contact.mail }}">{{ contact.mail }}</a>
+  </li>
+  <li class="contact-rights-item">
+    <div class="contact-rights-method">
+      <svg class="icon">
+        <use xlink:href="/assets/images/svg/sprites/sprite-icon-with-bg.svg#icon-vos-droits-form-en-ligne"></use>
+      </svg>
+      <p>En ligne</p>
+    </div>
+    <p>En remplissant le formulaire suivant :</p>
+    <a href="{% if collectivity == 'Ville' %} {{contact.city.form}} {% else %} {{contact.agglomeration.form}} {% endif %}">Formulaire de contact du délégué à la protection des données (DPO)</a>
+  </li>
+</ul>

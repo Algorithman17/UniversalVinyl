@@ -1,0 +1,16 @@
+:is(.title-h1, .title-h2) {
+  font-size: 3rem;
+}
+
+.title-h3 {
+  font-size: 2rem;
+}
+
+@media (max-width: 64rem) {
+  :is(.title-h1, .title-h2) {
+    font-size: 2rem;
+  }
+  .title-h3 {
+    font-size: 1.5rem;
+  }
+}

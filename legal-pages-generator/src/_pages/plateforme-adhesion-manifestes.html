@@ -1,0 +1,18 @@
+---
+# Indiquer le permalien pour accéder à la page
+permalink: /plateforme-adhesion-manifestes/
+# Indiquer le nom site concerné
+title: Plateforme d'adhésion aux manifestes
+# Indiquer l'url du site concerné
+urlSite: https://petitions.larochelle.fr/
+# Indiquer la collectivité : CDA ou Ville
+collectivity: CDA
+# Indiquer la date de modification du site au format YYYY-MM-DD
+lastUpdate: 2024-09-06
+# Indiquer si le site concerné comporte Matomo : true ou false
+hasMatomo: false
+---
+
+{% comment %} Mettre le fichier JSON des cookies dans
+la variable - data: cookies-nom-du-site {% endcomment %}
+{% render "accordion.html" data: cookies-plateforme-adhesion-manifestes %}

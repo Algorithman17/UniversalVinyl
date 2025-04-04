@@ -1,0 +1,23 @@
+.cookie-usage {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.cookie-usage-subtitle {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 2rem;
+}
+
+.cookie-usage-subtitle img {
+  height: auto;
+  width: 4rem;
+}
+
+@media (max-width: 64rem) {
+  .cookie-usage-subtitle {
+    flex-direction: column;
+  }
+}

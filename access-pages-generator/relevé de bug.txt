@@ -1,0 +1,28 @@
+Pas de lien données personnel et accessibilité sur:
+    - https://declaloc.fr 
+    - https://petitions.larochelle.fr/
+    - https://agglolarochelle.taxesejour.fr/
+
+je n'arrive pas à acceder à la page bazimo il faut que je me log
+
+Pas de lien accessibilité sur 
+    - https://demarches-urbanisme.agglo-larochelle.fr/ 
+    - https://helo.agglo-larochelle.fr/
+    - https://e-piscines.agglo-larochelle.fr/
+
+Pour les sites de la ville de la rochelle:
+    - ils ont la même page accessibilité (le même URL)
+    - sur chaques site de la ville avant d'atteindre la page accessibilité, 
+      il faut cliqué sur mentions légales, déscendre au footer
+      et la il y'a le lien accessibilité
+
+Pour https://demarches.agglo-larochelle.fr/liens-footer/accessibilite/
+    - Pour la partie "Pages du site ayant fait l’objet de la vérification de conformité"
+        - Certain lien sont erronés:
+            - Page d'accueil
+            - Démarche Espaces verts et naturels
+
+Pour https://talents.elsatis.fr/prod10/portal/portal.jsp?c=137055141&p=114404659&g=114404361&idSupport=null
+    - Liens "données personnel" et "mentions légales" érronés
+    - Est le même lien "urlSite" pour les _pages "recrutement-agglo.html"
+      et "recrutement-ville.html" du code source

@@ -1,0 +1,16 @@
+<!DOCTYPE html>  <!-- Déclare le type de document HTML5 -->
+<html lang="en">  <!-- Spécifie que la langue du document est l'anglais -->
+<head>
+    <meta charset="UTF-8">  <!-- Définit l'encodage des caractères en UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Permet un affichage responsive sur les appareils mobiles -->
+    <title>Document</title>  <!-- Titre de la page affiché dans l'onglet du navigateur -->
+</head>
+<body>
+    <header>
+        <h1>{{ title | default: "My Blog" }}</h1>  <!-- Affiche le titre de la page. Si "title" n'est pas défini, affiche "My Blog" par défaut -->
+    </header>
+    <main>
+        {{ content }}  <!-- Affiche le contenu de la page (ce qui est défini dans le front matter de chaque fichier Markdown) -->
+    </main>
+</body>
+</html>

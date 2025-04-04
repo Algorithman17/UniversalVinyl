@@ -1,0 +1,21 @@
+[
+    {
+        "title": "Cookies techniques nécessaires",
+        "description": "Ces cookies, directement créés par l’outil qui héberge le site, sont nécessaires au bon fonctionnement technique de celui-ci. Il n’est pas possible de refuser ces cookies si vous voulez visiter ce site.",
+        "information": [
+            {
+                "name": "csrftoken",
+                "expire": "1 an",
+                "use": "Protège contre les attaques de sécurité provenant de sites tiers qui tenteraient d'exécuter des actions malveillantes via l'utilisation du formulaire de signature"
+            }
+        ]
+    },
+    {
+        "title": "Cookies statistiques",
+        "description": "Ce site n’utilise aucun cookie statiques."
+    },
+    {
+        "title": "Cookies tiers",
+        "description": "Ce site n’utilise aucun cookie tiers."
+    }
+]

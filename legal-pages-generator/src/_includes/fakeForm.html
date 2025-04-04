@@ -1,0 +1,17 @@
+{% assign labels = labels | split: "," %}
+<!-- Div contenant le formulaire factice -->
+<div class="fakeForm" aria-hidden="true">
+    <!-- Titre du formulaire -->
+    <p class="fakeForm-title">
+    {{ nameForm }}
+    </p>
+    <!-- Boucle pour afficher chaque champ du formulaire -->
+    {% for label in labels %}
+        <div class="fakeForm-wrapper">
+            <!-- Affiche le label du champ -->
+            <span class="fakeForm-label">{{ label }}</span>
+            <!-- Champ factice sans fonctionnalité -->
+            <span class="fakeForm-input"></span>
+        </div>
+    {% endfor %}
+</div>

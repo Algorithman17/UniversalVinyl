@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Cookies techniques",
+    "description": "Cette application n'utilise pas de cookies techniques. Les données persistantes utiles sont exclusivement gérées en stockage local. Les données de géolocalisation sont enregistrées dans le téléphone. Elles permettent à l'application de vous transmettre des informations de proximité et ne sont pas conservées pour l'usage spécifique du service. Si vous ne souhaitez pas bénéficier de la fonctionnalité de géolocalisation, vous pouvez désactiver le service de localisation de votre terminal."
+  },
+  {
+    "title": "Cookies statistiques",
+    "description": "Cette application utilise l'outil Matomo pour permettre à la Ville de La Rochelle, propriétaire de cette application, de comprendre l'utilisation des services par les utilisateurs. L'outil Matomo est paramétré pour être entièrement anonymisé, et les données collectées sont exclusivement destinées à la Ville de La Rochelle. Nous respectons les préconisations de la CNIL permettant d'exempter ces cookies de votre consentement."
+  },
+  {
+    "title": "Cookies tiers",
+    "description": "Cette application n'utilise aucun cookie tiers."
+  }
+]

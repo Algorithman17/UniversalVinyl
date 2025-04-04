@@ -1,0 +1,28 @@
+{% for item in data %}
+<div class="accordion">
+
+  <button class="accordion-btn" aria-expanded="false" aria-controls="accordion-{{ forloop.index }}">
+    {{ item.title }}
+    <span aria-hidden="true">
+      <svg class="icon-accordeon">
+        <use
+          xlink:href="/assets/images/svg/sprites/sprite-icon-acordeon.svg#icon-accordeon-plus"
+        ></use>
+      </svg>
+    </span>
+  </button>
+
+  <div class="accordion-collapse" id="accordion-{{ forloop.index }}" aria-hidden="true">  
+    {% if item.description %}
+    <p>{{ item.description }}</p>
+    {% endif %}
+    {% if item.information %}
+      <ul>
+        {% for row in item.information %}
+        <li>{{ row.content }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}

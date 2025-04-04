@@ -1,0 +1,115 @@
+.accordion {
+  border: 0.0625rem var(--dark-blue) solid;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  border-radius: 0.25rem;
+}
+
+.accordion-btn {
+  display: flex;
+  align-items: center;
+  color: var(--dark-blue);
+  width: 100%;
+  cursor: pointer;
+  background: none;
+  font-size: 1.25rem;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  /* letter-spacing: -0.1rem; */
+  text-transform: uppercase;
+  padding: 1rem 2rem 1rem 3rem;
+  border: none;
+  text-align: left;
+}
+
+.accordion-btn span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 2.5rem;
+  min-height: 2.5rem;
+  border-radius: 50%;
+  background: var(--dark-blue);
+  margin-left: auto;
+}
+.accordion-btn svg {
+  pointer-events: none;
+  max-width: 1rem;
+  max-height: 1rem;
+}
+
+.accordion-collapse {
+  padding-inline: 3rem 6rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.accordion-collapse strong {
+  font-weight: 600;
+}
+
+.accordion-collapse > div {
+  margin-block: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.accordion-table-wrapper {
+  overflow-y: auto;
+  width: 100%;
+}
+
+.accordion-table {
+  width: 100%;
+}
+
+.accordion-table strong {
+  font-weight: 600;
+}
+
+.accordion-table caption {
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.accordion-table :is(thead, tr:not(tr:last-child)) {
+  border-bottom: 0.0625rem var(--dark-blue) solid;
+}
+
+.accordion-table th {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: start;
+}
+
+.accordion-table :is(th, td) {
+  padding: 1rem;
+}
+
+.accordion-table :is(th:first-of-type, td:first-of-type) {
+  width: 20%;
+}
+
+.accordion-table :is(th:nth-of-type(2), td:nth-of-type(2)) {
+  width: 30%;
+}
+
+.accordion-table :is(th:nth-of-type(3), td:nth-of-type(3)) {
+  width: 50%;
+}
+
+@media (max-width: 64rem) {
+  .accordion-btn {
+    gap: 1.5rem;
+    padding-inline: 1rem;
+    font-size: 1rem;
+  }
+
+  .accordion-collapse {
+    padding-inline: 1rem;
+  }
+}

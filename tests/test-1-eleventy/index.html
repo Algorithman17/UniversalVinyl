@@ -1,0 +1,15 @@
+---
+layout: layout.html  <!-- Indique que cette page utilise le layout "layout.html" -->
+---
+
+<!-- Démarre une boucle pour parcourir chaque article dans la collection "post" -->
+{% for post in collections.post %}
+
+    <!-- Affiche le titre de l'article en tant que lien vers sa page -->
+    <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2> 
+
+    <!-- Affiche un extrait du contenu de l'article -->
+    <p>{{ post.content }}</p>
+
+<!-- Fin de la boucle qui parcourt les articles -->
+{% endfor %}

@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<main>
+<h1>Bienvenue sur Universal Vinyl</h1>
+<% if (user && user.role === "admin") { %>
+    <p>Connecté en tant que <strong><%= user.email %> (<%= user.role %>)</strong></p>
+    <a href="/adminDashboard">Accéder au tableau de bord</a>
+<% } else if (user) { %>
+    <p>Connecté en tant que <strong><%= user.email %></strong></p>
+    <form action="/logout" method="POST">
+        <button type="submit">Se déconnecter</button>
+    </form>
+<% } else { %>
+    <p>Vous n'êtes pas connecté.</p>
+<% } %>
+<form action="/cookie-theme" method="post">
+    <button type="submit">Changer le thème</button>
+</form>
+</main>
+<%- include('../partials/footer') %>

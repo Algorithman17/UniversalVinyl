@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Non conformité",
+    "description": "Ne sont listées ici que les non-conformités jugées les plus impactantes et présentes en quantités importantes dans les pages de l’échantillon. Le résultat complet de l’audit est mis à disposition dans le paragraphe précédent.",
+    "information": [
+      {
+        "content": "Utilisation de champs de formulaire sans étiquette"
+      },
+      {
+        "content": "Captcha non accessible"
+      },
+      {
+        "content": "Carte interactive non accessible"
+      },
+      {
+        "content": "Contenu non accessible au clavier"
+      },
+      {
+        "content": "Images sans alternative textuelle"
+      },
+      {
+        "content": "Vidéo sans transcription textuelle"
+      },
+      {
+        "content": "En-tête de tableau non déclarée "
+      },
+      {
+        "content": "Absence d’indication sur le format pour des champs de saisie"
+      },
+      {
+        "content": "Document bureautique non accessible"
+      },
+      {
+        "content": "Mouvement perpétuel "
+      }
+    ]
+  },
+  {
+    "title": "Dérogations pour charge disproportionnée", 
+    "description": null,
+    "information": [
+      {
+        "content": "Néant"
+      }
+    ]
+  },
+  {
+    "title": "Contenus non soumis à l'obligation d'accessibilité", 
+    "description": null,
+    "information": [
+      {
+        "content": "Lecteur youtube"
+      },
+      {
+        "content": "Contenu Atmo "
+      },
+      {
+        "content": "Les fichiers disponibles dans des formats bureautiques publiés avant le 23 septembre 2018"
+      }
+    ]
+  }
+]

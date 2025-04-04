@@ -1,0 +1,500 @@
+---
+layout: base
+stylesheets:
+  - /assets/styles/main.css
+scripts:
+  - /assets/scripts/index.js
+---
+{% render "goTopBtn.html" %}
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-header">
+      <h1 class="hero-title title-h1">
+        {{ title }} - Politique de protection des données personnelles
+      </h1>
+      <a class="hero-return" href="{{ urlSite }}">
+        Retourner à l'accueil
+        <svg class="icon-fleche" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-fleche.svg#icon-fleche-droite"
+          ></use>
+        </svg>
+      </a>
+    </div>
+    <div class="hero-wrapper">
+      <p class="hero-paragraph paragraph">
+        Pour bénéficier des services proposés par {% if collectivity == "CDA" %}
+        la Communauté d'Agglomération de La Rochelle, {% endif %} {% if
+        collectivity == "Ville" %} la Ville de La Rochelle, {% endif %} vous
+        êtes amenés à communiquer des données à caractère personnel (ci-après
+        les «Données Personnelles »)
+      </p>
+      <p class="hero-paragraph paragraph">
+        Nous savons que
+        <strong>
+          ces informations sont précieuses et nous nous engageons à en assurer
+          la protection, la confidentialité et la sécurité ainsi qu’à respecter
+          votre vie privée.
+        </strong>
+      </p>
+      <p class="hero-paragraph paragraph">
+        Nous, c’est-à-dire, {% if collectivity == "CDA" %} la Communauté
+        d'Agglomération de La Rochelle, {% endif %} {% if collectivity ==
+        "Ville" %} la Ville de La Rochelle, {% endif %} sommes le
+        <a href="#data-controller">responsable du traitement</a> de vos Données
+        Personnelles. Nous ne revendons pas vos Données Personnelles et nous les
+        conservons pour une durée limitée.
+      </p>
+    </div>
+    <div class="hero-wrapper">
+      <h2 class="title-h3">Objectif de la présente politique</h2>
+      <p class="hero-paragraph paragraph">
+        Vous fournir les informations nécessaires pour comprendre comment {% if
+        collectivity == "CDA" %} la Communauté d'Agglomération de La Rochelle,
+        {% endif %} {% if collectivity == "Ville" %} la Ville de La Rochelle, {%
+        endif %} utilise vos Données Personnelles afin de mener à bien ses
+        missions de service public
+      </p>
+    </div>
+    {% render "summary.html" %}
+  </section>
+
+  <section class="definition" id="definition">
+    {% render "headTitle.html" src: "icon-une-donnee-personnelle", title:
+    "Qu'est-ce qu'une donnée personnelle ?" %}
+    <p class="paragraph-not-center">
+      Une donnée à caractère personnel désigne toute information se rapportant à
+      une personne
+    </p>
+    <div class="definition-example">
+      <svg class="icon-other" aria-hidden="true">
+        <use
+          xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-ex-donnee-personnelle"
+        ></use>
+      </svg>
+      <p class="paragraph-not-center">
+        Par exemple : il peut s’agir d’un nom, une adresse, une immatriculation
+        de véhicule, un numéro de téléphone ou de la combinaison de plusieurs
+        éléments.
+      </p>
+    </div>
+    <p>Vos Données Personnelles sont protégées par la Loi*.</p>
+    <div class="definition-items-wrapper">
+      <p>
+        RGPD : Règlement Général sur la Protection des Données. <br />
+        C’est un règlement européen qui vise à :
+      </p>
+      <ul class="definition-items">
+        <li class="definition-item">renforcer les droits des personnes</li>
+        <li class="definition-item">
+          leur donner plus de maîtrise sur leurs données personnelles
+        </li>
+      </ul>
+    </div>
+    <div class="definition-check">
+      <p>
+        Pour recueillir une donnée personnelle, il faut une bonne raison de le
+        faire :
+      </p>
+      <ul class="definition-items-check">
+        <li class="definition-item-check">
+          Collecter une donnée vraiment utile
+        </li>
+        <li class="definition-item-check">Expliquer à quoi elle va servir</li>
+        <li class="definition-item-check">Limiter sa durée de conservation</li>
+        <li class="definition-item-check">
+          Et surtout, respecter les droits et libertés des personnes !
+        </li>
+      </ul>
+    </div>
+    <div class="definition-legals">
+      <p>
+        * Loi n° 78-17 du 6 janvier 1978 modifiée relative à l’informatique, aux
+        fichiers et aux libertés (dite
+        <strong>Loi Informatique et Libertés</strong>)
+      </p>
+      <p>
+        * Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27
+        avril 2016 relatif à la protection des personnes physiques à l’égard du
+        Traitement des Données à caractère personnel et à la libre circulation
+        de ces Données [<strong>RGPD</strong>].
+      </p>
+    </div>
+  </section>
+
+  <section class="data-collection" id="data-collection">
+    {% render "headTitle.html" src: "icon-donnees-collectees-et-protection",
+    title: "Quelles sont les données personnelles que nous collectons et comment
+    les protégeons-nous ?" %}
+    <div class="data-collection-wrapper">
+      <h3 class="data-collection-subtitle title-h3">
+        <svg class="icon-other" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-donnees-collectees"
+          ></use>
+        </svg>
+        Les données personnelles que nous collectons ?
+      </h3>
+      <p>
+        Les informations que nous traitons sont directement recueillies auprès
+        de vous, chaque fois que vous remplissez un formulaire en ligne
+        disponible à partir de ce site.
+      </p>
+      <div class="data-collection-form">
+        <div class="data-collection-fakeForm">
+          {% render "fakeForm.html" nameForm: "Formulaire de contact", labels:
+          "Nom,Prénom,Courriel (obligatoire),Téléphone (obligatoire),Message
+          (obligatoire)" %}
+          <span aria-hidden="true">Exemple de formulaire de contact</span>
+        </div>
+        {% image "src/assets/images/svg/arrow.svg", "" %} {% image
+        "src/assets/images/svg/arrow.svg", "" %}
+        <p class="data-collection-text">
+          Le caractère facultatif ou obligatoire des données est indiqué sur
+          chaque formulaire.
+        </p>
+      </div>
+    </div>
+    <div class="data-collection-wrapper">
+      <h3 class="data-collection-subtitle title-h3">
+        <svg class="icon-other" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-donnees-protegees"
+          ></use>
+        </svg>
+        Comment vos données personnelles sont-elles protégées ?
+      </h3>
+      <p>
+        Nous mettons en place des mesures de sécurité permettant de maintenir la
+        sécurité de notre système d’information, sur la base de règles définies
+        par l’État.
+      </p>
+      <h3 class="data-collection-bold">
+        Seuls certains de nos agents ont accès à vos Données Personnelles
+      </h3>
+      <p>
+        {% if collectivity == "CDA" %} La Communauté d'Agglomération de La
+        Rochelle {% endif %} {% if collectivity == "Ville" %} La Ville de La
+        Rochelle {% endif %} a mis en place une
+        <strong>politique de gestion des droits</strong> de ses agents, de sorte
+        que ne puissent accéder à vos Données Personnelles que ces agents ayant
+        un intérêt professionnel à y accéder dans le cadre de leurs fonctions.
+      </p>
+      <h3 class="data-collection-bold">
+        Nos sous-traitants participent eux-aussi à la protection de vos Données
+        Personnelles
+      </h3>
+      <p>
+        Pour des raisons purement techniques, {% if collectivity == "CDA" %} 
+        La Communauté d'Agglomération de La Rochelle {% endif %} 
+        {% if collectivity == "Ville" %} la Ville de La Rochelle {% endif %} 
+        peut être amenée à sous-traiter certaines prestations à sa charge.
+      </p>
+      <p>
+        Dans tous les cas de sous-traitance du traitement de certaines de vos
+        Données Personnelles, {% if collectivity == "CDA" %} la Communauté
+        d'Agglomération de La Rochelle {% endif %} {% if collectivity == "Ville"
+        %} la Ville de La Rochelle {% endif %} reste seule responsable de
+        traitement. Elle a mis en place une
+        <strong>responsabilité contractuelle</strong> avec chacun de ses
+        sous-traitants, leur imposant de respecter l’ensemble des dispositions
+        juridiques et techniques de protection de vos Données Personnelles
+        conformément au RGPD.
+      </p>
+      <h3 class="data-collection-bold">
+        Nous ne collectons que les Données Personnelles vraiment utiles
+      </h3>
+      <div class="data-collection-list-wrapper">
+        <p>
+          Chaque formulaire ou téléservice limite la collecte des données
+          personnelles au strict nécessaire et indique notamment :
+        </p>
+        <ul class="data-collection-items">
+          <li class="data-collection-item">
+            les finalités du recueil de ces données ;
+          </li>
+          <li class="data-collection-item">
+            le caractère obligatoire ou facultatif de la saisie des informations
+            ;
+          </li>
+          <li class="data-collection-item">
+            les personnes autorisées à prendre connaissance des informations
+            saisies ;
+          </li>
+          <li class="data-collection-item">
+            la durée de conservation des données à caractère personnel ;
+          </li>
+          <li class="data-collection-item">
+            vos droits Informatique et Libertés et la façon de les exercer
+            auprès de la CNIL ou de {% if collectivity == "CDA" %} la Communauté
+            d'Agglomération de La Rochelle {% endif %} {% if collectivity ==
+            "Ville" %} la Ville de La Rochelle {% endif %}.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="data-collection-wrapper">
+      <h3 class="data-collection-subtitle title-h3">
+        <svg class="icon-other" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-temps-conservation-donnees"
+          ></use>
+        </svg>
+        Combien de temps conservons-nous vos données ?
+      </h3>
+      <h3 class="data-collection-bold">
+        Nous conservons vos Données Personnelles pour une durée limitée
+      </h3>
+      <p>
+        Les Données Personnelles vous concernant collectées sur ce site ne sont
+        pas conservées plus longtemps que nécessaire. Nous utilisons vos Données
+        Personnelles uniquement pour atteindre les objectifs décrits dans cette
+        politique. Lorsque l’utilisation prévue est terminée, vos Données
+        Personnelles sont soit supprimées soit anonymisées, sauf si la loi nous
+        oblige à les archiver
+      </p>
+      <div class="data-collection-list-wrapper">
+        <p>En résumé, une Donnée Personnelle collectée peut-être :</p>
+        <ul class="data-collection-items">
+          <li class="data-collection-item">
+            supprimée à l’expiration du délai de conservation
+          </li>
+          <li class="data-collection-item">
+            anonymisée (pour usage statistique ultérieur). Les données
+            anonymisées ne permettent plus de vous identifier.
+          </li>
+          <li class="data-collection-item">
+            versée aux archives municipales conformément à l’obligation légale
+            de conservation. (pour l’histoire).
+          </li>
+        </ul>
+      </div>
+      <div class="data-collection-more-details">
+        <p>
+          Si vous souhaitez en savoir davantage, vous pouvez consulter le
+          document suivant :
+        </p>
+        <a
+          style="word-break: break-all"
+          href="https://francearchives.gouv.fr/file/a6644b65c9b5a7867aa8667fae67a23ff2473948/static_8845.pdf"
+          >https://francearchives.gouv.fr/file/a6644b65c9b5a7867aa8667fae67a23ff2473948/static_8845.pdf</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="user-rights" id="user-rights">
+    {% render "headTitle.html" src: "icon-droits-donnees", title: "Quels sont
+    vos droits sur vos données ?" %}
+    <p>
+      Vous disposez d’un droit d’accès, de rectification, d’effacement, de
+      portabilité de vos Données Personnelles, d’opposition, et de limitation de
+      traitement tels que le prévoient le RGPD et la Loi Informatique et
+      Libertés.
+    </p>
+    <p>
+      Vous pouvez également définir le sort de vos données après votre décès
+    </p>
+    <h3 class="user-rights-subtitle">
+      <svg class="icon-other" aria-hidden="true">
+        <use
+          xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-liste-vos-droits"
+        ></use>
+      </svg>
+      Vos droits sur vos données?
+    </h3>
+    <div class="user-rights-accordion-wrapper">
+      {% render "accordion.html" data: rights %}
+    </div>
+  </section>
+
+  <section class="rights-exercise-process" id="rights-exercise-process">
+    <div>
+      {% render "headTitle.html" src: "icon-comment-exercer-droits", title:
+      "Comment exercer vos droits sur vos données ?" %}
+      <p>
+        Pour toute information ou exercice de vos droits Informatique et
+        Libertés sur les traitements de Données Personnelles gérés par {% if
+        collectivity == "CDA" %} la Communauté d'Agglomération de La Rochelle {%
+        endif %} {% if collectivity == "Ville" %} la Ville de La Rochelle {%
+        endif %} et ses établissements, vous pouvez contacter le délégué à la
+        protection des données (DPD/DPO) de {% if collectivity == "CDA" %} la
+        Communauté d'Agglomération de La Rochelle. {% endif %} {% if
+        collectivity == "Ville" %} la Ville de La Rochelle. {% endif %}
+      </p>
+      {% render "contactRights.html" contact: contactRights[0], collectivity:
+      collectivity %}
+    </div>
+    <div class="">
+      <div class="rights-exercise-process-wrapper">
+        <h3 class="rights-exercise-process-bold">
+          Dans quel délai devons-nous vous répondre ?
+        </h3>
+        <ul>
+          <li>
+            Au plus tard, dans le délai d'un mois, c’est une obligation légale.
+          </li>
+        </ul>
+        <p class="rights-exercise-process-italic">(Cf. article 12.2 du RGPD)</p>
+      </div>
+      <div class="rights-exercise-process-wrapper">
+        <h3 class="rights-exercise-process-bold">
+          Ce délai peut être prolongé de deux mois (trois mois au total) :
+        </h3>
+        <ul>
+          <li>Si votre demande est « complexe »</li>
+          <li>À condition de vous en informer dans le délai d'un mois.</li>
+        </ul>
+      </div>
+      <div class="rights-exercise-process-wrapper">
+        <p class="rights-exercise-process-bold">
+          De quelle manière allons-nous vous répondre ?
+        </p>
+        <p>
+          Si votre demande nous est adressée par courrier, nous vous répondrons
+          par courrier.
+        </p>
+        <p>
+          Si votre demande est formulée par voie électronique, nous vous
+          répondrons par voie électronique (à moins que vous ne précisiez que
+          vous souhaitez obtenir une réponse par courrier par exemple).
+        </p>
+      </div>
+      <div class="rights-exercise-process-wrapper">
+        <h3 class="rights-exercise-process-bold">
+          Limite à l’exercice de votre droit d’accès : demandes manifestement
+          abusives
+        </h3>
+        <p>
+          Nous pouvons nous opposer aux demandes manifestement abusives,
+          notamment par leur nombre, leur caractère répétitif ou systématique.
+        </p>
+        <p>
+          Par exemple, demande d’une copie intégrale d’un enregistrement toutes
+          les semaines
+        </p>
+        <p>
+          Si nous refusons de donner suite à une demande d’information, nous
+          préciserons les motifs de ce refus.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="data-processing-overview" id="data-processing-overview">
+    {% render "headTitle.html" src: "icon-registre-traitements-donnees", title:
+    "Disposez d’une vue d’ensemble des traitements de données personnelles" %}
+    <p>
+      Nous tenons à jour la liste des
+      <a href="#processing-data">traitements des Données Personnelles</a> gérés
+      par la Ville de la Rochelle
+    </p>
+    <p>
+      Elle donne une vue d’ensemble de ce que nous faisons avec les Données
+      Personnelles.
+    </p>
+    <p>
+      Vous pouvez consulter cette liste sur simple demande ou en cliquant sur le
+      lien suivant :
+    </p>
+    <a
+      style="word-break: break-all"
+      href="https://opendata.agglo-larochelle.fr/visualisation/information/?id=registre_des_traitements_d
+  e_donnees_a_caractere_personnel_de_la_ville_de_la_rochelle&disjunctive.service_en_char
+  ge&disjunctive.finalite_principale
+  "
+      >https://opendata.agglo-larochelle.fr/visualisation/information/?id=registre_des_traitements_d
+      e_donnees_a_caractere_personnel_de_la_ville_de_la_rochelle&disjunctive.service_en_char
+      ge&disjunctive.finalite_principale
+    </a>
+  </section>
+
+  <section class="cookie-usage" id="cookie-usage">
+    {% render "headTitle.html" src: "icon-comment-utilisons-cookies", title:
+    "Comment utilisons-nous les cookies ?" %}
+    <p>
+      Nous souhaitons vous fournir des informations transparentes sur la manière
+      dont nous plaçons, utilisons et stockons des cookies sur votre appareil
+      lorsque vous consultez le site internet de {% if collectivity == "CDA" %}
+      la Communauté d'Agglomération de La Rochelle. {% endif %} {% if
+      collectivity == "Ville" %} la Ville de La Rochelle. {% endif %}
+    </p>
+    <h3 class="cookie-usage-subtitle title-h3">
+      {% image "src/assets/images/svg/cookie.svg", "" %} Qu'est-ce qu'un cookie
+      ?
+    </h3>
+    <p>
+      Un cookie est un fichier texte déposé sur votre ordinateur par le site
+      internet, afin de stocker des informations vous concernant (par exemple :
+      langue utilisée, pages du site visitées, etc.).
+    </p>
+    {{ content }} {% if hasMatomo %}
+    <iframe
+      title="Acceptation du suivi de navigation sur ce site"
+      src="https://piwik.agglo-larochelle.fr/index.php?module=CoreAdminHome&action=optOut&language=fr&backgroundColor=&fontColor=313131&fontSize=14px&fontFamily=Arial"
+      frameborder="0"
+      style="height: 87px;"
+    ></iframe>
+    {% endif %}
+  </section>
+
+  <section class="glossary" id="glossary">
+    {% render "headTitle.html" src: "icon-glossaire", title: "Glossaire" %}
+    <div class="glossary-container">
+      <h3 class="glossary-bold">
+        Qu’est-ce qu’une donnée à caractère personnel (DCP) ?
+      </h3>
+      <div class="glossary-wrapper">
+        <p>
+          Il s’agit de toute information se rapportant à une personne, par
+          exemple :
+        </p>
+        <ul>
+          <li>
+            <strong>DCP courantes :</strong> nom, prénom, situation familiale,
+            téléphone, revenus, situation financière et fiscale, données de
+            connexion (adresse IP, journaux d’événements), données GPS, données
+            GSM.
+          </li>
+          <li>
+            <strong>DCP sensibles :</strong> numéro de sécurité sociale, données
+            bancaires, enfance, santé.
+          </li>
+          <li>
+            <strong>DCP très sensibles :</strong> opinions philosophiques,
+            syndicales, politiques ou religieuses, vie sexuelle, biométrie,
+            génétique.
+          </li>
+        </ul>
+      </div>
+
+      <h3 class="glossary-bold" id="processing-data">
+        Qu’est-ce qu’un traitement de données personnelles ?
+      </h3>
+      <p>
+        Un traitement de données correspond à une opération informatisée ou
+        papier portant sur vos données personnelles, telle que la collecte,
+        l’enregistrement, la conservation, l’utilisation, le transfert, la
+        suppression.
+      </p>
+
+      <h3 class="glossary-bold" id="data-controller">
+        Qu’est-ce qu’un responsable de traitement ?
+      </h3>
+      <p>
+        Un responsable de traitement est la personne qui définit la finalité (=
+        les objectifs) et les moyens (techniques, financiers, organisationnels)
+        d’un traitement de données. Elle est juridiquement responsable des
+        données personnelles utilisées.
+      </p>
+      <p>
+        Dans l’accomplissement de ses missions de service public, {% if
+        collectivity == "CDA" %} la Communauté d'Agglomération de La Rochelle {%
+        endif %} {% if collectivity == "Ville" %} la Ville de La Rochelle {%
+        endif %} est responsable des traitements de données à caractère
+        personnel mis en œuvre.
+      </p>
+    </div>
+  </section>
+</main>
+{% render "footer.html" lastUpdate: lastUpdate %}

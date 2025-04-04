@@ -1,0 +1,136 @@
+<div class="summary">
+  <div class="summary-wrapper">
+    {% image "src/assets/images/svg/img-centrale.svg", "" %}
+  </div>
+  <ul class="summary-links">
+    <li>
+      <a href="#conformity" class="summary-link">
+        <svg class="icon" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-with-bg.svg#icon-etat-de-conformite"
+          ></use>
+        </svg>
+        <div>
+          <p>État de conformité</p>
+          <p>
+            <svg class="icon-other" aria-hidden="true">
+              <use
+                xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-temps-lecture"
+              ></use>
+            </svg>
+            Temps de lecture <strong>1 minute</strong>
+          </p>
+        </div>
+        <svg class="icon-fleche" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-fleche.svg#icon-fleche-droite"
+          ></use>
+        </svg>
+      </a>
+    </li>
+    {% if conformity == "partially" or conformity == "conforms" %}
+    <li>
+      <a href="#inaccessible-contents" class="summary-link">
+        <svg class="icon" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-with-bg.svg#icon-contenus-inaccessibles"
+          ></use>
+        </svg>
+        <div>
+          <p>
+            Contenus inaccessibles
+          </p>
+          <p>
+            <svg class="icon-other" aria-hidden="true">
+              <use
+                xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-temps-lecture"
+              ></use>
+            </svg>
+            Temps de lecture <strong>< 1 minute</strong>
+          </p>
+        </div>
+        <svg class="icon-fleche" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-fleche.svg#icon-fleche-droite"
+          ></use>
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a href="#establishment-of-declaration" class="summary-link">
+        <svg class="icon" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-with-bg.svg#icon-declaration-accessibilite"
+          ></use>
+        </svg>
+        <div>
+          <p>Établissement de cette déclaration d'accessibilité</p>
+          <p>
+            <svg class="icon-other" aria-hidden="true">
+              <use
+                xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-temps-lecture"
+              ></use>
+            </svg>
+            Temps de lecture <strong>2 minutes</strong>
+          </p>
+        </div>
+        <svg class="icon-fleche" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-fleche.svg#icon-fleche-droite"
+          ></use>
+        </svg>
+      </a>
+    </li>
+    {% endif %}
+    <li>
+      <a href="#feedback-and-contact" class="summary-link">
+        <svg class="icon" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-with-bg.svg#icon-retour-information-contact"
+          ></use>
+        </svg>
+        <div>
+          <p>Retour d'information et contact</p>
+          <p>
+            <svg class="icon-other" aria-hidden="true">
+              <use
+                xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-temps-lecture"
+              ></use>
+            </svg>
+            Temps de lecture <strong>< 1 minute</strong>
+          </p>
+        </div>
+        <svg class="icon-fleche" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-fleche.svg#icon-fleche-droite"
+          ></use>
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a href="#remedies" class="summary-link">
+        <svg class="icon" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-with-bg.svg#icon-voies-de-recours"
+          ></use>
+        </svg>
+        <div>
+          <p>Voies de recours</p>
+          <p>
+            <svg class="icon-other" aria-hidden="true">
+              <use
+                xlink:href="/assets/images/svg/sprites/sprite-other-icon.svg#icon-temps-lecture"
+              ></use>
+            </svg>
+            Temps de lecture <strong>< 1 minute</strong>
+          </p>
+        </div>
+        <svg class="icon-fleche" aria-hidden="true">
+          <use
+            xlink:href="/assets/images/svg/sprites/sprite-icon-fleche.svg#icon-fleche-droite"
+          ></use>
+        </svg>
+      </a>
+    </li>
+  </ul>
+</div>

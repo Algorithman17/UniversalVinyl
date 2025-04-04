@@ -1,0 +1,29 @@
+---
+# Indique le permalien pour accéder à la page.
+# Ce permalien définit l'URL relative de la page dans le site généré.
+permalink: /agglo-larochelle/
+
+# Titre de la page, correspondant au nom du site concerné.
+# Ce titre est utilisé dans le contenu de la page et potentiellement dans les balises <title>.
+title: Agglo La Rochelle
+
+# URL du site concerné.
+# Cette URL est utilisée pour créer des liens vers le site externe.
+urlSite: https://www.agglo-larochelle.fr/
+
+# Type de collectivité (CDA ou Ville).
+# Cette variable est utilisée pour personnaliser le contenu en fonction de la collectivité.
+collectivity: CDA
+
+# Date de dernière mise à jour du site au format YYYY-MM-DD.
+# Cette date est affichée dans le pied de page pour indiquer la dernière mise à jour.
+lastUpdate: 2024-06-06
+
+# Indique si le site utilise Matomo pour les statistiques.
+# Cette variable est utilisée pour inclure ou non le code Matomo dans la page.
+hasMatomo: true
+---
+
+{% comment %} Spécifie le fichier JSON contenant les données des cookies {% endcomment %}
+{% render "accordion.html" data: cookies-agglo-larochelle %}
+<!-- Cette ligne inclut un composant HTML nommé "accordion.html" et lui passe les données des cookies. -->

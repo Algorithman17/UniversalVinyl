@@ -1,0 +1,73 @@
+[
+  {
+    "title": "Cookies techniques nécessaires",
+    "description": "Ces cookies, directement créés par l’outil qui héberge le site, sont nécessaires au bon fonctionnement technique de celui-ci. Il n’est pas possible de refuser ces cookies si vous voulez visiter ce site.",
+    "information": [
+      {
+        "name": "COOKIE_SUPPORT",
+        "expire": "13 mois",
+        "use": "Enregistre vos préférences en matière de dépôt de cookies"
+      },
+      {
+        "name": "GUEST_LANGUAGE_ID",
+        "expire": "13 mois",
+        "use": "Enregistre le code langue par défaut des visiteurs de ce site"
+      },
+      {
+        "name": "JSESSIONID",
+        "expire": "Session de navigation",
+        "use": "Identifie l'utilisateur durant sa session de navigation"
+      },
+      {
+        "name": "ROUTEID",
+        "expire": "Session de navigation",
+        "use": "Permet la répartition de charge entre les différents noeuds de nos serveurs"
+      },
+      {
+        "name": "device_dimensions",
+        "expire": "Session de navigation",
+        "use": "Enregistre les dimensions de l'appareil utilisé pour la navigation"
+      },
+      {
+        "name": "wp-settings-1",
+        "expire": "13 mois",
+        "use": "Nécessaire à la configuration technique du module de prise de rendez-vous"
+      },
+      {
+        "name": "wp-settings-time-1",
+        "expire": "13 mois",
+        "use": "Nécessaire à la configuration technique du module de prise de rendez-vous"
+      }
+    ]
+  },
+  {
+    "title": "Cookies statistiques",
+    "description": "Les cookies statistiques aident la Communauté d'Agglomération de La Rochelle, propriétaire de ce site web, à comprendre la navigation des visiteurs et leurs interactions avec les sites webs. L'outil Matomo est utilisé à ces fins, paramétré pour être entièrement anonymisé, et les données collectées sont exclusivement destinées à la Communauté d'Agglomération de La Rochelle. Nous respectons les préconisations de la CNIL permettant d’exempter ces cookies de votre consentement.",
+    "information": [
+      {
+        "name": "_pk_id",
+        "expire": "13 mois",
+        "use": "Effectue les mesures d’audience (nombre de visite, temps moyen passé sur le site, quelles pages ont été visitées, …)."
+      },
+      {
+        "name": "_pk_ref",
+        "expire": "6 mois",
+        "use": "Identifie le site de référence à partir duquel le visiteur est arrivé"
+      },
+      {
+        "name": "_pk_ses",
+        "expire": "30 minutes",
+        "use": "Suit les demandes de page du visiteur au cours de la session."
+      },
+      {
+        "name": "MATOMO_SESSID",
+        "expire": "Session de navigation",
+        "use": "Enregistre la session courante de l'outil de suivi statistique Matomo"
+      }
+    ]
+  },
+  {
+    "title": "Cookies tiers",
+    "description": "Ce site n’utilise aucun cookie tiers."
+  }
+]

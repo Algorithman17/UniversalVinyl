@@ -1,0 +1,8 @@
+<svg width="0" height="0" class="hidden">
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" id="icon-fleche-haut">
+    <path id="icon_fleche" d="M3.375,23.375a20,20,0,1,0,20-20A20,20,0,0,0,3.375,23.375Zm23.51,0-7.875-7.8a1.856,1.856,0,0,1,2.625-2.625l9.173,9.2a1.854,1.854,0,0,1,.058,2.558l-9.038,9.067A1.853,1.853,0,1,1,19.2,31.163Z" transform="translate(-3.375 43.375) rotate(-90)" fill="#002f66"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" id="icon-fleche-droite">
+    <path id="icon_fleche" d="M3.375,23.375a20,20,0,1,0,20-20A20,20,0,0,0,3.375,23.375Zm23.51,0-7.875-7.8a1.856,1.856,0,0,1,2.625-2.625l9.173,9.2a1.854,1.854,0,0,1,.058,2.558l-9.038,9.067A1.853,1.853,0,1,1,19.2,31.163Z" transform="translate(-3.375 -3.375)" fill="#002f66"></path>
+  </symbol>
+</svg>
