@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true, match: /.+\@.+\..+/ },
-  password: { type: String, required: true, minlength: 6 },
+  email: { type: String, required: true, unique: true, match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ },
+  password: { type: String, required: true, minlength: 8, match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/ },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   username: { type: String, required: true, unique: true },
   first: { type: String, required: true },
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   address: {
     number: { type: Number, required: true },
     street: { type: String, required: true },
-    zip: { type: String, required: true },
+    zip: { type: Number, required: true },
     city: { type: String, required: true },
     country: { type: String, required: true }
   }

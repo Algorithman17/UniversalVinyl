@@ -22,12 +22,14 @@ exports.register = async (req, res) => {
             errors.push("Le nom d'utilisateur doit contenir au moins 3 caractères.");
         }
 
-        if (!email || !/.+\@.+\..+/.test(email)) {
-            errors.push("Veuillez entrer une adresse e-mail valide.");
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!email || !emailRegex.test(email)) {
+            errors.push("L'adresse e-mail n'est pas valide. Elle doit contenir : lettres, chiffres, points (.), tirets (-), underscores (_), et un domaine comme exemple.com");
         }
 
-        if (!password || password.length < 6) {
-            errors.push("Le mot de passe doit contenir au moins 6 caractères.");
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        if (!password || !passwordRegex.test(password)) {
+            errors.push("Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
         }
 
         if (password !== confirmPassword) {
@@ -153,7 +155,7 @@ exports.myAnnonces = async (req, res) => {
     try {
     let annonces = [];
     
-    const userId = res.locals.user.id;
+    const userId = res.locals.user._id;
     
     annonces = await AnnonceModel.find({ userId });
     
@@ -189,21 +191,22 @@ exports.addAnnonce = async (req, res) => {
         if (req.files.length > 3) {
             return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
         }
-        
+
         // Créer une liste d'URLs d'images
         const images = req.files.map(file => ({
             name: file.originalname,
             contentType: file.mimetype,
             imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
         }));
-        
+
         const newAnnonce = new AnnonceModel({
             title,
             description,
             images,
             price,
+            
             musicStyle,
-            userId: res.locals.user.id // Stocke l'ID de l'utilisateur pour lier l'annonce
+            userId: res.locals.user._id // Stocke l'ID de l'utilisateur pour lier l'annonce
         });
         await newAnnonce.save();
 
@@ -252,6 +255,9 @@ exports.deleteAnnonce = async (req, res) => {
                 fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
             }
         });
+
+        // Supprimer les conversations associées à l'annonce
+        await ConversationModel.deleteMany({ annonceId: annonceId });
 
         // Supprimer l'annonce de la base de données
         await AnnonceModel.deleteOne({ _id: annonceId });
@@ -345,11 +351,11 @@ exports.showAnnonce = async (req, res) => {
         if(token) {
             user = jwt.verify(token, process.env.JWT_SECRET).user;
         }
-        
+
         let myAnnonce;
         if (token === undefined) {
             myAnnonce = false
-        } else if (annonce.userId === user._id) {
+        } else if (annonce.userId.toHexString() === user._id) {
             myAnnonce = true  
         }
 
@@ -393,7 +399,7 @@ exports.updateProfilForm = (req, res) => {
 
 exports.updateProfil = async (req, res) => {
     try {
-        const findUser = await UserModel.findById(res.locals.user.id);
+        const findUser = await UserModel.findById(res.locals.user._id);
         const { deleteAvatar } = req.body;
 
         if (deleteAvatar) {
@@ -414,7 +420,30 @@ exports.updateProfil = async (req, res) => {
             if (key in findUser) findUser[key] = req.body[key];
         });
 
+        const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
+        let user = decodedToken.user
+        user.avatarUrl = findUser.avatarUrl
+        user.address.number = findUser.address.number
+        user.address.street = findUser.address.street
+        user.address.zip = findUser.address.zip
+        user.address.city = findUser.address.city
+        user.address.country = findUser.address.country
+        user.bio = findUser.bio
+        user.username = findUser.username
+        user.last = findUser.last
+        user.first = findUser.first
+
+        const newToken = jwt.sign(
+            { user }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: "2h" }
+        );
+
+        res.clearCookie('token');
+        res.cookie('token', newToken, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000});
+
         await findUser.save();
+
         return res.redirect('/profil');
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de la mise à jour du profil', error });
@@ -477,7 +506,7 @@ exports.deleteUser = async (req, res) => {
 exports.startConversation = async (req, res) => {
     try {
         const { receiver, sender, annonceId } = req.body
-        log(receiver, sender, annonceId)
+
         const conversationExist = await ConversationModel.find({ members: [receiver, sender], annonceId });
 
         if(conversationExist.length === 1) {
@@ -528,14 +557,13 @@ exports.conversations = async (req, res) => {
 exports.chat = async (req, res) => {
     try {
         const { id } = req.params;
-        const username = res.locals.user.username;
 
         const conversation = await ConversationModel.findById(id);
-        log(conversation.id);
+
         let annonce = await AnnonceModel.findById(conversation.annonceId);
 
-        // Passez `res.locals.user` au fichier EJS
         return res.render('./pages/chat', { conversation, annonce, user: res.locals.user });
+
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
     }
@@ -557,7 +585,6 @@ exports.getMessages = async (req, res) => {
 exports.sendMessage = async (data) => {
     try {
         const { roomId, sender, message } = data;
-        console.log(`Tentative d'enregistrement du message : roomId=${roomId}, sender=${sender}, message=${message}`);
 
         // Ajouter le message dans la clé 'messages' de la conversation
         await ConversationModel.findByIdAndUpdate(
@@ -566,7 +593,6 @@ exports.sendMessage = async (data) => {
             { new: true }
         );
 
-        console.log('Message enregistré avec succès dans la conversation');
     } catch (error) {
         console.error('Erreur lors de l\'enregistrement du message :', error);
     }

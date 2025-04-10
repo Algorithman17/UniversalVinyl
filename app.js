@@ -69,11 +69,9 @@ app.get('/api/messages/:id', UserController.getMessages);
 
 // Connexion à Socket.io
 io.on('connection', (socket) => {
-    console.log('Un utilisateur s\'est connecté');
 
     socket.on('joinRoom', (roomId) => {
         socket.join(roomId);
-        console.log(`Utilisateur a rejoint la room : ${roomId}`);
     });
 
     socket.on('chatMessage', async ({ roomId, message }) => {

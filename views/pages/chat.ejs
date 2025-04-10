@@ -18,19 +18,16 @@
 
         // Rejoindre la room spécifique
         socket.emit("joinRoom", roomId);
-        console.log(`Rejoint la room : ${roomId}`);
 
         $("form").submit(function (e) {
             e.preventDefault();
             const message = $("#msg").val();
-            console.log(`Tentative d'envoi du message : roomId=${roomId}, message=${message}`);
             socket.emit("chatMessage", { roomId, message });
             $("#msg").val("");
             return false;
         });
 
         socket.on("chatMessage", function ({ sender, message }) {
-            console.log(`Message reçu : sender=${sender}, message=${message}`);
             $("#messages").append($("<p>").html(`<strong>${sender}:</strong> ${message}`));
         });
     });
