@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 // Fonction asynchrone pour se connecter à la base de données
 async function connectDb() {
     try {
+        console.log('Connecting to database...');
         // Connexion à la base MongoDB en utilisant les variables d'environnement
         await mongoose.connect(process.env.MONGO_URI + process.env.DB_NAME);
         // Message de succès si la connexion est établie

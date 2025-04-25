@@ -1,18 +1,18 @@
-<%- include('../partials/header') %>
+<%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
     <h1>Mon Profil</h1>
-    <div class="allInfosContent">
-        <div class="avatarContent">
+    <div class="all-infos-content">
+        <div class="avatar-content">
             <% if(user.avatarUrl === "") { %>
-                <div class="imgAvatarContent"></div>
+                <div class="img-avatar-content"></div>
                 <form action="/updateProfil" method="post" enctype="multipart/form-data">
-                    <label class="avatarLabel" for="avatarUrl">Ajouter une photo de profil</label>
+                    <label class="avatar-label" for="avatarUrl">Ajouter une photo de profil</label>
                     <input type="file" id="avatarUrl" name="image" accept="image/*">
                     <button type="submit" id="submitButton" style="display: none;">Envoyer</button>
                 </form>
             <% } else { %>
-                <div class="imgAvatarContent">
+                <div class="img-avatar-content">
                     <img src="../../../uploads/<%= user.avatarUrl %>" alt="avatar de profil">
                 </div>
                 <form action="/updateProfil" method="post">
@@ -20,47 +20,47 @@
                     <button type="submit">Supprimer</button>
                 </form>
                 <form action="/updateProfil" method="post" enctype="multipart/form-data">
-                    <label class="avatarLabel" for="avatarUrl">Modifier</label>
+                    <label class="avatar-label" for="avatarUrl">Modifier</label>
                     <input type="file" id="avatarUrl" name="image" accept="image/*">
                     <button type="submit" id="submitButton" style="display: none;">Envoyer</button>
                 </form>
             <% } %>
         </div>
-        <div class="infosContent">
-            <div class="infos username">
+        <div class="infos-content">
+            <div class="infos-username">
                 <span>Nom d'utilisateur</span>
                 <span><%= user.username %></span>
             </div>
             <a href="/updateProfilForm/username">Modifier</a>
         </div>
-        <div class="infosContent">
-            <div class="infos role">
+        <div class="infos-content">
+            <div class="infos-role">
                 <span>Rôle</span>
                 <span><%= userRole %></span>
             </div>
         </div>
-        <div class="infosContent">
-            <div class="infos last">
+        <div class="infos-content">
+            <div class="infos-last">
                 <span>Nom de famille</span>
                 <span><%= user.last %></span>
             </div>
             <a href="/updateProfilForm/last">Modifier</a>
         </div>
-        <div class="infosContent">
-            <div class="infos first">
+        <div class="infos-content">
+            <div class="infos-first">
                 <span>Prénom</span>
                 <span><%= user.first %></span>
             </div>
             <a href="/updateProfilForm/first">Modifier</a>
         </div>
-        <div class="infosContent">
-            <div class="infos age">
+        <div class="infos-content">
+            <div class="infos-age">
                 <span>Âge</span>
                 <span><%= age %></span>
             </div>
         </div>
-        <div class="infosContent">
-            <div class="infos address">
+        <div class="infos-content">
+            <div class="infos-address">
                 <span>Adresse</span>
                 <span>
                     <%= user.address.number %> <%= user.address.street %>, <%= user.address.zip %> <%= user.address.city %>, <%= user.address.country %>
@@ -68,21 +68,21 @@
             </div>
             <a href="/updateProfilForm/address">Modifier</a>
         </div>
-        <div class="infosContent">
-            <div class="infos bio">
+        <div class="infos-content">
+            <div class="infos-bio">
                 <span>Bio</span>
                 <span><%= user.bio %></span>
             </div>
             <a href="/updateProfilForm/bio">Modifier</a>
         </div>
-        <div class="infosContent">
-            <div class="infos email">
+        <div class="infos-content">
+            <div class="infos-email">
                 <span>E-mail</span>
                 <span><%= user.email %></span>
             </div>
         </div>
-        <div class="infosContent">
-            <div class="infos password">
+        <div class="infos-content">
+            <div class="infos-password">
                 <span>Mot de passe</span>
                 <span>*********</span>
             </div>

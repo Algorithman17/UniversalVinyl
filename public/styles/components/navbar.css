@@ -1,0 +1,112 @@
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-inline: 2rem;
+    padding-block: 4rem;
+    width: 100%;
+    height: 100vh;
+    gap: 2rem;
+    background-color: var(--global-background-color);
+    border-bottom: var(--global-border-width) solid var(--main-color);
+    position: absolute;
+    top: -90vh;
+    
+    ul {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        justify-content: space-between;
+        z-index: 2;
+        
+        a {
+            color: var(--main-color);
+        }
+    }
+}
+
+nav.active {
+    top: 0vh !important;
+    transition: all 0.3s ease-in-out;
+}
+
+nav.inactive {
+    top: -90vh !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-nav {
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+    cursor: pointer;
+    position: relative;
+    margin-top: 0.5rem;
+    z-index: 3;
+    
+    .bars {
+        height: 3rem;
+        width: 3rem;
+        display: flex;
+        align-items: center;
+        position: relative;
+        
+        .bar-1, .bar-2, .bar-3 {
+            display: block;
+            height: 0.15rem;
+            width: 3rem;
+            background-color: var(--main-color);
+            position: absolute;
+        }
+    }
+}
+
+.btn-nav.active {
+
+    .bar-1 {
+        transition: all 1s cubic-bezier(1, -0.59, 0, 1.49);
+        transform: rotate(45deg);
+        top: 45%;
+    }
+    
+    .bar-3 {
+        transition: all 1s cubic-bezier(1, -0.59, 0, 1.49);
+        transform: rotate(-45deg);
+        bottom: 50%;
+    }
+    
+    .bar-2 {
+        transition: all 1s cubic-bezier(1, -0.59, 0, 1.49);
+        left: 100vw;
+    }
+}
+
+.btn-nav.inactive {
+
+    .bars {
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    
+    .bar-1, .bar-3 {
+        transform: rotate(0deg) !important;
+        transition: all 0.3s ease-in-out;
+        position: relative !important;
+    }
+    
+    .bar-1 {
+        top: 0
+    }
+    
+    .bar-3 {
+        bottom: 0;
+    }
+    
+    .bar-2 {
+        left: 0vw !important;
+        transition: all 1s cubic-bezier(1, -0.59, 0, 1.49);
+    }
+}
+
+

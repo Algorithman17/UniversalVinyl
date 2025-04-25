@@ -1,0 +1,33 @@
+:root {
+    --main-color: #fed034;
+    --global-border-width: 1px;
+    --global-border-radius: 12px;
+    --global-text-shadow: 0 3px 4px var(--main-color);
+    --global-box-shadow: 0 0 10px 0 var(--main-color);
+    --global-background-color: #000000;
+    --button-background-color: rgba(var(--main-color), 0.4);
+}
+
+* {
+    list-style-type: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--global-background-color); /* Fond noir pour simuler l'espace */
+    overflow: hidden;
+}
+
+nav a, 
+h1:not(.title-home) {
+    font-family: "Audiowide", sans-serif;
+    text-shadow: var(--global-text-shadow);
+    letter-spacing: 0.3rem;
+}
+
+
+
+

@@ -1,11 +1,10 @@
 const annonce = document.querySelector('.annonce')
-const carousel = document.querySelector('.contentImgs')
-const contentImg = document.querySelectorAll(".contentImg")
-const images = document.querySelectorAll(".contentImg img")
-const prev = document.querySelector(".prev")
-const next = document.querySelector(".next")
-const currentPage = document.querySelector(".currentPage")
-const lastPage = document.querySelector(".lastPage")
+const carousel = document.querySelector('.content-imgs')
+const images = document.querySelectorAll(".content-img img")
+const previousArrow = document.querySelector(".previous-arrow")
+const nextArrow = document.querySelector(".next-arrow")
+const currentPage = document.querySelector(".current-page")
+const lastPage = document.querySelector(".last-page")
 
 let indexImg = 0
 let nbrImg = []
@@ -20,12 +19,12 @@ if (images.length === 3) {
     lastPage.textContent = "2"
 } else {
     carousel.style.width = "100%"
-    prev.style.display = "none"
-    next.style.display = "none"
+    previousArrow.style.display = "none"
+    nextArrow.style.display = "none"
     lastPage.textContent = "1"
 }
 
-prev.addEventListener('click', () => {
+previousArrow.addEventListener('click', () => {
     if(indexImg === 0) {
         indexImg = images.length-1 
         currentPage.textContent = indexImg+1
@@ -36,7 +35,7 @@ prev.addEventListener('click', () => {
     currentPage.textContent = indexImg+1
 })
 
-next.addEventListener('click', () => {
+nextArrow.addEventListener('click', () => {
     if(indexImg === images.length-1) {
         indexImg = 0
         currentPage.textContent = indexImg+1
