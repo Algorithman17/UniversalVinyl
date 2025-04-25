@@ -1,20 +1,20 @@
-<%- include('../partials/header') %>
+<%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
     <h1>Mes annonces</h1>
     <% if (annonces.length === 0) { %>
         <p>Vous n'avez pas encore d'annonce</p>
     <% } else { %>
-        <ul class="annonceCards">
+        <ul class="annonce-cards">
             <% annonces.forEach(annonce => { %>
-                <li class="annonceCard">
-                    <a class="clickableContent" href="/show-annonce/<%= annonce._id %>">
-                        <div class="contentImgs">
-                            <div class="contentImg">
+                <li class="annonce-card">
+                    <a class="clickable-content" href="/show-annonce/<%= annonce._id %>">
+                        <div class="content-imgs">
+                            <div class="content-img">
                                 <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="<%= annonce.images[0].name %>">
                             </div>
                         </div>  
-                        <div class="annonceText">             
+                        <div class="annonce-text">             
                             <h2><%= annonce.title %></h2>
                             <p><%= annonce.price %>€</p>
                             <p><%= annonce.musicStyle %></p>
@@ -25,6 +25,6 @@
             <% }) %>
         </ul>
     <% } %>
-    <a class="addAnnonceButton" href="/add-annonce">Ajouter une annonce</a>
+    <a class="add-annonce-btn" href="/add-annonce">Ajouter une annonce</a>
 </main>
 <%- include('../partials/footer') %>

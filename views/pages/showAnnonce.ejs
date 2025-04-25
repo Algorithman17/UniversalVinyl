@@ -1,4 +1,4 @@
-<%- include('../partials/header') %>
+<%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
 <h1>Annonce</h1>
@@ -7,19 +7,19 @@
 <% } else { %>
     <div class="annonce">
         <div class="carousel">
-            <div class="contentImgs">
+            <div class="content-imgs">
                 <% annonce.images.forEach(image => { %>
-                        <div class="contentImg">
+                        <div class="content-img">
                             <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
                         </div>
                 <% }); %> 
             </div>
             <div class="paging">
-                <span class="currentPage">1</span> / <span class="lastPage">3</span>
+                <span class="current-page">1</span> / <span class="last-page">3</span>
             </div>
         </div>
-        <div class="annonceText">
-            <div class="ObjectInfos">
+        <div class="annonce-text">
+            <div class="vinyl-infos">
                 <h2>Titre <%= annonce.title %></h2>
                 <p>Prix <%= annonce.price %>€</p>
                 <p>Genre <%= annonce.musicStyle %></p>
@@ -39,32 +39,32 @@
             </div>
         </div>
         <div class="prev">
-            <span class="border0">
-                <span class="border1">
-                    <span class="line">
-                        <span class="line1"></span>
-                        <span class="line2"></span>
-                        <span class="line3"></span>
+            <span class="border-0">
+                <span class="border-1">
+                    <span class="lines">
+                        <span class="line-1"></span>
+                        <span class="line-2"></span>
+                        <span class="line-3"></span>
                     </span>
                 </span>
             </span>
         </div>
-        <div class="next">
-            <span class="border0">
-                <span class="border1">
-                    <span class="line">
-                        <span class="line1"></span>
-                        <span class="line2"></span>
-                        <span class="line3"></span>
+        <div class="next-arrow">
+            <span class="border-0">
+                <span class="border-1">
+                    <span class="lines">
+                        <span class="line-1"></span>
+                        <span class="line-2"></span>
+                        <span class="line-3"></span>
                     </span>
                 </span>
             </span>
         </div>
         <% if (myAnnonce) { %>
-            <div class="editAndDeleteButton">
-                <a class="editButton" href="/edit-annonce/<%= annonce._id %>">Modifier</a>
+            <div class="edit-and-delete-btns">
+                <a class="edit-btn" href="/edit-annonce/<%= annonce._id %>">Modifier</a>
                 <form action="/delete-annonce/<%= annonce._id %>" method="post">
-                    <button class="deleteButton">Supprimer</button>
+                    <button class="delete-btn">Supprimer</button>
                 </form>
             </div>
         <% } %>

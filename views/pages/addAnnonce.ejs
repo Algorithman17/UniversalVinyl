@@ -1,4 +1,4 @@
-<%- include('../partials/header') %>
+<%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
 <h1>Ajouter une annonce</h1>
@@ -30,9 +30,14 @@
             <option value="variété">Variété</option>
         </select>
     </div>
-    <div class="form-group">
+    <div class="button-wrapper">
         <label for="images">Images (max 3)</label>
-        <input type="file" id="images" name="images" multiple required accept="image/*">
+        <input type="file" id="images" name="images" multiple required accept="image/*" hidden>
+        <button></button>
+    </div>
+    <div class="form-group">
+        
+        
     </div>
     <button type="submit">Ajouter</button>
 </form>

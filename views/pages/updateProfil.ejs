@@ -1,4 +1,4 @@
-<%- include('../partials/header') %>
+<%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <h1>Mettre à jour le profil</h1>
 <form action="/updateProfil" method="post">
@@ -28,6 +28,6 @@
         <label for="<%= keyInfo %>"><%= keyInfoTranslate %></label>
         <input type="text" name="<%= keyInfo %>" value="<%= valueInfo %>" required>
     <% } %>
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit">Envoyer</button>
 </form>
 <%- include('../partials/footer') %>

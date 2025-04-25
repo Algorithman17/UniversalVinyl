@@ -11,13 +11,13 @@
     position: relative;
 }
 
-.contentImgs {
+.content-imgs {
     display: flex;
     width: 300%;
     transition: transform 0.3s ease-in-out;
 }
 
-.contentImg {
+.content-img {
     height: 500px;
     width: 100%;
     display: flex;
@@ -25,7 +25,7 @@
     flex-direction: column;
 }
 
-.contentImg img {
+.content-img img {
     width: 100%;
     object-fit: scale-down;
     max-height: 100%;
@@ -43,7 +43,7 @@
     padding: 2px 5px;
 }
 
-.annonceText {
+.annonce-text {
     display: grid;
     gap: 20px;
     width: 100%;
@@ -53,7 +53,7 @@
 }
 
 
-.prev {
+.previous-arrow {
     transform: scale(-0.5) translate(50%, 50%);
     width: fit-content;
     position: absolute;
@@ -63,7 +63,7 @@
     cursor: pointer;
 }
 
-.next {
+.next-arrow {
     transform: scale(0.5) translate(0%, -50%);
     transform-origin: right;
     width: fit-content;
@@ -74,14 +74,14 @@
     cursor: pointer;
 }
 
-.editAndDeleteButton {
+.edit-and-delete-btns {
     display: flex;
     justify-content: space-evenly;  
     padding-block: 20px;
     width: 100%;
 }
 
-.editButton, .deleteButton {
+.edit-btn, .delete-btn {
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
@@ -89,12 +89,12 @@
     border: 0;
 }
 
-.deleteButton {
+.delete-btn {
     height: 100%;
 }
 
 @media screen and (max-width: 600px) {
-    .prev, .next {
+    .previous-arrow, .next-arrow {
         display: none;
     }
 }

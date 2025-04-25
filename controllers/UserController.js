@@ -114,7 +114,7 @@ exports.profil = (req, res) => {
         userRole = "UTILISATEUR"
     }
 
-    return res.render('./pages/profil', { age, userRole, styleUrl: "profil" });
+    return res.render('./pages/profil', { age, userRole, styleUrl: "components/profil" });
 };
 
 // Fonction pour afficher le formulaire d'enregistrement
@@ -142,7 +142,7 @@ exports.loginForm = (req, res) => {
 
 // Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
-    return res.render('./pages/home');
+    return res.render('./pages/home', { styleUrl: "components/home" });
 };
 
 exports.logout = (req, res) => {
@@ -170,7 +170,7 @@ exports.myAnnonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/myAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
+    return res.render('./pages/myAnnonces', { annonces: annoncesWithImages, styleUrl: "components/annonceCard" });
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage des annonces', error });
     }
@@ -230,7 +230,7 @@ exports.annonces = async (req, res) => {
             };
         });
 
-        return res.render('./pages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "annonceCard" });
+        return res.render('./pages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "components/annonceCard" });
     } catch (error) {   
         return res.status(500).json({ message: 'Erreur lors de l\'affichage des annonces', error });
     }
@@ -365,7 +365,7 @@ exports.showAnnonce = async (req, res) => {
         const yearAnnonce = dateAnnonce.getFullYear()
         dateAnnonce = `${dayAnnonce}/${monthAnnonce}/${yearAnnonce}`
         
-        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: "showAnnonce", userAnnonce, dateAnnonce })
+        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: "components/showAnnonce", userAnnonce, dateAnnonce })
 
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });

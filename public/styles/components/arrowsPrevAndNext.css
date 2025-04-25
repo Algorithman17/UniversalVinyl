@@ -1,4 +1,4 @@
-.border0 {
+.border-0 {
     display: flex;
     width: 100px;
     height: 100px;
@@ -8,7 +8,7 @@
     border-radius: 10%;
 }
 
-.border1 {
+.border-1 {
     display: flex;
     width: 85px;
     height: 85px;
@@ -19,15 +19,15 @@
     justify-content: center;
 }
 
-.line {
+.lines {
     position: relative;
 }
 
-.line1, .line2, .line3 {
+.line-1, .line-2, .line-3 {
     background-color: rgb(0, 0, 0);
 }
 
-.line1, .line2 {
+.line-1, .line-2 {
     display: block;
     width: 25px;
     height: 4px;
@@ -35,7 +35,7 @@
     z-index: 1;
 }
 
-.line1 {
+.line-1 {
     transform-origin: right;
     transform: rotate(45deg);
     position: absolute;
@@ -43,7 +43,7 @@
     right: 0;
 }
 
-.line2 {
+.line-2 {
     transform-origin: right;
     transform: rotate(315deg);
     position: absolute;
@@ -51,7 +51,7 @@
     top: -1px;
 }
 
-.line3 {
+.line-3 {
     display: block;
     width: 45px;
     height: 4px;

@@ -1,5 +1,5 @@
 <style>
-    .showMessage {
+    .popup {
         width: fit-content;
         height: 300px;
         padding: 20px;
@@ -17,17 +17,17 @@
         background-color: white;
         font-size: 30px;
     }
-    .showMessage p {
+    .popup p {
         margin: 0;
         text-align: center;
     }
-    .showMessage img {
+    .popup img {
         width: 100px;
         margin-bottom: 20px;
     }
 </style>
-<div class="showMessage" id="blockMessage">
-    <p id="iconMessage">
+<div class="popup" id="blockPopup">
+    <p id="iconPopup">
         <p style="height:0px; visibility:hidden; margin: 0;"  >
             <a target="_blank" href="https://icons8.com/icon/110240/error">
                 Erreur
@@ -38,27 +38,27 @@
             </a>
         </p>
     </p>
-    <p id="showMessage"></p>
+    <p id="popup"></p>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () { 
         let message = <%- JSON.stringify(message) %>;
         if (message) {
-            const blockMessage = document.getElementById("blockMessage")
-            const iconMessage = document.getElementById("iconMessage")
-            const showMessage = document.getElementById("showMessage")
+            const blockPopup = document.getElementById("blockPopup")
+            const iconPopup = document.getElementById("iconPopup")
+            const popup = document.getElementById("popup")
 
             if(message.type === "success") {
-                iconMessage.innerHTML = `<img src="/images/success.png" alt="success icon">`
+                iconPopup.innerHTML = `<img src="/images/success.png" alt="success icon">`
             } else {
-                iconMessage.innerHTML = `<img src="/images/error.png" alt="error icon">`
+                iconPopup.innerHTML = `<img src="/images/error.png" alt="error icon">`
             }
 
-            showMessage.textContent = message.text
+            popup.textContent = message.text
 
-            blockMessage.style.visibility = "visible"
+            blockPopup.style.visibility = "visible"
             setTimeout(() => {
-               blockMessage.style.visibility = "hidden" 
+               blockPopup.style.visibility = "hidden" 
             }, "3000")
         } else {
             next()

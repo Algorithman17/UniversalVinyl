@@ -1,7 +1,7 @@
-<%- include('../partials/header') %>
+<%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-<div class="container">
+<div>
     <% if (typeof message !== 'undefined' && message.text.length > 0) { %>
         <div class="alert alert-<%= message.type === 'error' ? 'danger' : 'success' %>" role="alert">
             <ul>
@@ -11,9 +11,9 @@
             </ul>
         </div>
     <% } %>
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h1 class="text-center">Inscription</h1>
+    <div>
+        <div>
+            <h1>Inscription</h1>
             <form action="/register" method="POST">
                 <div class="form-group">
                     <label for="username">Nom d'utilisateur</label>
@@ -70,11 +70,13 @@
                     <label for="confirmPassword">Confirmez le mot de passe</label>
                     <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
                 </div>
-                <button type="submit" class="btn btn-primary" id="btnRegister">ENVOYER</button>
+                <div class="button-wrapper">
+                    <button type="submit" id="btnRegister">S'inscrire</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
 </main>
-<%- include('../partials/showMessage') %>
+<%- include('../partials/popup') %>
 <%- include('../partials/footer') %>

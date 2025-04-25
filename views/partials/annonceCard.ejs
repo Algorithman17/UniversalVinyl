@@ -1,0 +1,13 @@
+<div class="annonce-card">
+    <a class="clickable-content" href="/show-annonce/<%= annonce._id %>">
+        <div class="content-img">
+            <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="<%= annonce.images[0].name %>">
+        </div> 
+        <div class="annonce-text">             
+            <h2><%= annonce.title %></h2>
+            <p><%= annonce.price %>€</p>
+            <p><%= annonce.musicStyle %></p>
+            <p><%= annonce.description %></p>
+        </div>
+    </a>
+</div>

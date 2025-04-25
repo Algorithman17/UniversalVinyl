@@ -1,10 +1,10 @@
-<%- include('../partials/header') %>
+<%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h1 class="text-center">Connexion</h1>
+<div>
+    <div>
+        <div>
+            <h1>Connexion</h1>
             <form action="/login" method="POST">
                 <div class="form-group">
                     <label for="email">E-mail</label>
@@ -14,11 +14,11 @@
                     <label for="password">Mot de passe</label>
                     <input type="password" name="password" class="form-control" id="password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Se connecter</button>
+                <button type="submit">Se connecter</button>
             </form>
         </div>
     </div>
 </div>
 </main>
-<%- include('../partials/showMessage') %>
+<%- include('../partials/popup') %>
 <%- include('../partials/footer') %>
