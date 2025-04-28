@@ -4,13 +4,10 @@ const body = document.body
 
 canvasAll.forEach((canvas) => {
   const ctx = canvas.getContext('2d');
-  console.log(canvas.parentNode);
-  
+
   // Ajuste le canevas à la taille de la fenêtre
   canvas.width = canvas.parentNode.clientWidth;
   canvas.height = canvas.parentNode.clientHeight;
-  console.log(canvas.width, canvas.height);
-  
 
   // Fonction pour dessiner des étoiles
   function drawStars() {
@@ -110,13 +107,13 @@ canvasAll.forEach((canvas) => {
 
   // Redessine les étoiles et les vinyles si la fenêtre est redimensionnée
   window.addEventListener('resize', () => {
-    canvas.width = body.clientWidth;
-    canvas.height = body.clientHeight;
+    canvas.width = canvas.parentNode.clientWidth;
+    canvas.height = canvas.parentNode.clientHeight;
     drawStars();
-    drawVinyls();
+    // drawVinyls();
   });
 
   // Dessine les étoiles et les vinyles au chargement
   drawStars();
-  drawVinyls();
+  // drawVinyls();
 })

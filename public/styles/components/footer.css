@@ -1,6 +1,39 @@
 footer {
     width: 100%;
-    background-color: rgb(255, 18, 18);
-    padding: 20px 0;
+    background-color: var(--global-background-color);
+    padding: 2rem 2rem;
+    color: var(--global-text-color);
+    border-top: var(--global-border-width) solid var(--main-color);
+    display: flex;
+    justify-content: center;
 
+    .footer-contents {
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+        gap: 2rem;
+
+        .f-content {
+            display: flex;
+            gap: 1rem;
+
+            img {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 900px) {
+    footer {
+        
+        .footer-contents {
+            flex-direction: row;
+        }
+    }
 }

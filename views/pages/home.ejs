@@ -2,18 +2,40 @@
 <%- include('../partials/navbar') %>
 <main>
     <div class="hero">
+        <img class="logo slide" src="images/logo-vinyle.png" alt="">
         <h1 class="title-home">Universal Vinyl</h1>
-        <% if (user && user.role === "admin") { %>
-            <p>Connecté en tant que <strong><%= user.email %> (<%= user.role %>)</strong></p>
-            <a href="/adminDashboard">Accéder au tableau de bord</a>
-        <% } else if (user) { %>
-            <p>Connecté en tant que <strong><%= user.email %></strong></p>
-            <form action="/logout" method="POST">
-                <button type="submit">Se déconnecter</button>
-            </form>
-        <% } else { %>
-            <p>Vous n'êtes pas connecté.</p>
-        <% } %>
+    </div>
+    <div class="filters">
+        <div class="filter rotate">
+            <a href="">ROCK</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">POP</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">RAP</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">JAZZ</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">CLASSIQUE</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">ELECTRO</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">REGGAE</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">METAL</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">BLUES</a>
+        </div>
+        <div class="filter rotate">
+            <a href="">VARIETE</a>
+        </div>
     </div>
 </main>
 <%- include('../partials/footer') %>

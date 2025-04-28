@@ -1,11 +1,12 @@
 :root {
-    --main-color: #fed034;
+    --main-color: #fecf34;
     --global-border-width: 1px;
     --global-border-radius: 12px;
     --global-text-shadow: 0 3px 4px var(--main-color);
-    --global-box-shadow: 0 0 10px 0 var(--main-color);
+    --global-box-shadow: 2px 3px 4px 1px var(--main-color);
     --global-background-color: #000000;
-    --button-background-color: rgba(var(--main-color), 0.4);
+    --global-text-color: #ffffff;
+    --button-background-opacity: #fecf3457;
 }
 
 * {
@@ -14,11 +15,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-weight: normal;
+    letter-spacing: 0.05rem;
 }
 
 body {
     background: var(--global-background-color); /* Fond noir pour simuler l'espace */
-    overflow: hidden;
+    overflow-x: hidden;
+    font-family: "Albert Sans", sans-serif;
+
 }
 
 nav a, 
@@ -26,6 +31,14 @@ h1:not(.title-home) {
     font-family: "Audiowide", sans-serif;
     text-shadow: var(--global-text-shadow);
     letter-spacing: 0.3rem;
+    color: var(--main-color);
+}
+
+main {
+    padding-top: 5rem;
+    min-height: 100vh;
+    padding-inline: 2rem;
+    padding-bottom: 2rem;
 }
 
 
