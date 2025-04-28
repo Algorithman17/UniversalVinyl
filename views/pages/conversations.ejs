@@ -1,21 +1,23 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
-<h1>Messages</h1>
-<% if(annonces.length > 0) { %>
-    <% annonces.forEach(annonce => { %>
-        <a href="/chat/<%= annonce.conversationId %>">
-            <div class="card">
-                <div class="content-img">
-                    <img src="../../../uploads/<%= annonce.imageUrl %>" alt="" style="width: 200px;">
+<main>
+    <h1>Messages</h1>
+    <% if(annonces.length > 0) { %>
+        <% annonces.forEach(annonce => { %>
+            <a href="/chat/<%= annonce.conversationId %>">
+                <div class="card">
+                    <div class="content-img">
+                        <img src="../../../uploads/<%= annonce.imageUrl %>" alt="" style="width: 200px;">
+                    </div>
+                    <div class="info-annonce">
+                        <p><%= annonce.title %></p>
+                        <p><%= annonce.recipient[0] %></p>
+                    </div>
                 </div>
-                <div class="info-annonce">
-                    <p><%= annonce.title %></p>
-                    <p><%= annonce.recipient[0] %></p>
-                </div>
-            </div>
-        </a>
-    <% }) %>
-<% } else { %>
-    <p>Vous n'avez pas de messages</p>
-<% } %>
+            </a>
+        <% }) %>
+    <% } else { %>
+        <p>Vous n'avez pas de messages</p>
+    <% } %>
+</main>
 <%- include('../partials/footer') %>

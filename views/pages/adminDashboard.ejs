@@ -1,49 +1,51 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
-<h1>TABLEAU DE BORD ADMINISTRATEUR</h1>
-<form action="/searchUser" method="post">
-    <label>Rechercher un utilisateur par son nom d'utilisateur</label>
-    <input type="text" name="username">
-    <button type="submit">Rechercher</button>
-</form>
-<% if(userSearch && userSearch.role === "user") { %>
-    <h2>Utilisateur trouvé</h2>
-    <table>
-        <tr>
-            <th>Nom d'utilisateur</th>
-            <th>Email</th>
-            <th>Rôle</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><%= userSearch.username %></td>
-            <td><%= userSearch.email %></td>
-            <td><%= userSearch.role %></td>
-            <td>
-                <form action="/deleteUser" method="post">
-                    <input type="hidden" name="userId" value="<%= userSearch._id %>">
-                    <button type="submit">Supprimer l'utilisateur</button>
-                </form>
-            </td>
-        </tr>
-    </table>
-<% } else if (userSearch && userSearch.role === "admin") { %>
-    <h2>Administrateur trouvé</h2>
-    <table>
-        <tr>
-            <th>Nom d'utilisateur</th>
-            <th>Email</th>
-            <th>Rôle</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td><%= userSearch.username %></td>
-            <td><%= userSearch.email %></td>
-            <td><%= userSearch.role %></td>
-            <td>Vous ne pouvez pas supprimer un administrateur</td>
-        </tr>
-    </table>
-<% } else if (!userSearch) { %>
-    <h2>Aucun utilisateur trouvé</h2>
-<% } %>
+<main>
+    <h1>TABLEAU DE BORD ADMINISTRATEUR</h1>
+    <form action="/searchUser" method="post">
+        <label>Rechercher un utilisateur par son nom d'utilisateur</label>
+        <input type="text" name="username">
+        <button type="submit">Rechercher</button>
+    </form>
+    <% if(userSearch && userSearch.role === "user") { %>
+        <h2>Utilisateur trouvé</h2>
+        <table>
+            <tr>
+                <th>Nom d'utilisateur</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td><%= userSearch.username %></td>
+                <td><%= userSearch.email %></td>
+                <td><%= userSearch.role %></td>
+                <td>
+                    <form action="/deleteUser" method="post">
+                        <input type="hidden" name="userId" value="<%= userSearch._id %>">
+                        <button type="submit">Supprimer l'utilisateur</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    <% } else if (userSearch && userSearch.role === "admin") { %>
+        <h2>Administrateur trouvé</h2>
+        <table>
+            <tr>
+                <th>Nom d'utilisateur</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td><%= userSearch.username %></td>
+                <td><%= userSearch.email %></td>
+                <td><%= userSearch.role %></td>
+                <td>Vous ne pouvez pas supprimer un administrateur</td>
+            </tr>
+        </table>
+    <% } else if (!userSearch) { %>
+        <h2>Aucun utilisateur trouvé</h2>
+    <% } %>
+</main>
 <%- include('../partials/footer') %>
