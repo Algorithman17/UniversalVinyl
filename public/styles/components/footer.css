@@ -22,8 +22,8 @@ footer {
                 height: 2rem;
             }
 
-            h3 {
-                font-size: 1rem;
+            h3, p {
+                font-size: 0.85rem;
             }
         }
     }

@@ -1,9 +1,5 @@
 main {
-    padding-inline: 2rem;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    gap: 2rem;
 }
 
 .hero {
@@ -83,7 +79,6 @@ main {
 @media (min-width: 1000px) {
     main {
         gap: 4rem;
-        align-items: center;
 
         .hero {
             flex-direction: row;
