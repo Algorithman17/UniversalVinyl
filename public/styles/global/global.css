@@ -7,6 +7,8 @@
     --global-background-color: #000000;
     --global-text-color: #ffffff;
     --button-background-opacity: #fecf3457;
+    --button-box-shadow-hover: 0px 0px 10px 5px var(--main-color);
+    --button-box-shadow-active: 0px 0px 10px 5px var(--main-color) inset;
 }
 
 * {
@@ -20,14 +22,15 @@
 }
 
 body {
-    background: var(--global-background-color); /* Fond noir pour simuler l'espace */
+    background: var(--global-background-color);
     overflow-x: hidden;
     font-family: "Albert Sans", sans-serif;
 
 }
 
-nav a, 
-h1:not(.title-home) {
+nav a:not(.logo), 
+h1:not(.title-home),
+button {
     font-family: "Audiowide", sans-serif;
     text-shadow: var(--global-text-shadow);
     letter-spacing: 0.3rem;
@@ -35,12 +38,27 @@ h1:not(.title-home) {
 }
 
 main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-top: 5rem;
     min-height: 100vh;
     padding-inline: 2rem;
     padding-bottom: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
 }
 
+input {
+    padding-left: 0.5rem;
+    color: var(--global-text-color);
+    outline: none;
+}
 
-
+@media (min-width: 1000px) {
+    main {
+        padding-top: 1.125rem;
+    }
+}
 

@@ -19,4 +19,3 @@ btnNav.addEventListener('click', function() {
         btnNav.classList.remove('btn-nav-inactive');
     }
 });
-

@@ -1,7 +1,7 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-    <h1>Modifier une annonce</h1>
+    <h1>MODIFIER UNE ANNONCE</h1>
     <form action="/edit-annonce/<%= annonce.id %>" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Titre</label>
@@ -39,7 +39,7 @@
             <label for="images">Images (max 3)</label>
             <input type="file" class="form-control-file" id="images" name="images" multiple accept="image/*">
         </div>
-        <button type="submit" >Modifier</button>
+        <button type="submit" >MODIFIER</button>
     </form>
 </main>
 <%- include('../partials/footer') %>

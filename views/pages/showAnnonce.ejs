@@ -1,7 +1,7 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-    <h1>Annonce</h1>
+    <h1>ANNONCE</h1>
     <% if (!annonce) { %>
         <p>Il n'y a pas d'annonce</p>
     <% } else { %>
@@ -62,9 +62,9 @@
             </div>
             <% if (myAnnonce) { %>
                 <div class="edit-and-delete-btns">
-                    <a class="edit-btn" href="/edit-annonce/<%= annonce._id %>">Modifier</a>
+                    <a class="edit-btn" href="/edit-annonce/<%= annonce._id %>">MODIFIER</a>
                     <form action="/delete-annonce/<%= annonce._id %>" method="post">
-                        <button class="delete-btn">Supprimer</button>
+                        <button class="delete-btn">SUPPRIMER</button>
                     </form>
                 </div>
             <% } %>

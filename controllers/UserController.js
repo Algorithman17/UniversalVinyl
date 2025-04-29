@@ -125,7 +125,7 @@ exports.registerForm = (req, res) => {
     } else {
         res.locals.message = undefined
     }
-    return res.render('./pages/register');
+    return res.render('./pages/register', { styleUrl: "components/register" });
 };
 
 // Fonction pour afficher le formulaire de connexion
@@ -136,7 +136,7 @@ exports.loginForm = (req, res) => {
     } else {
         res.locals.message = undefined
     }
-    return res.render('./pages/login');
+    return res.render('./pages/login', { styleUrl: "components/login" });
     
 };
 

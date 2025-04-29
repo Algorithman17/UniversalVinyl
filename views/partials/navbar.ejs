@@ -9,19 +9,19 @@
 <nav>
     <canvas class="universe" style="z-index: 2;"></canvas>
     <ul>
-        <li><a href="/">ACCUEIL</a></li>
+        <li><a class="logo" href="/"><img src="images/logo-vinyle.png" alt="">UNIVERSAL VINYL</a></li>
         <li><a href="/annonces">ANNONCES</a></li>
         <% if (user) { %>
             <li><a href="/profil">PROFIL</a></li>
             <% if (user.role === "admin") { %>
-                <li><a href="/adminDashboard">TABLEAU DE BORD ADMINISTRATEUR</a></li>
+                <li><a href="/adminDashboard">ADMINISTRATION</a></li>
             <% } %>
             <li><a href="/my-annonces">MES ANNONCES</a></li>
-            <li><a href="/conversations">MES MESSAGES</a></li>
-            <li><a href="/logout">SE DÉCONNECTER</a></li>
+            <li><a href="/conversations">MESSAGES</a></li>
+            <li><a href="/logout">DÉCONNEXION</a></li>
         <% } else { %>
-            <li><a href="/register-form">S'INSCRIRE</a></li>
-            <li><a href="/login-form">SE CONNECTER</a></li>
+            <li><a href="/register-form">INSCRIPTION</a></li>
+            <li><a href="/login-form">CONNEXION</a></li>
         <% } %>
     </ul>
 </nav>
