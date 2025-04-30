@@ -1,10 +1,10 @@
-const annonce = document.querySelector('.annonce')
 const carousel = document.querySelector('.content-imgs')
 const images = document.querySelectorAll(".content-img img")
 const previousArrow = document.querySelector(".previous-arrow")
 const nextArrow = document.querySelector(".next-arrow")
 const currentPage = document.querySelector(".current-page")
 const lastPage = document.querySelector(".last-page")
+
 
 let indexImg = 0
 let nbrImg = []
@@ -44,5 +44,4 @@ nextArrow.addEventListener('click', () => {
     indexImg++
     carousel.style.transform = `translateX(-${nbrImg[indexImg]}%)`      
     currentPage.textContent = indexImg+1
-
 })

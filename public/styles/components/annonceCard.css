@@ -8,7 +8,7 @@
 
 .annonce-card {
     border: var(--global-border-width) solid var(--main-color);
-    max-width: 300px;
+    width: 300px;
     background-color: var(--global-background-color);
     border-radius: var(--global-border-radius);
     overflow: hidden;

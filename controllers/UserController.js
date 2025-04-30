@@ -339,11 +339,12 @@ exports.showAnnonce = async (req, res) => {
         if(res.locals.user) {
             userConnected = true
         }
+
         
         const { annonceId } = req.params
         
         const annonce = await AnnonceModel.findById(annonceId)
-
+        
         const userAnnonce = await UserModel.findById({ _id: annonce.userId })
         
         const token = req.cookies.token
@@ -351,14 +352,14 @@ exports.showAnnonce = async (req, res) => {
         if(token) {
             user = jwt.verify(token, process.env.JWT_SECRET).user;
         }
-
+        
         let myAnnonce;
         if (token === undefined) {
             myAnnonce = false
         } else if (annonce.userId.toHexString() === user._id) {
             myAnnonce = true  
         }
-
+        
         let dateAnnonce = annonce.createdAt
         const dayAnnonce = dateAnnonce.getDate()
         const monthAnnonce = dateAnnonce.getMonth() + 1

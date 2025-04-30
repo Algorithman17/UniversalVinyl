@@ -7,7 +7,7 @@
 
 .carousel {
     overflow: hidden;
-    width: 70%;
+    width: 60%;
     position: relative;
 }
 
@@ -15,6 +15,7 @@
     display: flex;
     width: 300%;
     transition: transform 0.3s ease-in-out;
+    /* height: 600px; */
 }
 
 .content-img {
@@ -32,71 +33,86 @@
     max-width: 100%;
 }
 
+.edit-and-delete-img {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
 .paging {
+    align-content: center;
     position: absolute;
     width: fit-content;
     right: 10px;
-    bottom: 0;
-    background-color: #26d804;
-    color: #383838;
-    border-radius: 4px;
+    top: 10px;
+    background-color: var(--global-background-color);
+    color: var(--global-text-color);
+    border: var(--global-border-width) solid var(--main-color);
     padding: 2px 5px;
+    z-index: 1;
 }
 
 .annonce-text {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
     width: 100%;
     margin-top: 20px;
     padding: 20px;
-    background-color: rgb(251, 255, 0);
+    background-color: var(--global-background-color);
+    border: var(--global-border-width) solid var(--main-color);
+    color: var(--global-text-color);
 }
 
 
-.previous-arrow {
-    transform: scale(-0.5) translate(50%, 50%);
-    width: fit-content;
+.swipe-btns {
+    display: flex;
+    justify-content: space-between;
     position: absolute;
+    top: 25%;
+    width: 100%;
+}
+
+.previous-arrow {
+    transform: scale(-0.5) translateX(50%);
+    width: fit-content;
+    position: relative;
     z-index: 1;
-    left: 40px;
-    top: 225px;
     cursor: pointer;
 }
 
 .next-arrow {
-    transform: scale(0.5) translate(0%, -50%);
-    transform-origin: right;
+    transform: scale(0.5) translateX(50%);
     width: fit-content;
-    position: absolute;
+    position: relative;
     z-index: 1;
-    right: 40px;
-    top: 225px;
     cursor: pointer;
 }
 
 .edit-and-delete-btns {
     display: flex;
-    justify-content: space-evenly;  
-    padding-block: 20px;
-    width: 100%;
 }
 
 .edit-btn, .delete-btn {
-    padding: 10px 20px;
-    border-radius: 10px;
     cursor: pointer;
-    background-color: rgb(255, 174, 0);
-    border: 0;
-}
+    width: 2rem;
+    height: 2rem;
 
-.delete-btn {
-    height: 100%;
-}
-
-@media screen and (max-width: 600px) {
-    .previous-arrow, .next-arrow {
-        display: none;
+    img {
+        width: 100%;
     }
+
+}
+
+@media screen and (max-width: 690px) {
+    .previous-arrow, .next-arrow {
+       
+    }
+
+    /* .next-arrow {
+        right: 180px;
+        top: 460px;
+    } */
 }
 
 /* 
