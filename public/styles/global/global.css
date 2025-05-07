@@ -9,6 +9,8 @@
     --button-background-opacity: #fecf3457;
     --button-box-shadow-hover: 0px 0px 10px 5px var(--main-color);
     --button-box-shadow-active: 0px 0px 10px 5px var(--main-color) inset;
+    scrollbar-width: thin;
+    scrollbar-color: var(--main-color) rgba(0, 0, 0, 0);
 }
 
 * {
@@ -25,7 +27,6 @@ body {
     background: var(--global-background-color);
     overflow-x: hidden;
     font-family: "Albert Sans", sans-serif;
-
 }
 
 nav a:not(.logo), 

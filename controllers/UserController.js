@@ -177,7 +177,7 @@ exports.myAnnonces = async (req, res) => {
 };
 
 exports.addAnnonceForm = (req, res) => {
-    return res.render('./pages/addAnnonce');
+    return res.render('./pages/addAnnonce', { styleUrl: "components/addAnnonce" });
 };
 
 exports.addAnnonce = async (req, res) => {
@@ -546,10 +546,10 @@ exports.conversations = async (req, res) => {
                 })
             }
         } else {
-            return res.render('./pages/conversations', { annonces })
+            return res.render('./pages/conversations', { annonces, styleUrl: "components/conversations" })
         }
 
-        return res.render('./pages/conversations', { annonces })
+        return res.render('./pages/conversations', { annonces, styleUrl: "components/conversations" })
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
     }
@@ -563,7 +563,9 @@ exports.chat = async (req, res) => {
 
         let annonce = await AnnonceModel.findById(conversation.annonceId);
 
-        return res.render('./pages/chat', { conversation, annonce, user: res.locals.user });
+        const userAnnonce = await UserModel.findById(annonce.userId)
+
+        return res.render('./pages/chat', { userAnnonce, conversation, annonce, user: res.locals.user, styleUrl: "components/chat" });
 
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
