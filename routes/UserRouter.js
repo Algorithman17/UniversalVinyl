@@ -35,7 +35,7 @@ router.post("/login", UserController.login)
 
 router.get('/profil', auth, UserController.profil);
 
-router.post('/logout', auth, UserController.logout);
+router.get('/logout', auth, UserController.logout);
 
 router.get('/my-annonces', auth, UserController.myAnnonces);
 

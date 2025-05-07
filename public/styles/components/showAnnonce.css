@@ -3,11 +3,12 @@
     flex-direction: column;
     position: relative;
     align-items: center;
+    width: 100%;
 }
 
 .carousel {
     overflow: hidden;
-    width: 60%;
+    width: 100%;
     position: relative;
 }
 
@@ -27,7 +28,7 @@
 }
 
 .content-img img {
-    width: 100%;
+    /* width: 100%; */
     object-fit: scale-down;
     max-height: 100%;
     max-width: 100%;
@@ -37,6 +38,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    border-bottom: var(--global-border-width) solid var(--global-text-color);
 }
 
 .paging {
@@ -55,13 +57,32 @@
 .annonce-text {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.5rem;
     width: 100%;
-    margin-top: 20px;
-    padding: 20px;
+    margin-top: 1rem;
+    padding: 1rem;
     background-color: var(--global-background-color);
     border: var(--global-border-width) solid var(--main-color);
     color: var(--global-text-color);
+    overflow: hidden;
+
+    .vinyl-infos {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .vinyl-info {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: var(--global-border-width) solid var(--global-text-color);
+            gap: 1rem;
+
+            .categorie-and-content {
+                overflow-wrap: break-word;
+            }
+        }
+
+    }
 }
 
 
@@ -74,7 +95,7 @@
 }
 
 .previous-arrow {
-    transform: scale(-0.5) translateX(50%);
+    transform: scale(-0.5) translateX(50%) translateY(50%);
     width: fit-content;
     position: relative;
     z-index: 1;
@@ -82,7 +103,7 @@
 }
 
 .next-arrow {
-    transform: scale(0.5) translateX(50%);
+    transform: scale(0.5) translateX(50%) translateY(-50%);
     width: fit-content;
     position: relative;
     z-index: 1;
@@ -91,6 +112,7 @@
 
 .edit-and-delete-btns {
     display: flex;
+    gap: 1rem;
 }
 
 .edit-btn, .delete-btn {
@@ -102,6 +124,29 @@
         width: 100%;
     }
 
+}
+
+form {
+    width: 100%;
+
+    button {
+        background-color: var(--button-background-opacity);
+        color: var(--global-text-color);
+        padding: 0.5rem;
+        border: var(--global-border-width) solid var(--main-color);
+        letter-spacing: normal;
+        width: 100%;
+        font-size: 1rem;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: var(--button-box-shadow-hover);
+        }
+
+        &:active {
+            box-shadow: var(--button-box-shadow-active);
+        }
+    }
 }
 
 @media screen and (max-width: 690px) {

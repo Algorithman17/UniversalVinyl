@@ -1,36 +1,97 @@
+<%- include('../partials/head') %>
+<%- include('../partials/navbar') %>
 <main>
-    <div id="messages"></div>
+    <div class="detail-annonce">
+        <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="<%= annonce.images[0].name %>">
+        <div class="infos-annonce">
+            <p class="title-annonce"><%= annonce.title %></p>
+            <p class="username-annonce"><%= userAnnonce.username %></p>
+        </div>
+    </div>
+    <div id="messages" class="messages"></div>
     <form action="">
-        <input id="msg" autocomplete="off" /><button>ENVOYER</button>
+        <textarea id="msg" autocomplete="off" maxlength="1000"></textarea>
+        <button>ENVOYER</button>
     </form>
 </main>
+<%- include('../partials/footer') %>
 <script src="/socket.io/socket.io.js"></script> <!-- Chemin correct pour charger Socket.io -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
     $(function () {
         var socket = io({ query: { username: "<%= user.username %>" } });
         const roomId = "<%= conversation._id %>"; // ID unique de la conversation
+        let currentDate = ""; // Variable pour suivre la date actuelle
 
         // Charger les messages existants
         $.get(`/api/messages/${roomId}`, function (messages) {
-            messages.forEach(({ sender, message }) => {
-                $("#messages").append($("<p>").html(`<strong>${sender}:</strong> ${message}`));
+            messages.forEach(({ sender, message, createdAt }) => {
+                appendMessage(sender, message, createdAt);
             });
         });
 
         // Rejoindre la room spécifique
         socket.emit("joinRoom", roomId);
 
+        // Envoyer un message
         $("form").submit(function (e) {
             e.preventDefault();
-            const message = $("#msg").val();
-            socket.emit("chatMessage", { roomId, message });
-            $("#msg").val("");
+            const message = $("#msg").val().trim();
+            if (message) {
+                const createdAt = new Date().toISOString(); // Générer une date locale pour le message
+                appendMessage("<%= user.username %>", message, createdAt); // Ajouter immédiatement le message
+                socket.emit("chatMessage", { roomId, message });
+                $("#msg").val(""); // Réinitialiser le champ de texte
+            }
             return false;
         });
 
-        socket.on("chatMessage", function ({ sender, message }) {
-            $("#messages").append($("<p>").html(`<strong>${sender}:</strong> ${message}`));
+        // Recevoir un message en temps réel
+        socket.on("chatMessage", function ({ sender, message, createdAt }) {
+            appendMessage(sender, message, createdAt);
         });
+
+        // Fonction pour ajouter un message au DOM
+        function appendMessage(sender, message, createdAt) {
+            const date = new Date(createdAt);
+
+            // Vérifier si la date est valide
+            if (isNaN(date.getTime())) {
+                console.error("Invalid date format:", createdAt);
+                return;
+            }
+
+            // Formater la date pour l'en-tête
+            const formattedDate = date.toLocaleDateString("fr-FR", {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            });
+
+            // Formater l'heure pour chaque message
+            const formattedTime = date.toLocaleTimeString("fr-FR", {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+
+            // Ajouter un en-tête de date si la date change
+            if (formattedDate !== currentDate) {
+                currentDate = formattedDate;
+                $("#messages").append($("<div class='date-header'>").text(currentDate));
+            }
+
+            // Ajouter le message sous l'en-tête de date
+            const messageClass = sender === "<%= user.username %>" ? "my-messages" : "his-messages";
+            $("#messages").append(
+                $("<div>").addClass(messageClass)
+                    .append($("<p class='message'>").text(message))
+                    .append($("<span class='message-time'>").text(formattedTime))
+            );
+
+            // Faire défiler vers le bas pour voir le dernier message
+            $("#messages").scrollTop($("#messages")[0].scrollHeight);
+        }
     });
 </script>
+                                
