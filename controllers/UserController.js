@@ -114,7 +114,7 @@ exports.profil = (req, res) => {
         userRole = "UTILISATEUR"
     }
 
-    return res.render('./pages/profil', { age, userRole, styleUrl: "components/profil" });
+    return res.render('./pages/profil', { age, userRole, styleUrl: ["components/profil"] });
 };
 
 // Fonction pour afficher le formulaire d'enregistrement
@@ -125,7 +125,7 @@ exports.registerForm = (req, res) => {
     } else {
         res.locals.message = undefined
     }
-    return res.render('./pages/register', { styleUrl: "components/register" });
+    return res.render('./pages/register', { styleUrl: ["components/register"] });
 };
 
 // Fonction pour afficher le formulaire de connexion
@@ -136,13 +136,13 @@ exports.loginForm = (req, res) => {
     } else {
         res.locals.message = undefined
     }
-    return res.render('./pages/login', { styleUrl: "components/login" });
+    return res.render('./pages/login', { styleUrl: ["components/login"] });
     
 };
 
 // Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
-    return res.render('./pages/home', { styleUrl: "components/home" });
+    return res.render('./pages/home', { styleUrl: ["components/home"] });
 };
 
 exports.logout = (req, res) => {
@@ -170,14 +170,14 @@ exports.myAnnonces = async (req, res) => {
         };
     });
     
-    return res.render('./pages/myAnnonces', { annonces: annoncesWithImages, styleUrl: "components/annonceCard" });
+    return res.render('./pages/myAnnonces', { annonces: annoncesWithImages, styleUrl: ["components/annonceCard"] });
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage des annonces', error });
     }
 };
 
 exports.addAnnonceForm = (req, res) => {
-    return res.render('./pages/addAnnonce', { styleUrl: "components/addAnnonce" });
+    return res.render('./pages/addAnnonce', { styleUrl: ["components/addAnnonce"] });
 };
 
 exports.addAnnonce = async (req, res) => {
@@ -230,7 +230,7 @@ exports.annonces = async (req, res) => {
             };
         });
 
-        return res.render('./pages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: "components/annonceCard" });
+        return res.render('./pages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: ["components/annonceCard"] });
     } catch (error) {   
         return res.status(500).json({ message: 'Erreur lors de l\'affichage des annonces', error });
     }
@@ -366,7 +366,7 @@ exports.showAnnonce = async (req, res) => {
         const yearAnnonce = dateAnnonce.getFullYear()
         dateAnnonce = `${dayAnnonce}/${monthAnnonce}/${yearAnnonce}`
         
-        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: "components/showAnnonce", userAnnonce, dateAnnonce })
+        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: ["components/showAnnonce"], userAnnonce, dateAnnonce })
 
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
@@ -453,9 +453,10 @@ exports.updateProfil = async (req, res) => {
 
 exports.adminDashboard = (req, res) => {
     try {
-        let userSearch = {}
-        
-        return res.render('./pages/adminDashboard', { userSearch })
+        let userSearch = false
+        console.log("userSearch:", userSearch);
+        let annoncesUser = []
+        return res.render('./pages/adminDashboard', { userSearch, annoncesUser, styleUrl: ["components/adminDashboard"] })
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
     }
@@ -464,9 +465,16 @@ exports.adminDashboard = (req, res) => {
 exports.searchUser = async (req, res) => {
     try {
         const { username } = req.body
-        const userSearch = await UserModel.findOne({ username })
 
-        return res.render('./pages/adminDashboard', { userSearch })
+        const userSearch = await UserModel.findOne({ username })
+        console.log("userSearch:", userSearch);
+        
+        let annoncesUser = []
+        if (userSearch) {
+            annoncesUser = await AnnonceModel.find({userId: userSearch._id.toString()})
+        } 
+
+        return res.render('./pages/adminDashboard', { userSearch, annoncesUser, styleUrl: ["components/adminDashboard", "components/conversations"] })
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
     }
@@ -532,9 +540,25 @@ exports.conversations = async (req, res) => {
         const annonces = []
         if(conversations.length > 0) {
             for (const conversation of conversations) {
+                
+                if (conversation.lastMessage === "") {
+                    await conversation.deleteOne()
+                    break
+                    console.log("okss");
+                }
+
+                const dateLastMessage = conversation.messages[conversation.messages.length-1].createdAt;
+                const date = new Date(dateLastMessage);
+                const formattedLastDate = date.toLocaleDateString("fr-FR", {
+                    weekday: "long",
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                });
 
                 let annonce = await AnnonceModel.findById(conversation.annonceId);
-
                 annonces.push({
                     conversationId: conversation._id,
                     annonceId: conversation.annonceId,
@@ -543,13 +567,15 @@ exports.conversations = async (req, res) => {
                     price: annonce.price,
                     musicStyle: annonce.musicStyle,
                     imageUrl: annonce.images[0].imageUrl,
+                    lastMessage: conversation.lastMessage,
+                    dateLastMessage: formattedLastDate
                 })
             }
         } else {
-            return res.render('./pages/conversations', { annonces, styleUrl: "components/conversations" })
+            return res.render('./pages/conversations', { annonces, styleUrl: ["components/conversations"] })
         }
 
-        return res.render('./pages/conversations', { annonces, styleUrl: "components/conversations" })
+        return res.render('./pages/conversations', { annonces, styleUrl: ["components/conversations"] })
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
     }
@@ -565,7 +591,7 @@ exports.chat = async (req, res) => {
 
         const userAnnonce = await UserModel.findById(annonce.userId)
 
-        return res.render('./pages/chat', { userAnnonce, conversation, annonce, user: res.locals.user, styleUrl: "components/chat" });
+        return res.render('./pages/chat', { userAnnonce, conversation, annonce, user: res.locals.user, styleUrl: ["components/chat"] });
 
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
