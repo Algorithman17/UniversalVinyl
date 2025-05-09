@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 2rem;
     width: 100%;
 }
 
@@ -54,7 +54,7 @@
 
 .add-annonce-btn {
     display: block;
-    padding: 10px 20px;
+    padding: 0.75rem 1.25rem;
     border: var(--global-border-width) solid var(--main-color);
     text-align: center;
     background-color: var(--button-background-opacity);
