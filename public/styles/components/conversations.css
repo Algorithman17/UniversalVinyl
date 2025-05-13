@@ -1,18 +1,18 @@
 a:not(nav a, .delete-btn) {
     width: 100%;
-    height: 150px;
     border: var(--global-border-width) solid var(--main-color);
 
     .card {
         display: flex;
+        flex-direction: column;
         background-color: var(--global-background-color);
         box-shadow: var(--global-box-shadow);
         height: 100%;
 
         .content-img {
-
+            height: 70px;
             img {
-                width: 200px;
+                width: 100%;
                 vertical-align: middle;
                 height: 100%;
                 object-fit: cover;
@@ -26,5 +26,21 @@ a:not(nav a, .delete-btn) {
             flex-direction: column;
             gap: 1rem;
         }
+    }
+}
+
+@media (min-width: 550px) {
+    .card {
+        flex-direction: row !important;
+        height: 150px !important;
+
+        .content-img {
+            height: 100% !important;
+            width: 150px;
+        }
+    }
+
+    img {
+        width: 200px;
     }
 }

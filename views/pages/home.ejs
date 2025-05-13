@@ -1,6 +1,9 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
+    <% if(user) { %>
+        <p class="connected"><%= user.username %> connecté</p>
+    <% } %>
     <div class="hero">
         <img class="logo slide" src="images/logo-vinyle.png" alt="">
         <h1 class="title-home">UNIVERSAL VINYL</h1>

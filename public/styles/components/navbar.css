@@ -19,7 +19,8 @@ nav {
         flex-direction: column;
         height: 100%;
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-start;
+        gap: 4rem;
             
         .logo {
             display: flex;

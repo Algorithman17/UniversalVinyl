@@ -47,15 +47,13 @@ router.get('/annonces', UserController.annonces);
 
 router.post('/delete-annonce/:id', auth, UserController.deleteAnnonce)
 
-router.get('/edit-annonce/:id', auth, UserController.editAnnonceForm)
+router.get('/edit-annonce/:id/:data', auth, UserController.editAnnonceForm)
 
 router.post('/edit-annonce/:id', auth, upload.array('images', 3), UserController.editAnnonce)
 
 router.post('/cookie-theme', UserController.cookieTheme)
 
 router.get('/show-annonce/:annonceId', UserController.showAnnonce)
-
-router.get('/updateProfilForm/:info', auth, UserController.updateProfilForm)
 
 router.post('/updateProfil', auth, upload.single('image'), UserController.updateProfil)
 

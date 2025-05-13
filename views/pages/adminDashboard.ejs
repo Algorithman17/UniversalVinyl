@@ -31,10 +31,10 @@
                     <div class="annonces-list">
                         <% annoncesUser.forEach(annonce => { %>
                             <div class="annonce">
-                                <a href="/show-annonce/<%= annonce._id %>" style="display: block; height: 150px;">
-                                    <div class="card" style="box-shadow: none; height: 100%;">
+                                <a href="/show-annonce/<%= annonce._id %>">
+                                    <div class="card" style="box-shadow: none;">
                                         <div class="content-img">
-                                            <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="" style="height: 100%; object-fit: cover;">
+                                            <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="">
                                         </div>
                                         <div class="info-annonce" style="gap: 0.5rem;">
                                             <h2><%= annonce.title %></h2>
@@ -44,7 +44,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                <% if (userSearch.role === user) { %>
+                                <% if (userSearch.role === "user") { %>
                                     <a class="delete-btn" href=""><img src="/images/delete-icon.png" alt="" style="width: 2rem;"></a>
                                     <% } %>
                                 </div>

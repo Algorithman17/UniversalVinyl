@@ -1,6 +1,15 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
+  <% if (typeof message !== 'undefined' && message.text.length > 0) { %>
+    <div class="alert alert-<%= message.type === 'error' ? 'danger' : 'success' %>" role="alert">
+        <ul>
+            <% message.text.forEach(function(msg) { %>
+                <li><%= msg %></li>
+            <% }); %>
+        </ul>
+    </div>
+  <% } %>
   <h1>CONNEXION</h1>
   <form action="/login" method="POST">
     <div class="form-group">

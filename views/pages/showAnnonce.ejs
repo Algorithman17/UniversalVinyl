@@ -28,11 +28,9 @@
                 </div>
             </div>
             <div class="carousel">
-                <% if (!myAnnonce) { %> 
-                    <div class="paging">
-                        <span class="current-page">1</span> / <span class="last-page">3</span>
-                    </div>
-                <% } %>
+                <div class="paging">
+                    <span class="current-page">1</span> / <span class="last-page">3</span>
+                </div>
                 <div class="content-imgs">
                     <% annonce.images.forEach(image => { %>
                             <div class="content-img">
@@ -43,43 +41,34 @@
             </div>
             <div class="annonce-text">
                 <% if (myAnnonce) { %>
-                    <div class="edit-and-delete-img">
-                        <div class="paging" style="position: inherit; border: none">
-                            Image <span class="current-page">1</span> / <span class="last-page">3</span>
-                        </div>
-                        <div class="edit-and-delete-btns">
-                            <a class="edit-btn" href=""><img src="/images/edit-icon.png" alt=""></a>
-                            <a class="delete-btn" href=""><img src="/images/delete-icon.png" alt=""></a>
-                        </div>
-                    </div>
                     <div class="vinyl-infos">
                         <div class="vinyl-info">
                             <div class="categorie-and-content">
                                 <span>Titre</span>
                                 <h2><%= annonce.title %></h2>
                             </div>
-                            <a class="edit-btn" href=""><img src="/images/edit-icon.png" alt=""></a>
+                            <a class="edit-btn" href="/edit-annonce/<%= annonce.id %>/<%= annonce.title %>"><img src="/images/edit-icon.png" alt=""></a>
                         </div>
                         <div class="vinyl-info">
                             <div class="categorie-and-content">
                                 <span>Prix</span>
                                 <p><%= annonce.price %>€</p>
                             </div>
-                            <a class="edit-btn" href=""><img src="/images/edit-icon.png" alt=""></a>
+                            <a class="edit-btn" href="/edit-annonce/<%= annonce.id %>/<%= annonce.price %>"><img src="/images/edit-icon.png" alt=""></a>
                         </div>
                         <div class="vinyl-info">
                             <div class="categorie-and-content">
                                 <span>Style de musique</span>
                                 <p><%= annonce.musicStyle %></p>
                             </div>
-                            <a class="edit-btn" href=""><img src="/images/edit-icon.png" alt=""></a>
+                            <a class="edit-btn" href="/edit-annonce/<%= annonce.id %>/<%= annonce.musicStyle %>"><img src="/images/edit-icon.png" alt=""></a>
                         </div>
                         <div class="vinyl-info">
                             <div class="categorie-and-content">
                                 <span>Description</span>
                                 <p><%= annonce.description %></p>
                             </div>
-                            <a class="edit-btn" href=""><img src="/images/edit-icon.png" alt=""></a>
+                            <a class="edit-btn" href="/edit-annonce/<%= annonce.id %>/<%= annonce.description %>"><img src="/images/edit-icon.png" alt=""></a>
                         </div>
                 <% } else { %>
                     <div class="vinyl-info">
@@ -121,6 +110,11 @@
                     <input type="hidden" name="sender" value="<%= user.username %>">
                     <input type="hidden" name="annonceId" value="<%= annonce._id %>">
                     <button>ENVOYER UN MESSAGE</button>
+                </form>
+            <% } %>
+            <% if(userAnnonce.username === user.username) { %>
+                <form action="/delete-annonce/<%= annonce.id %>" method="post">
+                    <button>SUPPRIMER L'ANNONCE</button>
                 </form>
             <% } %>
         <% } %>

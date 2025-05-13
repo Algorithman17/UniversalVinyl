@@ -1,3 +1,7 @@
+h1 {
+    text-align: center;
+}
+
 label {
     color: white
 }
@@ -17,7 +21,7 @@ form {
         input, textarea, select {
             background-color: var(--global-background-color);
             border: var(--global-border-width) solid var(--main-color);
-            color: white;
+            color: var(--global-text-color);
             outline: none;
             font-size: 1rem;
         }
@@ -80,6 +84,10 @@ form {
             display: flex;
             gap: 1%;
             justify-content: center;
+
+            img {
+                object-fit: contain;
+            }
 
         }
     }
