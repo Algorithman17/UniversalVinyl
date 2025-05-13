@@ -1,45 +1,128 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-    <h1>MODIFIER UNE ANNONCE</h1>
-    <form action="/edit-annonce/<%= annonce.id %>" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="title">Titre</label>
-            <input type="text" class="form-control" id="title" name="title" value="<%= annonce.title %>">
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3"><%= annonce.description %></textarea>
-        </div>
-        <div class="form-group">
-            <label for="price">Prix</label>
-            <input type="number" class="form-control" id="price" name="price" value="<%= annonce.price %>">
-        </div>
-        <div class="form-group">
-            <label for="musicStyle">Style de musique</label>
-            <select id="musicStyle" name="musicStyle" required>
-                <option value="rock">Rock</option>
-                <option value="pop">Pop</option>
-                <option value="rap">Rap</option>
-                <option value="jazz">Jazz</option>
-                <option value="classique">Classique</option>
-                <option value="electro">Electro</option>
-                <option value="reggae">Reggae</option>
-                <option value="metal">Metal</option>
-                <option value="blues">Blues</option>
-                <option value="variété">Variété</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <div>
-                <% annonce.images.forEach(image => { %>
-                    <img src="../../../uploads/<%= image.imageUrl %>" alt="image" style="width: 100px">
-                <% }) %>
+    <h1>ANNONCE</h1>
+        <div class="annonce">
+            <div class="swipe-btns">
+                <div class="previous-arrow">
+                    <span class="border-0">
+                        <span class="border-1">
+                            <span class="lines">
+                                <span class="line-1"></span>
+                                <span class="line-2"></span>
+                                <span class="line-3"></span>
+                            </span>
+                        </span>
+                    </span>
+                </div>
+                <div class="next-arrow">
+                    <span class="border-0">
+                        <span class="border-1">
+                            <span class="lines">
+                                <span class="line-1"></span>
+                                <span class="line-2"></span>
+                                <span class="line-3"></span>
+                            </span>
+                        </span>
+                    </span>
+                </div>
             </div>
-            <label for="images">Images (max 3)</label>
-            <input type="file" class="form-control-file" id="images" name="images" multiple accept="image/*">
+            <div class="carousel">
+                <div class="paging">
+                    <span class="current-page">1</span> / <span class="last-page">3</span>
+                </div>
+                <div class="content-imgs">
+                    <% annonce.images.forEach(image => { %>
+                            <div class="content-img">
+                                <img src="../../../uploads/<%= image.imageUrl %>" alt="<%= image.name %>">
+                            </div>
+                    <% }); %> 
+                </div>
+            </div>
+            <div class="annonce-text">
+                    <div class="vinyl-infos">
+                        <div class="vinyl-info">
+                            <% if (data === annonce.title) { %>
+                                <div class="categorie-and-content">
+                                    <span>Titre</span>
+                                    <form action="/edit-annonce/<%= annonce.id %>" method="post">
+                                        <input type="text" name="title" required>
+                                        <button type="submit"><img src="/images/send-icon.png" alt=""></button>
+                                    </form>
+                                </div>
+                            <% } else { %>
+                                <div class="categorie-and-content">
+                                    <span>Titre</span>
+                                    <p><%= annonce.title %></p>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="vinyl-info">
+                            <% if (data === `${annonce.price}`) { %>
+                                <div class="categorie-and-content">
+                                    <span>Prix</span>
+                                    <form action="/edit-annonce/<%= annonce.id %>" method="post">
+                                        <input type="number" name="price" required>
+                                        <button type="submit"><img src="/images/send-icon.png" alt=""></button>
+                                    </form>
+                                </div>
+                            <% } else { %>
+                                <div class="categorie-and-content">
+                                    <span>Prix</span>
+                                    <p><%= annonce.price %>€</p>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="vinyl-info">
+                            <% if (data === annonce.musicStyle) { %>
+                                <div class="categorie-and-content">
+                                    <span>Style de musique</span>
+                                    <form action="/edit-annonce/<%= annonce.id %>" method="post">
+                                        <select id="musicStyle" name="musicStyle" required>
+                                            <option value="rock">Rock</option>
+                                            <option value="pop">Pop</option>
+                                            <option value="rap">Rap</option>
+                                            <option value="jazz">Jazz</option>
+                                            <option value="classique">Classique</option>
+                                            <option value="electro">Electro</option>
+                                            <option value="reggae">Reggae</option>
+                                            <option value="metal">Metal</option>
+                                            <option value="blues">Blues</option>
+                                            <option value="variété">Variété</option>
+                                        </select>
+                                        <button type="submit"><img src="/images/send-icon.png" alt=""></button>
+                                    </form>
+                                </div>
+                            <% } else { %>
+                                <div class="categorie-and-content">
+                                    <span>Style de musique</span>
+                                    <p><%= annonce.musicStyle %></p>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="vinyl-info">
+                            <% if (data === annonce.description) { %>
+                                <div class="categorie-and-content">
+                                    <span>Description</span>
+                                    <form action="/edit-annonce/<%= annonce.id %>" method="post">
+                                        <textarea name="description" id="description" required></textarea>
+                                        <button type="submit"><img src="/images/send-icon.png" alt=""></button>
+                                    </form>
+                                </div>
+                            <% } else { %>
+                                <div class="categorie-and-content">
+                                    <span>Description</span>
+                                    <p><%= annonce.description %></p>
+                                </div>
+                            <% } %>
+                        </div>
+                    <p>Créer le <%= dateAnnonce %></p>
+                    <div class="userInfo">
+                        <h2><%= userAnnonce.username %></h2>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button type="submit" >MODIFIER</button>
-    </form>
+    </div>
 </main>
 <%- include('../partials/footer') %>

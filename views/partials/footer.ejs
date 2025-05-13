@@ -23,6 +23,8 @@
         </div>
     </div>
 </footer>
-<script src="/scripts/annonceCarousel.js"></script>
+<% if (typeof carousel !== 'undefined' && carousel) { %>
+    <script src="/scripts/<%= carousel %>.js"></script>
+<% } %>
 <script src="/scripts/canvas.js" ></script>
 <script src="/scripts/navbar.js"></script>

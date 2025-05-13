@@ -1,5 +1,13 @@
 main {
     justify-content: center;
+
+    .connected {
+        color: var(--main-color);
+        position: absolute;
+        top: 5rem;
+        padding: 0.5rem;
+        border: var(--global-border-width) solid var(--main-color);
+    }
 }
 
 .hero {

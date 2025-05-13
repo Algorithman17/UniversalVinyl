@@ -71,13 +71,15 @@ exports.login = async (req, res) => {
         const findUser = await UserModel.findOne({ email });
         
         if (!findUser) {
-            return res.status(400).json({ message: 'Email ou mot de passe incorrect.' });
+            req.session.message = { type: 'error', text: [`${email} introuvable !`] };
+            return res.redirect('/login-form')
         }
 
         let isValid = await bcrypt.compare(password, findUser.password);
 
         if (!isValid) {
-            return res.status(400).json({ message: 'Email ou mot de passe incorrect.' });
+            req.session.message = { type: 'error', text: [`Mot de passe incorrect !`] };
+            return res.redirect('/login-form')
         }
 
         // Supprimer le mot de passe de l'objet utilisateur
@@ -270,14 +272,20 @@ exports.deleteAnnonce = async (req, res) => {
 
 exports.editAnnonceForm = async (req, res) => {
     try {
-        const annonceId = req.params.id;
-        const annonce = await AnnonceModel.findById(annonceId);
+        const annonceId = req.params.id
+        const data = req.params.data
 
-        if (!annonce) {
-            return res.status(404).json({ message: 'Annonce non trouvée' });
-        }
+        const annonce = await AnnonceModel.findById(annonceId)
 
-        return res.render('./pages/editAnnonce', { annonce });
+        let dateAnnonce = annonce.createdAt
+        const dayAnnonce = dateAnnonce.getDate()
+        const monthAnnonce = dateAnnonce.getMonth() + 1
+        const yearAnnonce = dateAnnonce.getFullYear()
+        dateAnnonce = `${dayAnnonce}/${monthAnnonce}/${yearAnnonce}`
+
+        const userAnnonce = res.locals.user.username
+
+        return res.render(`./pages/editAnnonce`, { data, annonce, dateAnnonce, userAnnonce, styleUrl: ['components/showAnnonce', 'components/editAnnonce'], carousel: "annonceCarousel" })
     } catch (error) {
         return res.status(500).json({ message: 'Erreur serveur', error });
     }
@@ -287,47 +295,61 @@ exports.editAnnonce = async (req, res) => {
     try {
         const annonceId = req.params.id;
         const { title, description, price, musicStyle } = req.body;
+        
+        if (req.files) {
+            if (req.files.length > 3) {
+                return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
+            }
 
-        if (req.files.length > 3) {
-            return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
+            if (req.files.length > 0) {
+                // Supprimer les anciennes images du dossier "uploads"
+                annonce.images.forEach(img => {
+                    const imagePath = path.join(__dirname, '..', 'public/uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
+                    
+                    if (fs.existsSync(imagePath)) {
+                        fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
+                    }
+                });
+    
+                // Créer une liste d'URLs d'images
+                const images = req.files.map(file => ({
+                    name: file.originalname,
+                    contentType: file.mimetype,
+                    imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
+                }));
+                
+                annonce.images = images;
+            }
         }
-
+        
+        
         // Trouver l'annonce à modifier
         const annonce = await AnnonceModel.findById(annonceId);
-
+        
         if (!annonce) {
             return res.status(404).json({ message: 'Annonce non trouvée' });
         }
-
         // Vérifier si de nouvelles images ont été téléchargées
-        if (req.files && req.files.length > 0) {
-            // Supprimer les anciennes images du dossier "uploads"
-            annonce.images.forEach(img => {
-                const imagePath = path.join(__dirname, '..', 'public/uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
-                
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
-                }
-            });
+        
 
-            // Créer une liste d'URLs d'images
-            const images = req.files.map(file => ({
-                name: file.originalname,
-                contentType: file.mimetype,
-                imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
-            }));
-            
-            annonce.images = images;
+        if (typeof title !== "undefined") {
+            annonce.title = title;
         }
-
-        annonce.title = title;
-        annonce.description = description;
-        annonce.price = price;
-        annonce.musicStyle = musicStyle;
-
+        if (typeof description !== "undefined") {
+            annonce.description = description;
+        }
+        if (typeof price !== "undefined") {
+            annonce.price = price;
+        }
+        if (typeof musicStyle !== "undefined") {
+            annonce.musicStyle = musicStyle;
+        }
+        
+        console.log(title, description, price, musicStyle)
+        
         await annonce.save();
 
-        return res.redirect('/my-annonces');
+        return res.redirect(`/show-annonce/${annonce.id}`);
     } catch (error) {
         return res.status(500).json({ message: 'Erreur serveur', error });
     }
@@ -336,10 +358,10 @@ exports.editAnnonce = async (req, res) => {
 exports.showAnnonce = async (req, res) => {
     try {
         let userConnected = false
+
         if(res.locals.user) {
             userConnected = true
         }
-
         
         const { annonceId } = req.params
         
@@ -366,35 +388,10 @@ exports.showAnnonce = async (req, res) => {
         const yearAnnonce = dateAnnonce.getFullYear()
         dateAnnonce = `${dayAnnonce}/${monthAnnonce}/${yearAnnonce}`
         
-        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: ["components/showAnnonce"], userAnnonce, dateAnnonce })
+        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: ["components/showAnnonce"], carousel: "annonceCarousel", userAnnonce, dateAnnonce })
 
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
-    }
-}
-
-exports.updateProfilForm = (req, res) => {
-    try {
-    let keyInfo = req.params.info
-    const valueInfo = res.locals.user[keyInfo]
-
-    let keyInfoTranslate;
-
-    switch(keyInfo) {
-        case "username": keyInfoTranslate = "Nom d'utilisateur" 
-        break;
-        case "last": keyInfoTranslate = "Nom de famille"
-        break;
-        case "first": keyInfoTranslate = "Prénom"
-        break;
-        case "address": keyInfoTranslate = "Adresse"
-        break;
-        case "bio": keyInfoTranslate = "Bio"
-    }
-
-    return res.render('./pages/updateProfil', { keyInfoTranslate, keyInfo, valueInfo })
-    } catch (error){
-        return res.status(500).json({ message: 'Erreur lors de l\'affichage du formulaire', error });
     }
 }
 

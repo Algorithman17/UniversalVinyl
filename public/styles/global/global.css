@@ -2,7 +2,7 @@
     --main-color: #fecf34;
     --global-border-width: 1px;
     --global-border-radius: 12px;
-    --global-text-shadow: 0 3px 4px var(--main-color);
+    --global-text-shadow: 0 3px 8px var(--main-color);
     --global-box-shadow: 2px 3px 4px 1px var(--main-color);
     --global-background-color: #000000;
     --global-text-color: #ffffff;
@@ -34,7 +34,7 @@ h1:not(.title-home),
 button {
     font-family: "Audiowide", sans-serif;
     text-shadow: var(--global-text-shadow);
-    letter-spacing: 0.3rem;
+    letter-spacing: 0.2rem;
     color: var(--main-color);
 }
 
