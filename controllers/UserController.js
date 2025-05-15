@@ -7,9 +7,6 @@ const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
 const ConversationModel = require('../models/ConversationModel');
 
-const { log } = require('console');
-const { title } = require('process');
-
 // Fonction pour recevoir les données du formulaire d'enregistrement
 exports.register = async (req, res) => {
     try {
@@ -381,6 +378,8 @@ exports.showAnnonce = async (req, res) => {
         } else if (annonce.userId.toHexString() === user._id) {
             myAnnonce = true  
         }
+
+        let musicStyle = String(annonce.musicStyle).charAt(0).toUpperCase() + String(annonce.musicStyle).slice(1);
         
         let dateAnnonce = annonce.createdAt
         const dayAnnonce = dateAnnonce.getDate()
@@ -388,7 +387,7 @@ exports.showAnnonce = async (req, res) => {
         const yearAnnonce = dateAnnonce.getFullYear()
         dateAnnonce = `${dayAnnonce}/${monthAnnonce}/${yearAnnonce}`
         
-        return res.render('./pages/showAnnonce', { userConnected, annonce, myAnnonce, styleUrl: ["components/showAnnonce"], carousel: "annonceCarousel", userAnnonce, dateAnnonce })
+        return res.render('./pages/showAnnonce', { userConnected, annonce, musicStyle, myAnnonce, styleUrl: ["components/showAnnonce"], carousel: "annonceCarousel", userAnnonce, dateAnnonce })
 
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage de l\'annonce', error });
@@ -625,6 +624,9 @@ exports.sendMessage = async (data) => {
 };
 
 exports.cookieTheme = (req, res, next) => {
-    res.cookie("theme", "#6efaf3", { httpOnly: true, maxAge: 1000000000 }); // 115 jours
+    const color = req.body.theme
+    
+    res.cookie("theme", `${color}`, { httpOnly: true, maxAge: 1000000000 }); // 115 jours
+    
     res.redirect('/');
 }

@@ -1,3 +1,4 @@
+/****************** MONOTON FONT ******************/
 @font-face {
     font-family: "Monoton";
     src: url("../../fonts/Monoton-Regular.ttf") format("truetype");
@@ -6,18 +7,56 @@
     font-display: swap;
 }
 
-@font-face {
+/* @font-face {
     font-family: "Audiowide";
     src: url("../../fonts/Audiowide-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+} */
+
+/****************** ALBERT SANS FONT ******************/
+@font-face {
+    font-family: "AlbertSans-Black";
+    src: url("../../fonts/albertSans/AlbertSans-Black.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: "Albert Sans";
-    src: url("../../fonts/AlbertSans-Light.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+    font-family: "AlbertSans-Bold";
+    src: url("../../fonts/albertSans/AlbertSans-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AlbertSans-ExtraBold";
+    src: url("../../fonts/albertSans/AlbertSans-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AlbertSans-ExtraLight";
+    src: url("../../fonts/albertSans/AlbertSans-ExtraLight.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AlbertSans-Light";
+    src: url("../../fonts/albertSans/AlbertSans-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AlbertSans-Medium";
+    src: url("../../fonts/albertSans/AlbertSans-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AlbertSans-Regular";
+    src: url("../../fonts/albertSans/AlbertSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AlbertSans-SemiBold";
+    src: url("../../fonts/albertSans/AlbertSans-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AlbertSans-Thin";
+    src: url("../../fonts/albertSans/AlbertSans-Thin.ttf") format("truetype");
 }

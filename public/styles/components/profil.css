@@ -26,42 +26,15 @@
             display: flex;
             gap: 1rem;
 
-            .avatar-label {
-                cursor: pointer;
-                color: var(--global-text-color)
-            }
-
             input[type="file"] {
                 display: none;
-            }
-
-            button, label {
-                background-color: var(--button-background-opacity);
-                border: var(--global-border-width) solid var(--main-color);
-                padding: 0.5rem;
-                color: var(--global-text-color);
-                /* font-family: "Audiowide", sans-serif; */
-                /* letter-spacing: 0.3rem; */
-                letter-spacing:normal;
-                font-family: "Albert Sans", sans-serif;
-                font-size: 0.85rem;
-                text-shadow: var(--global-text-shadow);
-                cursor: pointer;
-
-                &:hover {
-                    box-shadow: var(--button-box-shadow-hover);
-                }
-        
-                &:active {
-                    box-shadow: var(--button-box-shadow-active);
-                }
             }
         }
     }
     
 }
 
-.all-infos-content {
+.infos-wrapper {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -73,29 +46,16 @@
     color: var(--global-text-color);
     box-shadow: var(--global-box-shadow);
 
-    .info-content {
+    .info-wrapper {
         display: flex;
         justify-content: space-between;
         border-bottom: var(--global-border-width) solid var(--global-text-color);
         padding-bottom: 0.5rem;
 
-        .info {
+        .info-content {
             display: flex;
             flex-direction: column;
         }
-
-        a {
-            display: flex;
-            align-items: flex-end;
-
-            img {
-                width: 2rem;
-                height: 2rem;
-            }
-
-        }
-
-
     }
 
 }

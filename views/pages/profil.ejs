@@ -1,15 +1,15 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-    <h1>MON PROFIL</h1>
+    <h1 class="page-title">MON PROFIL</h1>
     <div class="avatar-content">
         <% if(user.avatarUrl === "") { %>
             <div class="img-avatar-content"></div>
             <div class="forms">
                 <form class="form-choose" action="/updateProfil" method="post" enctype="multipart/form-data">
-                    <label class="avatar-label" for="avatarUrl">AJOUTER UNE PHOTO DE PROFIL</label>
+                    <label class="btn" for="avatarUrl">AJOUTER UNE PHOTO DE PROFIL</label>
                     <input type="file" id="avatarUrl" name="image" accept="image/*">
-                    <button type="submit" id="submitButton" style="display: none;">ENVOYER</button>
+                    <button class="btn" type="submit" id="submitButton" style="display: none;">ENVOYER</button>
                 </form>
             </div>
         <% } else { %>
@@ -19,69 +19,69 @@
             <div class="forms">
                 <form action="/updateProfil" method="post">
                     <input type="hidden" name="deleteAvatar" value="true">
-                    <button type="submit">SUPPRIMER</button>
+                    <button class="btn" type="submit">SUPPRIMER</button>
                 </form>
                 <form action="/updateProfil" method="post" enctype="multipart/form-data">
-                    <label class="avatar-label" for="avatarUrl">MODIFIER</label>
+                    <label class="btn" for="avatarUrl">MODIFIER</label>
                     <input type="file" id="avatarUrl" name="image" accept="image/*">
-                    <button type="submit" id="submitButton" style="display: none;">ENVOYER</button>
+                    <button class="btn" type="submit" id="submitButton" style="display: none;">ENVOYER</button>
                 </form>
             </div>
         <% } %>
     </div>
-    <div class="all-infos-content">
-        <div class="info-content">
-            <div class="info info-username">
+    <div class="infos-wrapper">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>Nom d'utilisateur</span>
                 <span><%= user.username %></span>
             </div>
         </div>
-        <div class="info-content">
-            <div class="info info-role">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>Rôle</span>
                 <span><%= userRole %></span>
             </div>
         </div>
-        <div class="info-content">
-            <div class="info info-last">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>Nom de famille</span>
                 <span><%= user.last %></span>
             </div>
         </div>
-        <div class="info-content">
-            <div class="info info-first">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>Prénom</span>
                 <span><%= user.first %></span>
             </div>
         </div>
-        <div class="info-content">
-            <div class="info info-age">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>Âge</span>
                 <span><%= age %></span>
             </div>
         </div>
-        <div class="info-content">
-            <div class="info info-address">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>Adresse</span>
                 <span>
                     <%= user.address.number %> <%= user.address.street %>, <%= user.address.zip %> <%= user.address.city %>, <%= user.address.country %>
                 </span>
             </div>
         </div>
-        <div class="info-content">
-            <div class="info info-bio">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>Bio</span>
                 <span><%= user.bio %></span>
             </div>
         </div>
-        <div class="info-content">
-            <div class="info info-email">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>E-mail</span>
                 <span><%= user.email %></span>
             </div>
         </div>
-        <div class="info-content">
-            <div class="info info-password">
+        <div class="info-wrapper">
+            <div class="info-content">
                 <span>Mot de passe</span>
                 <span>*********</span>
             </div>

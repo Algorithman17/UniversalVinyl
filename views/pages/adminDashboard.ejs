@@ -1,11 +1,11 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-    <h1>TABLEAU DE BORD ADMINISTRATEUR</h1>
+    <h1 class="page-title">TABLEAU DE BORD ADMINISTRATEUR</h1>
     <form action="/searchUser" method="post">
         <label>Rechercher un utilisateur par son nom d'utilisateur</label>
         <input type="text" name="username">
-        <button type="submit">RECHERCHER</button>
+        <button class="btn" type="submit">RECHERCHER</button>
     </form>
     <% if (userSearch) { %>
         <% if(userSearch && userSearch.role === "user") { %>
@@ -32,7 +32,7 @@
                         <% annoncesUser.forEach(annonce => { %>
                             <div class="annonce">
                                 <a href="/show-annonce/<%= annonce._id %>">
-                                    <div class="card" style="box-shadow: none;">
+                                    <div class="card">
                                         <div class="content-img">
                                             <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="">
                                         </div>
@@ -45,7 +45,7 @@
                                     </div>
                                 </a>
                                 <% if (userSearch.role === "user") { %>
-                                    <a class="delete-btn" href=""><img src="/images/delete-icon.png" alt="" style="width: 2rem;"></a>
+                                    <a class="btn delete-btn" href=""><img src="/images/delete-icon.png" alt="" style="width: 2rem;"></a>
                                     <% } %>
                                 </div>
                                 <% }); %>
@@ -56,7 +56,7 @@
                             <% if(userSearch && userSearch.role === "user") { %>
                                 <form action="/deleteUser" method="post">
                                     <input type="hidden" name="userId" value="<%= userSearch._id %>">
-                                    <button type="submit">SUPPRIMER L'UTILISATEUR</button>
+                                    <button class="btn" type="submit">SUPPRIMER L'UTILISATEUR</button>
                                 </form>
                                 <% } else if (userSearch && userSearch.role === "admin") { %>
                                     <p>Vous ne pouvez pas supprimer un administrateur.</p>

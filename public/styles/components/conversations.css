@@ -1,27 +1,26 @@
-a:not(nav a, .delete-btn) {
+a {
+    max-width: 80%;
     width: 100%;
-    border: var(--global-border-width) solid var(--main-color);
 
     .card {
         display: flex;
         flex-direction: column;
         background-color: var(--global-background-color);
+        border: var(--global-border-width) solid var(--main-color);
         box-shadow: var(--global-box-shadow);
-        height: 100%;
-
+    
         .content-img {
             height: 70px;
+            
             img {
                 width: 100%;
-                vertical-align: middle;
                 height: 100%;
                 object-fit: cover;
             }
         }
-
+    
         .info-annonce {
             padding: 1rem;
-            color: var(--global-text-color);
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -38,9 +37,5 @@ a:not(nav a, .delete-btn) {
             height: 100% !important;
             width: 150px;
         }
-    }
-
-    img {
-        width: 200px;
     }
 }

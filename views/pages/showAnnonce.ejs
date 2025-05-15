@@ -1,7 +1,7 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-    <h1>ANNONCE</h1>
+    <h1 class="page-title">ANNONCE</h1>
         <div class="annonce">
             <div class="swipe-btns">
                 <div class="previous-arrow">
@@ -59,7 +59,7 @@
                         <div class="vinyl-info">
                             <div class="categorie-and-content">
                                 <span>Style de musique</span>
-                                <p><%= annonce.musicStyle %></p>
+                                <p><%= musicStyle %></p>
                             </div>
                             <a class="edit-btn" href="/edit-annonce/<%= annonce.id %>/<%= annonce.musicStyle %>"><img src="/images/edit-icon.png" alt=""></a>
                         </div>
@@ -86,7 +86,7 @@
                     <div class="vinyl-info">
                         <div class="categorie-and-content">
                             <span>Style de musique</span>
-                            <p><%= annonce.musicStyle %></p>
+                            <p><%= musicStyle %></p>
                         </div>
                     </div>
                     <div class="vinyl-info">
@@ -109,12 +109,12 @@
                     <input type="hidden" name="receiver" value="<%= userAnnonce.username %>">
                     <input type="hidden" name="sender" value="<%= user.username %>">
                     <input type="hidden" name="annonceId" value="<%= annonce._id %>">
-                    <button>ENVOYER UN MESSAGE</button>
+                    <button class="btn">ENVOYER UN MESSAGE</button>
                 </form>
             <% } %>
             <% if(userAnnonce.username === user.username) { %>
                 <form action="/delete-annonce/<%= annonce.id %>" method="post">
-                    <button>SUPPRIMER L'ANNONCE</button>
+                    <button class="btn">SUPPRIMER L'ANNONCE</button>
                 </form>
             <% } %>
         <% } %>

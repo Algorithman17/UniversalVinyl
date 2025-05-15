@@ -23,17 +23,15 @@ footer {
             }
 
             h3, p {
-                font-size: 0.85rem;
+                font-size: 0.875rem;
             }
         }
     }
 }
 
 @media (min-width: 900px) {
-    footer {
-        
-        .footer-contents {
-            flex-direction: row;
-        }
+    .footer-contents {
+        flex-direction: row !important;
     }
+
 }

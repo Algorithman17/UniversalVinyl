@@ -26,15 +26,19 @@ nav {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-family: "Monoton", sans-serif;
-            color: var(--global-text-color);
 
             img {
                 width: 2rem;
             }
         }
+
+        a:not(.site-title) {
+            font-family: "AlbertSans-Bold", sans-serif;
+        }
     }
 }
+
+/*************** States Of Navbar ***************/
 
 nav.active {
     top: 0vh !important;
@@ -45,6 +49,8 @@ nav.inactive {
     top: -100vh !important;
     transition: all 0.3s ease-in-out;
 }
+
+/*************** Navbar Version Mobile/Tablet ***************/
 
 .btn-nav {
     display: flex;
@@ -150,15 +156,6 @@ nav.inactive {
             align-items: center;
             justify-content: space-around;
             gap: 1rem;
-            
-            li {
-                
-                a {
-                    /* font-weight: bold; */
-                    letter-spacing: 0.15rem !important;
-                }
-
-            }
         }
     }
 

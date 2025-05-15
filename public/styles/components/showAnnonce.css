@@ -1,3 +1,16 @@
+.vinyl-info {
+    padding-bottom: 0.5rem;
+}
+
+.categorie-and-content {
+    width: 100%;
+
+    span {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+}
+
 .annonce {
     display: flex;
     flex-direction: column;
@@ -132,41 +145,4 @@
 
 form {
     width: 100%;
-
-    button {
-        background-color: var(--button-background-opacity);
-        color: var(--global-text-color);
-        padding: 0.5rem;
-        border: var(--global-border-width) solid var(--main-color);
-        letter-spacing: normal;
-        width: 100%;
-        font-size: 1rem;
-        cursor: pointer;
-
-        &:hover {
-            box-shadow: var(--button-box-shadow-hover);
-        }
-
-        &:active {
-            box-shadow: var(--button-box-shadow-active);
-        }
-    }
 }
-
-@media screen and (max-width: 690px) {
-    .previous-arrow, .next-arrow {
-       
-    }
-
-    /* .next-arrow {
-        right: 180px;
-        top: 460px;
-    } */
-}
-
-/* 
-0px - 480px
-481px - 768px
-769px - 1279px
-1280px+
-*/
