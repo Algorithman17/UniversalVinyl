@@ -1,6 +1,10 @@
 // Sélectionne le canevas et configure ses dimensions
 const canvasAll = document.querySelectorAll('.universe');
 
+const scriptTag = document.currentScript;
+let mainColor = scriptTag.dataset.color;
+
+
 canvasAll.forEach((canvas) => {
   const ctx = canvas.getContext('2d');
 
@@ -120,7 +124,7 @@ canvasAll.forEach((canvas) => {
     // Dessiner l'étiquette centrale
     ctx.beginPath();
     ctx.ellipse(x, y, size / 5, ellipseHeight / 5, 0, 0, Math.PI * 2);
-    ctx.fillStyle = '#FED034'; // Couleur de l'étiquette (orange vif)
+    ctx.fillStyle = mainColor; // Couleur de l'étiquette (orange vif)
     ctx.fill();
 
     // Ajouter un petit cercle noir au centre

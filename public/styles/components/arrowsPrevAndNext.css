@@ -7,56 +7,53 @@
     align-items: center;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.329);
-}
 
-.border-1 {
-    display: flex;
-    width: 85px;
-    height: 85px;
-    /* background-color: #fecfcf99;
-    border: 2px solid rgb(255, 255, 255); */
-    /* border-radius: 10%; */
-    align-items: center;
-    justify-content: center;
-}
+    .border-1 {
+        display: flex;
+        width: 85px;
+        height: 85px;
+        align-items: center;
+        justify-content: center;
 
-.lines {
-    position: relative;
-}
+        .lines {
+            position: relative;
 
-.line-1, .line-2, .line-3 {
-    background-color: var(--main-color);
-}
-
-.line-1, .line-2 {
-    display: block;
-    width: 25px;
-    height: 4px;
-    border-radius: 10px;
-    z-index: 1;
-}
-
-.line-1 {
-    transform-origin: right;
-    transform: rotate(45deg);
-    position: absolute;
-    top: 1px;
-    right: 0;
-}
-
-.line-2 {
-    transform-origin: right;
-    transform: rotate(315deg);
-    position: absolute;
-    right: 0;
-    top: -1px;
-}
-
-.line-3 {
-    display: block;
-    width: 45px;
-    height: 4px;
-    border-radius: 10px;
-    position: relative;
-    left: 1px;
+            .line-1, .line-2, .line-3 {
+                background-color: var(--main-color);
+            }  
+            
+            .line-1, .line-2 {
+                display: block;
+                width: 25px;
+                height: 4px;
+                border-radius: 10px;
+                z-index: 1;
+            }    
+            
+            .line-1 {
+                transform-origin: right;
+                transform: rotate(45deg);
+                position: absolute;
+                top: 1px;
+                right: 0;
+            }   
+            
+            .line-2 {
+                transform-origin: right;
+                transform: rotate(315deg);
+                position: absolute;
+                right: 0;
+                top: -1px;
+            }     
+            
+            .line-3 {
+                display: block;
+                width: 45px;
+                height: 4px;
+                border-radius: 10px;
+                position: relative;
+                left: 1px;
+            }            
+        }        
+    }
 }

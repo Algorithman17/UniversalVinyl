@@ -10,7 +10,7 @@
             </ul>
         </div>
     <% } %>
-    <h1>INSCRIPTION</h1>
+    <h1 class="page-title">INSCRIPTION</h1>
     <form action="/register" method="POST">
         <div class="form-group">
             <label for="username">Nom d'utilisateur</label>
@@ -67,7 +67,7 @@
             <label for="confirmPassword">Confirmez le mot de passe</label>
             <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
         </div>
-        <button type="submit" id="btnRegister">S'INSCRIRE</button>
+        <button class="btn" type="submit" id="btnRegister">S'INSCRIRE</button>
     </form>
 </main>
 <%- include('../partials/popup') %>

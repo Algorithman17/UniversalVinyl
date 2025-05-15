@@ -26,5 +26,8 @@
 <% if (typeof carousel !== 'undefined' && carousel) { %>
     <script src="/scripts/<%= carousel %>.js"></script>
 <% } %>
-<script src="/scripts/canvas.js" ></script>
+<script src="/scripts/canvas.js" data-color='<%= theme %>' ></script>
 <script src="/scripts/navbar.js"></script>
+<script>
+    document.documentElement.style.setProperty('--main-color', "<%= theme %>");
+</script>

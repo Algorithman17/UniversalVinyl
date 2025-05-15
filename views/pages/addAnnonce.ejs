@@ -1,7 +1,7 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar') %>
 <main>
-    <h1>AJOUTER UNE ANNONCE</h1>
+    <h1 class="page-title">AJOUTER UNE ANNONCE</h1>
     <form action="/add-annonce" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Titre de l'annonce</label>
@@ -28,15 +28,15 @@
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" name="description" required></textarea>
+            <textarea id="description" name="description" rows="10" required></textarea>
         </div>
         <div class="select-files">
             <p>Photos (max 3)</p>
-            <label class="btn-select-files" for="images">SELECTIONNER UN FICHIER</label>
+            <label class="btn btn-select-files" for="images">SELECTIONNER UN FICHIER</label>
             <input class="input-select-files" type="file" id="images" name="images" multiple required accept="image/*" hidden>
             <div class="imgs-selected"></div>
         </div>
-        <button type="submit">AJOUTER</button>
+        <button class="btn" type="submit">AJOUTER</button>
     </form>
 </main>
 <%- include('../partials/footer') %>
