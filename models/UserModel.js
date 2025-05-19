@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   first: { type: String, required: true },
   last: { type: String, required: true },
   avatarUrl: { type: String, default: '' },
+  avatarPublicId: { type: String, default: '' },
   birthday: { type: Date, required: true },
   bio: { type: String, default: '' },
   address: {

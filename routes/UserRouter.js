@@ -9,18 +9,11 @@ const UserController = require('../controllers/UserController');
 
 const multer = require("multer");
 // Définir le stockage des fichiers
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/uploads')
-    },
-    filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix+'.webp')
-  
-    }
-  })
+
+const { storage } = require('../middlewares/cloudinary');
+
 // Initialize multer
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 // Définition des routes
 router.get("/", UserController.home);
@@ -43,7 +36,7 @@ router.get('/add-annonce', auth, UserController.addAnnonceForm);
 
 router.post('/add-annonce', auth, upload.array('images', 3), UserController.addAnnonce);
 
-router.get('/annonces', UserController.annonces);
+router.get('/annonces/:filter', UserController.annonces);
 
 router.post('/delete-annonce/:id', auth, UserController.deleteAnnonce)
 

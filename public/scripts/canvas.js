@@ -2,7 +2,7 @@
 const canvasAll = document.querySelectorAll('.universe');
 
 const scriptTag = document.currentScript;
-let mainColor = scriptTag.dataset.color;
+let mainColor = scriptTag.dataset.color || "#ffffff";
 
 
 canvasAll.forEach((canvas) => {

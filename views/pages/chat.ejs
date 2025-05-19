@@ -2,7 +2,7 @@
 <%- include('../partials/navbar') %>
 <main>
     <div class="detail-annonce">
-        <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="<%= annonce.images[0].name %>">
+        <img src="<%= annonce.images[0].imageUrl %>" alt="Image de l'annonce">
         <div class="infos-annonce">
             <p class="title-annonce"><%= annonce.title %></p>
             <p class="username-annonce"><%= userAnnonce.username %></p>

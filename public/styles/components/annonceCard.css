@@ -1,3 +1,17 @@
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .filter a {
+        display: block;
+    }
+}
+
+.filter-actif {
+    width: min-content;
+}
+
 .annonce-cards {
     display: flex;
     justify-content: center;

@@ -5,10 +5,10 @@
     gap: 10px;
     
     .img-avatar-content {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
         border: var(--global-border-width) solid var(--main-color);
-        background-color: var(--button-background-opacity);
+        padding: 0;
         
         img {
             width: 100%;
@@ -25,6 +25,7 @@
         form {
             display: flex;
             gap: 1rem;
+            flex-wrap: wrap;
 
             input[type="file"] {
                 display: none;

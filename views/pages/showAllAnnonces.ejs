@@ -2,16 +2,54 @@
 <%- include('../partials/navbar') %>
 <main>
     <h1 class="page-title">ANNONCES</h1>
-    <% if (annonces.length === 0) { %>
+    <div class="filters">
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/rock">ROCK</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/pop">POP</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/pop">RAP</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/jazz">JAZZ</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/classique">CLASSIQUE</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/electro">ELECTRO</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/reggae">REGGAE</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/metal">METAL</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/blues">BLUES</a>
+        </div>
+        <div class="filter rotate">
+            <a class="btn" href="/annonces/variété">VARIETE</a>
+        </div>
+    </div>
+    <% if (annonces.length === 0 && filter === "all") { %>
         <p>Il n'y a pas d'annonce</p>
     <% } else { %>
+        <% if (filter !== "all") { %>
+            <a href="/annonces/all" class="filter-actif btn">X <%= filter %></a>
+            <% if (annonces.length === 0 ) { %>
+                <p>Il n'y a pas d'annonce <%= filter %></p>
+            <% } %>
+        <% } %>
         <ul class="annonce-cards">
             <% annonces.forEach(annonce => { %>
                 <li class="annonce-card">
                     <a class="clickable-content" href="/show-annonce/<%= annonce._id %>">
                         <div class="content-imgs">
                             <div class="content-img">
-                                <img src="../../../uploads/<%= annonce.images[0].imageUrl %>" alt="<%= annonce.images[0].name %>">
+                                <img src="<%= annonce.images[0].imageUrl %>" alt="Image de l'annonce">
                             </div>
                         </div>  
                         <div class="annonce-text">   
