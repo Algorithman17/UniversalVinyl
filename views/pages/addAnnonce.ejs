@@ -40,33 +40,49 @@
     </form>
 </main>
 <%- include('../partials/footer') %>
+<script src="https://cdn.jsdelivr.net/npm/heic2any/dist/heic2any.min.js"></script>
 <script>
     const inputSelectFiles = document.querySelector('.input-select-files');
     const imgsSelectedContainer = document.querySelector('.imgs-selected');
 
     inputSelectFiles.addEventListener('change', () => {
-        // Vider le conteneur des images sélectionnées
         imgsSelectedContainer.innerHTML = '';
 
-        // Vérifier si plus de 3 fichiers sont sélectionnés
         if (inputSelectFiles.files.length > 3) {
             alert('Vous ne pouvez sélectionner que 3 images maximum.');
-            inputSelectFiles.value = ''; // Réinitialiser la sélection
+            inputSelectFiles.value = '';
             return;
         }
 
-        // Parcourir les fichiers sélectionnés
-        Array.from(inputSelectFiles.files).forEach(file => {
-            // Créer un objet URL pour l'aperçu
+        Array.from(inputSelectFiles.files).forEach(async file => {
+            // Si HEIC, convertir avant affichage
+            if (file.type === "image/heic" || file.name.toLowerCase().endsWith('.heic')) {
+                try {
+                    const convertedBlob = await heic2any({
+                        blob: file,
+                        toType: "image/jpeg",
+                        quality: 0.8
+                    });
+                    const url = URL.createObjectURL(convertedBlob);
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.alt = file.name;
+                    img.style.width = '32%';
+                    imgsSelectedContainer.appendChild(img);
+                } catch (e) {
+                    const msg = document.createElement('div');
+                    msg.textContent = `${file.name} : Aperçu HEIC non disponible.`;
+                    msg.style.color = "orange";
+                    imgsSelectedContainer.appendChild(msg);
+                }
+                return;
+            }
+            // Aperçu classique pour les autres formats
             const url = window.URL.createObjectURL(file);
-
-            // Créer un élément img pour afficher l'aperçu
             const img = document.createElement('img');
             img.src = url;
             img.alt = file.name;
-            img.style.width = '32%'; // Ajuster la taille selon vos besoins
-
-            // Ajouter l'image au conteneur
+            img.style.width = '32%';
             imgsSelectedContainer.appendChild(img);
         });
     });
