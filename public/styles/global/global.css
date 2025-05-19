@@ -35,7 +35,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 5rem;
+    padding-top: 3.5rem;
     min-height: 100vh;
     padding-inline: 2rem;
     padding-bottom: 2rem;
@@ -67,9 +67,6 @@ h6,
 .site-title
 :not(nav a, .page-title) { 
     color: var(--global-text-color);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 /*************** Text Shadow Elements ***************/

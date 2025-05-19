@@ -9,7 +9,7 @@
 }
 
 .filter-actif {
-    width: min-content;
+    width: fit-content;
 }
 
 .annonce-cards {

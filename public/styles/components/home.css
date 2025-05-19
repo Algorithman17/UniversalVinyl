@@ -3,11 +3,9 @@ main {
     position: relative;
 
     .top-infos {
-        top: 3.5rem;
         display: flex;
         flex-direction: row;
-        width: 80%;
-        position: absolute;
+        width: 100%;
         justify-content: center;
 
         .connected {
