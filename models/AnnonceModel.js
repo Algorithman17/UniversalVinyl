@@ -6,9 +6,8 @@ const annonceSchema = new mongoose.Schema({
     price: { type: Number, required: true, min: 0 },
     musicStyle: { type: String, required: true, enum: ['rock', 'pop', 'rap', 'jazz', 'classique', 'electro', 'reggae', 'metal', 'blues', 'variété'] },
     images: [{
-        name: { type: String, required: true },
-        contentType: { type: String, required: true },
-        imageUrl: { type: String, required: true }
+        imageUrl: { type: String, required: true },
+        publicId: { type: String, required: true }   // Identifiant Cloudinary pour suppression
     }],
     createdAt: { type: Date, default: Date.now },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }

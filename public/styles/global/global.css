@@ -1,6 +1,6 @@
 /*************** CSS Variables ***************/
 :root {
-    --main-color: ;
+    --main-color: #ffffff;
     --global-border-width: 1px;
     --global-border-radius: 12px;
     --global-text-shadow: 0 3px 8px var(--main-color);
@@ -57,8 +57,7 @@ input,
 textarea, 
 select, 
 .btn, 
-p, 
-a, 
+p,  
 span:not(.swipe-btns span),
 h2, 
 h3,

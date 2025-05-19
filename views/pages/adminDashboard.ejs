@@ -45,7 +45,11 @@
                                     </div>
                                 </a>
                                 <% if (userSearch.role === "user") { %>
-                                    <a class="btn delete-btn" href=""><img src="/images/delete-icon.png" alt="" style="width: 2rem;"></a>
+                                    <form action="/delete-annonce/<%= annonce._id %>" method="post">
+                                        <button type="submit" class="btn delete-btn">
+                                            <img src="/images/delete-icon.png" alt="" style="width: 2rem;">
+                                        </button>
+                                    </form>
                                     <% } %>
                                 </div>
                                 <% }); %>

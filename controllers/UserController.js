@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
+const cloudinary = require('cloudinary').v2;
 
 const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
@@ -51,7 +52,7 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new UserModel({ email, password: hashedPassword, username, first, last, birthday, address, bio: "", avatarUrl: "" });
         await user.save();
-
+        
         req.session.message = { type: 'success', text: [`${email} vient d'être créé !`] };
         return res.redirect('/login-form');
     } catch (err) {
@@ -183,7 +184,6 @@ exports.addAnnonce = async (req, res) => {
     try {
         const { title, description, price, musicStyle } = req.body;
 
-        // Vérification du nombre d'images
         if (!req.files || req.files.length < 1) {
             return res.status(400).json({ message: "Veuillez envoyer au moins une image" });
         }
@@ -191,24 +191,29 @@ exports.addAnnonce = async (req, res) => {
             return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
         }
 
-        // Créer une liste d'URLs d'images
-        const images = req.files.map(file => ({
-            name: file.originalname,
-            contentType: file.mimetype,
-            imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
-        }));
+        // Upload images sur Cloudinary
+        const images = [];
+        for (const file of req.files) {
+            const result = await cloudinary.uploader.upload(file.path, {
+                folder: "universalvinyl/annonces",
+                format: "webp"
+            });
+            images.push({
+                imageUrl: result.secure_url,
+                publicId: result.public_id
+            });
+        }
 
         const newAnnonce = new AnnonceModel({
             title,
             description,
             images,
             price,
-            
             musicStyle,
-            userId: res.locals.user._id // Stocke l'ID de l'utilisateur pour lier l'annonce
+            userId: res.locals.user._id
         });
-        await newAnnonce.save();
 
+        await newAnnonce.save();
         return res.redirect('/my-annonces');
     } catch (error) {
         return res.status(500).json({ message: 'Erreur serveur', error });
@@ -217,6 +222,23 @@ exports.addAnnonce = async (req, res) => {
 
 exports.annonces = async (req, res) => {
     try {
+        let filter = req.params.filter
+        if (filter !== "all") {
+            let annonces = await AnnonceModel.find({musicStyle: filter});
+            const annoncesWithImages = annonces.map(annonce => {
+                return {
+                    ...annonce._doc, // Copie des données de l'annonce
+                    images: annonce.images.map(img => ({
+                        name: img.name,
+                        contentType: img.contentType,
+                        imageUrl: img.imageUrl // Utiliser l'URL relative pour l'affichage
+                    }))
+                };
+            });
+            filter = filter.toUpperCase()
+            return res.render('./pages/showAllAnnonces', { filter, annonces: annoncesWithImages, styleUrl: ["components/annonceCard"] });
+        }
+
         let annonces = await AnnonceModel.find({});
         const annoncesWithImages = annonces.map(annonce => {
             return {
@@ -229,7 +251,7 @@ exports.annonces = async (req, res) => {
             };
         });
 
-        return res.render('./pages/showAllAnnonces', { annonces: annoncesWithImages, styleUrl: ["components/annonceCard"] });
+        return res.render('./pages/showAllAnnonces', { filter, annonces: annoncesWithImages, styleUrl: ["components/annonceCard"] });
     } catch (error) {   
         return res.status(500).json({ message: 'Erreur lors de l\'affichage des annonces', error });
     }
@@ -238,30 +260,23 @@ exports.annonces = async (req, res) => {
 exports.deleteAnnonce = async (req, res) => {
     try {
         const annonceId = req.params.id;
-        
-        // Trouver l'annonce à supprimer
         const annonce = await AnnonceModel.findById(annonceId);
 
         if (!annonce) {
             return res.status(404).json({ message: 'Annonce non trouvée' });
         }
 
-        // Supprimer les images du dossier "uploads"
-        annonce.images.forEach(img => {
-            const imagePath = path.join(__dirname, '..', 'public/uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
-            
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
+        // Supprimer les images de Cloudinary
+        for (const img of annonce.images) {
+            if (img.publicId) {
+                await cloudinary.uploader.destroy(img.publicId);
             }
-        });
+        }
 
-        // Supprimer les conversations associées à l'annonce
         await ConversationModel.deleteMany({ annonceId: annonceId });
-
-        // Supprimer l'annonce de la base de données
         await AnnonceModel.deleteOne({ _id: annonceId });
 
-        return res.redirect('/my-annonces');  // Rediriger vers la liste des annonces après la suppression
+        return res.redirect('/my-annonces');
     } catch (error) {
         return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
     }
@@ -292,60 +307,41 @@ exports.editAnnonce = async (req, res) => {
     try {
         const annonceId = req.params.id;
         const { title, description, price, musicStyle } = req.body;
-        
-        if (req.files) {
-            if (req.files.length > 3) {
-                return res.status(400).json({ message: "Vous ne pouvez envoyer que 3 images maximum" });
-            }
-
-            if (req.files.length > 0) {
-                // Supprimer les anciennes images du dossier "uploads"
-                annonce.images.forEach(img => {
-                    const imagePath = path.join(__dirname, '..', 'public/uploads', img.imageUrl);  // Assurez-vous que le nom correspond bien au fichier dans "uploads"
-                    
-                    if (fs.existsSync(imagePath)) {
-                        fs.unlinkSync(imagePath);  // Supprime l'image du système de fichiers
-                    }
-                });
-    
-                // Créer une liste d'URLs d'images
-                const images = req.files.map(file => ({
-                    name: file.originalname,
-                    contentType: file.mimetype,
-                    imageUrl: `${file.filename}` // Stocker l'URL relative dans la base de données
-                }));
-                
-                annonce.images = images;
-            }
-        }
-        
-        
-        // Trouver l'annonce à modifier
         const annonce = await AnnonceModel.findById(annonceId);
-        
+
         if (!annonce) {
             return res.status(404).json({ message: 'Annonce non trouvée' });
         }
-        // Vérifier si de nouvelles images ont été téléchargées
-        
 
-        if (typeof title !== "undefined") {
-            annonce.title = title;
+        if (req.files && req.files.length > 0) {
+            // Supprimer les anciennes images Cloudinary
+            for (const img of annonce.images) {
+                if (img.publicId) {
+                    await cloudinary.uploader.destroy(img.publicId);
+                }
+            }
+            // Upload des nouvelles images
+            const images = [];
+            for (const file of req.files) {
+                const result = await cloudinary.uploader.upload(file.path, {
+                    folder: "universalvinyl/annonces",
+                    format: "webp"
+                });
+                images.push({
+                    imageUrl: result.secure_url,
+                    publicId: result.public_id
+                });
+                fs.unlinkSync(file.path);
+            }
+            annonce.images = images;
         }
-        if (typeof description !== "undefined") {
-            annonce.description = description;
-        }
-        if (typeof price !== "undefined") {
-            annonce.price = price;
-        }
-        if (typeof musicStyle !== "undefined") {
-            annonce.musicStyle = musicStyle;
-        }
-        
-        console.log(title, description, price, musicStyle)
-        
+
+        if (typeof title !== "undefined") annonce.title = title;
+        if (typeof description !== "undefined") annonce.description = description;
+        if (typeof price !== "undefined") annonce.price = price;
+        if (typeof musicStyle !== "undefined") annonce.musicStyle = musicStyle;
+
         await annonce.save();
-
         return res.redirect(`/show-annonce/${annonce.id}`);
     } catch (error) {
         return res.status(500).json({ message: 'Erreur serveur', error });
@@ -399,53 +395,51 @@ exports.updateProfil = async (req, res) => {
         const findUser = await UserModel.findById(res.locals.user._id);
         const { deleteAvatar } = req.body;
 
-        if (deleteAvatar) {
-            const imagePath = path.join(__dirname, '..', 'public/uploads', findUser.avatarUrl);
-            if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-            findUser.avatarUrl = "";
+        // Supprimer l'image sur Cloudinary si demandé
+        if (deleteAvatar && findUser.avatarPublicId) {
+            await cloudinary.uploader.destroy(findUser.avatarPublicId);
+            findUser.avatarUrl = '';
+            findUser.avatarPublicId = '';
         }
 
+        // Nouvelle image => supprimer l'ancienne si présente
         if (req.file) {
-            if (findUser.avatarUrl) {
-                const oldImagePath = path.join(__dirname, '..', 'public/uploads', findUser.avatarUrl);
-                if (fs.existsSync(oldImagePath)) fs.unlinkSync(oldImagePath);
+            if (findUser.avatarPublicId) {
+                await cloudinary.uploader.destroy(findUser.avatarPublicId);
             }
-            findUser.avatarUrl = req.file.filename;
+            findUser.avatarUrl = req.file.path; // URL complète Cloudinary
+            findUser.avatarPublicId = req.file.filename; // public_id Cloudinary
         }
 
+        // Mise à jour des autres champs
         Object.keys(req.body).forEach(key => {
             if (key in findUser) findUser[key] = req.body[key];
         });
 
+        // Mise à jour du token JWT avec les nouvelles infos
         const decodedToken = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-        let user = decodedToken.user
-        user.avatarUrl = findUser.avatarUrl
-        user.address.number = findUser.address.number
-        user.address.street = findUser.address.street
-        user.address.zip = findUser.address.zip
-        user.address.city = findUser.address.city
-        user.address.country = findUser.address.country
-        user.bio = findUser.bio
-        user.username = findUser.username
-        user.last = findUser.last
-        user.first = findUser.first
+        let user = decodedToken.user;
+        user.avatarUrl = findUser.avatarUrl;
+        user.address = { ...findUser.address };
+        user.bio = findUser.bio;
+        user.username = findUser.username;
+        user.last = findUser.last;
+        user.first = findUser.first;
 
-        const newToken = jwt.sign(
-            { user }, 
-            process.env.JWT_SECRET, 
-            { expiresIn: "2h" }
-        );
+        const newToken = jwt.sign({ user }, process.env.JWT_SECRET, {
+            expiresIn: '2h',
+        });
 
         res.clearCookie('token');
-        res.cookie('token', newToken, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000});
+        res.cookie('token', newToken, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 });
 
         await findUser.save();
-
         return res.redirect('/profil');
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: 'Erreur lors de la mise à jour du profil', error });
     }
-}
+};
 
 exports.adminDashboard = (req, res) => {
     try {
@@ -540,7 +534,6 @@ exports.conversations = async (req, res) => {
                 if (conversation.lastMessage === "") {
                     await conversation.deleteOne()
                     break
-                    console.log("okss");
                 }
 
                 const dateLastMessage = conversation.messages[conversation.messages.length-1].createdAt;
@@ -570,7 +563,7 @@ exports.conversations = async (req, res) => {
         } else {
             return res.render('./pages/conversations', { annonces, styleUrl: ["components/conversations"] })
         }
-
+        console.log(annonces)
         return res.render('./pages/conversations', { annonces, styleUrl: ["components/conversations"] })
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });

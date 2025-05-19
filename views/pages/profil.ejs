@@ -13,8 +13,8 @@
                 </form>
             </div>
         <% } else { %>
-            <div class="img-avatar-content">
-                <img src="../../../uploads/<%= user.avatarUrl %>" alt="avatar de profil">
+            <div class="img-avatar-content btn">
+                <img src="<%= user.avatarUrl %>" alt="avatar de profil">
             </div>
             <div class="forms">
                 <form action="/updateProfil" method="post">
