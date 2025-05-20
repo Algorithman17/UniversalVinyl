@@ -1,40 +1,44 @@
-// Importation des modules nécessaires
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-const session = require('express-session');
-const cookieParser = require("cookie-parser");
-const jwt = require('jsonwebtoken');
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+/*************** Importation des modules necessaires ***************/
 
-// Importation des utilitaires et routes
+// Initialisation de l'application Express
+const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+
+const bodyParser = require('body-parser'); // Middleware pour parser les données des requêtes
+const session = require('express-session'); // Middleware pour gérer les sessions
+const cookieParser = require("cookie-parser"); // Middleware pour gérer les cookies
+const jwt = require('jsonwebtoken'); // Middleware pour gérer les JSON Web Tokens
+const io = require('socket.io')(server); // Initialisation de Socket.io
+require('dotenv').config(); // Chargement des variables d'environnement
+ 
+
+/*************** Importation des utilitaires et routes ***************/
 const connectDb = require('./database/connect');
-require('dotenv').config();
 const userRouter = require('./routes/UserRouter');
-const UserController = require('./controllers/UserController');
+const Controller = require('./controllers/Controller');
 
 // Configuration du port (par défaut : 3005)
 const port = process.env.PORT || 3005;
 
 // Middleware pour gérer les données des requêtes
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.json());
-app.use('/api/users', userRouter);
-app.use(express.static('public'));
-app.use('/uploads', express.static('uploads'));
-app.set('views', './views');
-app.set('view engine', 'ejs');
-app.use(cookieParser());
-app.use(session({
-    secret: 'secret_key',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 6555555 }
-}));
+app.use(bodyParser.urlencoded({ extended: true })); // Middleware pour parser les données des requêtes
+app.use(bodyParser.json()); // Middleware pour parser les données JSON
+app.use(express.json()); // Middleware pour parser les données JSON
+app.use('/api/users', userRouter); // Middleware pour gérer les routes API
+app.use(express.static('public')); // Middleware pour servir les fichiers statiques
+app.use('/uploads', express.static('uploads')); // Middleware pour servir les fichiers d'uploads
+app.set('views', './views'); // Définition du répertoire des vues
+app.set('view engine', 'ejs'); // Définition du moteur de template EJS
+app.use(cookieParser()); // Middleware pour gérer les cookies
+app.use(session({ 
+    secret: 'secret_key', // Clé secrète pour signer les sessions
+    resave: false, // Ne pas sauvegarder la session si elle n'a pas été modifiée
+    saveUninitialized: true, // Sauvegarder la session même si elle n'a pas été initialisée
+    cookie: { maxAge: 6555555 } // Durée de vie du cookie (en millisecondes)
+})); // Middleware pour gérer les sessions
 
-// Middleware
+// Middleware pour gérer les cookies et les sessions
 app.use((req, res, next) => {
     if (req.cookies.token) {
         try {
@@ -65,7 +69,7 @@ app.use((req, res, next) => {
 });
 
 // Route pour récupérer les messages d'une conversation
-app.get('/api/messages/:id', UserController.getMessages);
+app.get('/api/messages/:id', Controller.getMessages);
 
 // Connexion à Socket.io
 io.on('connection', (socket) => {
@@ -79,7 +83,7 @@ io.on('connection', (socket) => {
         io.to(roomId).emit('chatMessage', { sender, message });
 
         try {
-            await UserController.sendMessage({ roomId, sender, message });
+            await Controller.sendMessage({ roomId, sender, message });
         } catch (error) {
             console.error('Erreur lors de la sauvegarde du message :', error);
         }

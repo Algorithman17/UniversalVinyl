@@ -8,7 +8,31 @@ const UserModel = require('../models/UserModel');
 const AnnonceModel = require('../models/AnnonceModel');
 const ConversationModel = require('../models/ConversationModel');
 
-// Fonction pour recevoir les données du formulaire d'enregistrement
+exports.deleteAnnonce = async (req, res) => {
+    try {
+        const annonceId = req.params.id;
+        const annonce = await AnnonceModel.findById(annonceId);
+
+        if (!annonce) {
+            return res.status(404).json({ message: 'Annonce non trouvée' });
+        }
+
+        // Supprimer les images de Cloudinary
+        for (const img of annonce.images) {
+            if (img.publicId) {
+                await cloudinary.uploader.destroy(img.publicId);
+            }
+        }
+
+        await ConversationModel.deleteMany({ annonceId: annonceId });
+        await AnnonceModel.deleteOne({ _id: annonceId });
+
+        return res.redirect('/my-annonces');
+    } catch (error) {
+        return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
+    }
+}
+
 exports.register = async (req, res) => {
     try {
         const { email, password, confirmPassword, username, first, last, birthday, number, street, zip, city, country } = req.body;
@@ -61,7 +85,6 @@ exports.register = async (req, res) => {
     }
 };
 
-// Fonction pour se connecter
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -101,7 +124,6 @@ exports.login = async (req, res) => {
     }
 };
 
-// Fonction pour afficher le profil de l'utilisateur
 exports.profil = (req, res) => {
     const birthday = Date.parse(res.locals.user.birthday)
     const currentDate = Date.now();
@@ -117,7 +139,6 @@ exports.profil = (req, res) => {
     return res.render('./pages/profil', { age, userRole, styleUrl: ["components/profil"] });
 };
 
-// Fonction pour afficher le formulaire d'enregistrement
 exports.registerForm = (req, res) => {
     if (req.session.message) {
         res.locals.message = req.session.message 
@@ -128,7 +149,6 @@ exports.registerForm = (req, res) => {
     return res.render('./pages/register', { styleUrl: ["components/register"] });
 };
 
-// Fonction pour afficher le formulaire de connexion
 exports.loginForm = (req, res) => {
     if (req.session.message) {
         res.locals.message = req.session.message 
@@ -140,7 +160,6 @@ exports.loginForm = (req, res) => {
     
 };
 
-// Fonction pour afficher la page d'accueil
 exports.home = (req, res) => {
     return res.render('./pages/home', { styleUrl: ["components/home"] });
 };
@@ -256,31 +275,6 @@ exports.annonces = async (req, res) => {
         return res.status(500).json({ message: 'Erreur lors de l\'affichage des annonces', error });
     }
 };
-
-exports.deleteAnnonce = async (req, res) => {
-    try {
-        const annonceId = req.params.id;
-        const annonce = await AnnonceModel.findById(annonceId);
-
-        if (!annonce) {
-            return res.status(404).json({ message: 'Annonce non trouvée' });
-        }
-
-        // Supprimer les images de Cloudinary
-        for (const img of annonce.images) {
-            if (img.publicId) {
-                await cloudinary.uploader.destroy(img.publicId);
-            }
-        }
-
-        await ConversationModel.deleteMany({ annonceId: annonceId });
-        await AnnonceModel.deleteOne({ _id: annonceId });
-
-        return res.redirect('/my-annonces');
-    } catch (error) {
-        return res.status(500).json({ message: 'Erreur lors de la suppression de l\'annonce', error });
-    }
-}
 
 exports.editAnnonceForm = async (req, res) => {
     try {
