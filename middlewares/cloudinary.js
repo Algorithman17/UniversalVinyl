@@ -12,6 +12,7 @@ const storage = new CloudinaryStorage({
   params: {
     folder: 'annonces',
     format: async () => 'webp', // Convertir chaque image en .webp
+    // Remplacer les espaces par des underscores
     public_id: (req, file) => `${Date.now()}-${file.originalname.replace(/\s/g, "_")}`,
   },
 });

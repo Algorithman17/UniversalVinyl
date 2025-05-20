@@ -12,7 +12,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: #fecf34c7;
+        background-color: var(--main-color);
         font-size: 30px;
     }
     .popup p {
@@ -57,9 +57,10 @@
             popup.textContent = message.text
 
             blockPopup.style.visibility = "visible"
-            setTimeout(() => {
-               blockPopup.style.visibility = "hidden" 
-            }, "3000")
+
+            blockPopup.addEventListener("click", function () {
+                blockPopup.style.visibility = "hidden"
+            })
         } else {
             next()
         }

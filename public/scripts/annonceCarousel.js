@@ -1,3 +1,4 @@
+// Variables
 const carousel = document.querySelector('.content-imgs')
 const images = document.querySelectorAll(".content-img img")
 const previousArrow = document.querySelector(".previous-arrow")
@@ -5,6 +6,8 @@ const nextArrow = document.querySelector(".next-arrow")
 const currentPage = document.querySelector(".current-page")
 const lastPage = document.querySelector(".last-page")
 
+
+/*************** Définition de la taille du carousel en fonction du nombre d'images ***************/
 
 let indexImg = 0
 let nbrImg = []
@@ -23,6 +26,8 @@ if (images.length === 3) {
     nextArrow.style.display = "none"
     lastPage.textContent = "1"
 }
+
+/*************** Gestion des flèches de navigation ***************/
 
 previousArrow.addEventListener('click', () => {
     if(indexImg === 0) {
