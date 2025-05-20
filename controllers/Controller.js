@@ -438,7 +438,6 @@ exports.updateProfil = async (req, res) => {
 exports.adminDashboard = (req, res) => {
     try {
         let userSearch = false
-        console.log("userSearch:", userSearch);
         let annoncesUser = []
         return res.render('./pages/adminDashboard', { userSearch, annoncesUser, styleUrl: ["components/adminDashboard"] })
     } catch (error) {
@@ -451,7 +450,6 @@ exports.searchUser = async (req, res) => {
         const { username } = req.body
 
         const userSearch = await UserModel.findOne({ username })
-        console.log("userSearch:", userSearch);
         
         let annoncesUser = []
         if (userSearch) {
@@ -557,7 +555,6 @@ exports.conversations = async (req, res) => {
         } else {
             return res.render('./pages/conversations', { annonces, styleUrl: ["components/conversations"] })
         }
-        console.log(annonces)
         return res.render('./pages/conversations', { annonces, styleUrl: ["components/conversations"] })
     } catch (error) {
         return res.status(404).json({ message: 'Erreur lors de l\'affichage', error });
