@@ -87,3 +87,16 @@
         });
     });
 </script>
+<script>
+    document.getElementById('images').addEventListener('change', function(e) {
+      const files = Array.from(e.target.files);
+      const maxSize = 1 * 1024 * 1024; // 1MB
+      const validFiles = files.filter(file => file.size <= maxSize);
+
+      if (validFiles.length !== files.length) {
+        alert('Seules les images de 1 Mo ou moins sont autorisées.');
+        // Réinitialise l’input si un fichier est trop gros
+        e.target.value = '';
+      }
+    });
+</script>
