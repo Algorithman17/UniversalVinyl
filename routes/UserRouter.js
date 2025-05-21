@@ -3,17 +3,10 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth'); // Import du middleware
 const isAdmin = require('../middlewares/isAdmin'); // Import du middleware
+const upload = require('../middlewares/upload');
 
 // Importation du contrôleur des users
 const Controller = require('../controllers/Controller');
-
-const multer = require("multer");
-// Définir le stockage des fichiers
-
-const { storage } = require('../middlewares/cloudinary');
-
-// Initialize multer
-const upload = multer({ storage });
 
 // Définition des routes
 router.get("/", Controller.home);
