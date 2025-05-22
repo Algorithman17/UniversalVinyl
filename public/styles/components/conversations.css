@@ -6,6 +6,7 @@
         border: var(--global-border-width) solid var(--main-color);
         box-shadow: var(--global-box-shadow);
         position: relative;
+        width: 100%;
     
         a {
             position: absolute;
@@ -38,13 +39,16 @@
     .card {
         flex-direction: row !important;
         height: 150px !important;
+        width: 100% !important;
 
         .content-imgs {
             display: flex;
+            width: 150px !important;
         }
 
         .content-img {
             height: 100% !important;
+            width: 100% !important;
         }
     }
 }
