@@ -6,16 +6,17 @@
         <% annonces.forEach(annonce => { %>
             <div class="card">
                 <a href="/chat/<%= annonce.conversationId %>"></a>
-                    <div class="content-imgs">
-                        <div class="content-img">
-                            <img src="<%= annonce.imageUrl %>" alt="Image de l'annonce">
-                        </div>
-                    <div class="info-annonce">
-                        <p><%= annonce.title %></p>
-                        <p><%= annonce.recipient[0] %></p>
-                        <p><%= annonce.lastMessage %></p>
-                        <p><%= annonce.dateLastMessage %></p>
+                <div class="content-imgs">
+                    <div class="content-img">
+                        <img src="<%= annonce.imageUrl %>" alt="Image de l'annonce">
                     </div>
+                </div>
+                <div class="info-annonce">
+                    <p><%= annonce.title %></p>
+                    <p><%= annonce.recipient[0] %></p>
+                    <p><%= annonce.lastMessage %></p>
+                    <p><%= annonce.dateLastMessage %></p>
+                </div>
             </div>
         <% }) %>
     <% } else { %>
