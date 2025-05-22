@@ -29,7 +29,6 @@
     display: flex;
     width: 300%;
     transition: transform 0.3s ease-in-out;
-    /* height: 600px; */
 }
 
 .content-img {
